@@ -20,24 +20,44 @@
                 alert("Connard!");
             }
         </script>
+
+        <script type="text/javascript"> 
+            function test()
+            {
+                do
+                {
+                    do
+                    {
+                        var myID = prompt("ID:","");
+                    } 
+                    while(myID == "");
+
+                    if (myID != "" && myID != null)
+                    {
+                        do
+                        {
+                            var myPass = prompt("MDP:","");
+                        }while(myPass == "");
+
+                    }
+
+                }while(myPass == null && myID != null);
+
+                document.write("Vous avez saisi: " + myID + " et " + myPass );
+                
+            }
+        </script> 
     </head>
 
     <body role="document">
 
         <div class="container-fluid">
-            <div class="banner">
-                <table>
-                    <tr>
-                        <td><img src="Images/logo.png"></td>
-                        <td><h1>RCP : Research Collaborative Plateform</h1></td>
-                        <td class="connexion">
-                            <button onclick="connexion()" class="btn btn-lt btn-default">
-                                Se connecter
-                            </button> 
-
-                        </td>                   
-                    </tr>
-                </table>
+            <div class="banner-container">
+                <img id="img-banner" src="Images/logo2.png">
+                <h1 id="banner-title">Research Collaborative Plateforme</h1>
+                <button onclick="test()" class="btn btn-lt btn-default connexion">
+                            Se connecter
+                </button>
             </div>
 
             <nav class="navbar navbar-default">

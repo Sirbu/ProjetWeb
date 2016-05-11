@@ -8,13 +8,33 @@ body
 	margin: 10px;
 }
 
-.banner
+.banner-container
 {
 	height: 140px;
 	width: auto;
-	overflow: hidden;
-	background-color: white;
+	background-image: url("../Images/little3.png");
+	background-repeat: repeat repeat-y;
+	/*background-color: #548DD4;*/
 	border-radius: 15px;
+}
+
+#img-banner
+{
+	padding: 5px;
+	float: left;
+}
+
+#banner-title
+{
+	padding-top: 5%;
+	padding-left: 5%;
+}
+
+.connexion
+{
+	float: right;
+	margin-right: 10px;
+	margin-top: -50px;
 }
 
 .container-fluid
@@ -71,10 +91,5 @@ body
 	padding: 10px;
 }
 
-.connexion
-{
-	width: 15%;
-	text-align: right;
-}
 
 /* Penser a une classe générale content */
