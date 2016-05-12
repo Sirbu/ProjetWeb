@@ -6,23 +6,62 @@
         <title>RCP : Research Collaborative Platform</title>
         
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 
         <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
 
         <!-- Personnal css -->
-        <link rel="stylesheet" href="bootstrap_mod.css">
+        <link rel="stylesheet" href="Styles/bootstrap_mod.css">
+
+        <script type="text/javascript">
+            function connexion()
+            {
+                alert("Connard!");
+            }
+        </script>
+
+        <script type="text/javascript"> 
+            function test()
+            {
+                do
+                {
+                    do
+                    {
+                        var myID = prompt("ID:","");
+                    } 
+                    while(myID == "");
+
+                    if (myID != "" && myID != null)
+                    {
+                        do
+                        {
+                            var myPass = prompt("MDP:","");
+                        }while(myPass == "");
+
+                    }
+
+                }while(myPass == null && myID != null);
+
+                document.write("Vous avez saisi: " + myID + " et " + myPass );
+                
+            }
+        </script> 
     </head>
 
-    <body id="fond" role="document">
+    <body role="document">
 
-        <div id="barre" class="container-fluid">
-            <div class="banner">
+        <div class="container-fluid">
+            <div class="banner-container">
                 <table>
                     <tr>
-                        <td><img src="Images/logo.png"></td>
-                        <td><h1>RCP : Research Collaborative Plateform</h1></td>
+                        <td><img id="img-banner" src="Images/logo2.png"></td>
+                        <td><h1 id="banner-title">Research Collaborative Plateform</h1></td>
+                        <td>
+                            <button onclick="test()" class="btn btn-lt btn-default connexion">
+                                Se connecter
+                            </button>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -44,7 +83,7 @@
                             <li class="active"><a href="index.php">Accueil</a></li>
                             <li><a href="publications.php">Publications</a></li>
                             <li><a href="laboratoires.php">Laboratoires</a></li>
-                            <li><a href="recherche.php">Recherche Avancée</a></li>
+                            <li><a href="recherche.php">Recherche</a></li>
                             <li class="dropdown">
                                 <!-- menu déroulant -->
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Privé <span class="caret"></span></a>
@@ -62,41 +101,57 @@
                 </div>                    
             </nav>
 
-            <div class="sidebar">
+            <div class="main-container">
                 <form action="recherche.php">
                     <input type="text" name="search" placeholder="Recherche">
                     <input type="submit" name="boutonEnvoi" value="OK">
                 </form>
 
-                <table height="600px" width="17%" border ="1" cellspacing="1" cellpadding="1" align="left">
-                    <caption> <h2> News</h2> </caption>
+                <div class="personnal-sidebar">
+                    <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
+                     align="left">
+                        <caption> <h2>News</h2> </caption>
+                        <tr>
+                            <td class="news-title">
+                                <div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
+                            </td>
+                        </tr>
+                    </table>            
+                </div>
+
+                <div class="content-container">
+                    <h1>TOTO</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe expedita quisquam sequi minima nam adipisci dicta nulla accusantium dolorem pariatur earum cupiditate aliquam voluptatem libero, voluptate iusto non corporis dolores.</p>
+                    <h2>Other lorem</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum esse dignissimos voluptates magnam ullam accusamus perferendis odio, ipsa et error reiciendis numquam delectus, voluptatem nesciunt quae quam minima reprehenderit sapiente.</p>
+                    <h2>Last Lorem</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero amet similique veritatis tempora, incidunt magni consequuntur repudiandae dolorem ipsum ad quidem saepe nulla, vitae consequatur dolores, dicta aliquam pariatur temporibus.</p>
+                </div>
+            </div>
+
+
+            <div class="mentions">
+                <table height="75px" width="100%" border ="1" cellspacing="1" cellpadding="1" >
+                    <caption>Mention légales</caption>
                     <tr>
-                        <td>
-                            <div class="titre_news">
-                                <h3>News 1</h3>
-                            </div>
-                        </td>
+                        <td> Nous contacter : stri@hmtl.com</td>
                     </tr>
-                </table>            
+                </table>
             </div>
-
-            <div class="container">
-                <h1>TOTO</h1>
-            </div>
-
-            <table height="75px" width="100%" border ="1" cellspacing="1" cellpadding="1" >
-                <caption><h2>Mention légales  </h2></caption>
-                <tr>
-                    <td id="mentions"> Nous contacter : stri@hmtl.com</td>
-                </tr>
-            </table>
         
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
         <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
 
     </body>
 </html>
