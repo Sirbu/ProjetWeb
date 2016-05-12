@@ -12,9 +12,9 @@ body
 {
 	height: 140px;
 	width: auto;
-	background-image: url("../Images/little3.png");
+	/*background-image: url("../Images/little3.png");*/
 	background-repeat: repeat repeat-y;
-	/*background-color: #548DD4;*/
+	background-color: #548DD4;
 	border-radius: 15px;
 }
 
@@ -26,15 +26,18 @@ body
 
 #banner-title
 {
-	padding-top: 5%;
-	padding-left: 5%;
+	/*padding-top: 5%;*/
+	margin-left: 5%;
+	margin-bottom: 5%;
+	margin-right: 10%;
 }
 
 .connexion
 {
-	float: right;
-	margin-right: 10px;
-	margin-top: -50px;
+	/*float: right;*/
+	position: relative;
+	margin: auto;
+	/*margin-right: 5%;*/
 }
 
 .container-fluid

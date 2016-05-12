@@ -53,11 +53,17 @@
 
         <div class="container-fluid">
             <div class="banner-container">
-                <img id="img-banner" src="Images/logo2.png">
-                <h1 id="banner-title">Research Collaborative Plateforme</h1>
-                <button onclick="test()" class="btn btn-lt btn-default connexion">
-                            Se connecter
-                </button>
+                <table>
+                    <tr>
+                        <td><img id="img-banner" src="Images/logo2.png"></td>
+                        <td><h1 id="banner-title">Research Collaborative Plateform</h1></td>
+                        <td>
+                            <button onclick="test()" class="btn btn-lt btn-default connexion">
+                                Se connecter
+                            </button>
+                        </td>
+                    </tr>
+                </table>
             </div>
 
             <nav class="navbar navbar-default">
