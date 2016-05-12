@@ -1,3 +1,7 @@
+<?php 
+    session_start();
+ ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,10 +45,7 @@
 
                     }
 
-                }while(myPass == null && myID != null);
-
-                document.write("Vous avez saisi: " + myID + " et " + myPass );
-                
+                }while(myPass == null && myID != null);                
             }
         </script> 
     </head>
@@ -58,9 +59,19 @@
                         <td><img id="img-banner" src="Images/logo2.png"></td>
                         <td><h1 id="banner-title">Research Collaborative Plateform</h1></td>
                         <td>
-                            <button onclick="test()" class="btn btn-lt btn-default connexion">
-                                Se connecter
-                            </button>
+                            <?php 
+                                if(!isset($_SESSION["connecte"]))
+                                {
+                                    echo "<button onclick=\"test()\" 
+                                            class=\"btn btn-lt btn-default connexion\">
+                                                Se connecter
+                                            </button>";
+                                }
+                                else
+                                {
+                                    echo "<p>Bonjour " . $_SESSION["login"] . "</p>";
+                                }
+                             ?>
                         </td>
                     </tr>
                 </table>
