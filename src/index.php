@@ -14,7 +14,6 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 
@@ -24,52 +23,40 @@
         <!-- Personnal css -->
         <link rel="stylesheet" href="Styles/bootstrap_mod.css">
 
-<!--         <script type="text/javascript"> 
-            function test()
-            {
-                do
-                {
-                    do
-                    {
-                        var myID = prompt("ID:","");
-                    } 
-                    while(myID == "");
+        <!-- CSS pour le JQuery button "se connecter" -->
+         <link rel="stylesheet" href="Styles/css_connecter_button.css">
 
-                    if (myID != "" && myID != null)
-                    {
-                        do
-                        {
-                            var myPass = prompt("MDP:","");
-                        }while(myPass == "");
-
-                    }
-
-                }while(myPass == null && myID != null);                
-            }
-        </script>  -->
+        <!-- What is this ? -->
+        <link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
+        
     </head>
 
     <body role="document">
 
         <div class="container-fluid">
             <div class="banner-container">
-                <table>
+                <table id="banner-content">
                     <tr>
                         <td><img id="img-banner" src="Images/logo2.png"></td>
                         <td><h1 id="banner-title">Research Collaborative Plateform</h1></td>
                         <td>
-                            <?php 
-                                if(!isset($_SESSION["connecte"]))
-                                {
-                                    echo "<a href=\"connexion.php\" class=\"btn btn-lt btn-default connexion\">
-                                                Se connecter
-                                          </a>";
-                                }
-                                else
-                                {
-                                    echo "<p>Bonjour " . $_SESSION["login"] . "</p>";
-                                }
-                             ?>
+                            <div class="connexion">
+                                <?php
+                                    if( isset($_POST["username"] ))
+                                    {
+                                        echo "<p>  Bonjour " . $_POST["username"] . "</p>";
+                                        echo "<button>Déconnexion</button>";    
+                                    }
+                                    else
+                                    {
+                                        echo "<div class=\"post\">
+                                                <div class=\"btn-sign\">
+                                                   <a href=\"#login-box\" class=\"login-window\">Se Connecter</a>
+                                                </div>
+                                             </div>";
+                                    }
+                                ?>
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -110,32 +97,33 @@
                 </div>                    
             </nav>
 
-            <div class="main-container">
+            <div class="main-container container-fluid">
                 <form action="recherche.php">
                     <input type="text" name="search" placeholder="Recherche">
                     <input type="submit" name="boutonEnvoi" value="OK">
                 </form>
 
-                <div class="personnal-sidebar">
-                    <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
-                     align="left">
-                        <caption> <h2>News</h2> </caption>
-                        <tr>
-                            <td class="news-title">
-                                <div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
-                            </td>
-                        </tr>
-                    </table>            
-                </div>
 
                 <div class="content-container">
+                    <div class="personnal-sidebar">
+                        <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
+                         align="left">
+                            <caption> <h2>News</h2> </caption>
+                            <tr>
+                                <td class="news-title">
+                                    <div>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="news-title">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
+                                </td>
+                            </tr>
+                        </table>            
+                    </div>
+
                     <h1>TOTO</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe expedita quisquam sequi minima nam adipisci dicta nulla accusantium dolorem pariatur earum cupiditate aliquam voluptatem libero, voluptate iusto non corporis dolores.</p>
                     <h2>Other lorem</h2>
@@ -157,10 +145,39 @@
         
         </div>
 
+        <!-- Formulaire Caché pour se connecter-->
+        <div id="login-box" class="login-popup">
+        <a href="#" class="close"><img src="Images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+          <form method="post" class="signin" action="#">
+                <fieldset class="textbox">
+                <label class="username">
+                <span>Identifiant</span>
+                <input id="username" name="username" value="" type="text" autocomplete="on" placeholder="identifiant">
+                </label>
+                
+                <label class="password">
+                <span>Mot de Passe</span>
+                <input id="password" name="password" value="" type="password" placeholder="mot de passe">
+                </label>
+                
+                <button class="submit button" type="submit">Se Connecter</button>
+                </fieldset>
+          </form>
+        </div>
+
+        <!-- INCLUSIONS DES SCRIPTS -->
+        <!-- Include de JQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- JQuery Menu Connect -->
+        <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
+
+        <!-- Personnal script -->     
+        <script type="text/javascript" src="Scripts/scripts.js"></script>
 
         <!-- Latest compiled and minified JavaScript -->
         <script src="bootstrap/js/bootstrap.min.js"></script>
 
     </body>
+
+
 </html>
