@@ -14,39 +14,49 @@
         <!-- Personnal css -->
         <link rel="stylesheet" href="Styles/bootstrap_mod.css">
 
-        <script type="text/javascript">
-            function connexion()
-            {
-                alert("Connard!");
-            }
-        </script>
+        <!-- CSS pour le JQuery button "se connecter" -->
+         <link rel="stylesheet" href="Styles/css_connecter_button.css">
 
-        <script type="text/javascript"> 
-            function test()
-            {
-                do
-                {
-                    do
-                    {
-                        var myID = prompt("ID:","");
-                    } 
-                    while(myID == "");
+        <!-- JQuery Menu Connect -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('a.login-window').click(function() {
+					
+					// Getting the variable's value from a link 
+					var loginBox = $(this).attr('href');
 
-                    if (myID != "" && myID != null)
-                    {
-                        do
-                        {
-                            var myPass = prompt("MDP:","");
-                        }while(myPass == "");
+					//Fade in the Popup and add close button
+					$(loginBox).fadeIn(300);
+					
+					//Set the center alignment padding + border
+					var popMargTop = ($(loginBox).height() + 24) / 2; 
+					var popMargLeft = ($(loginBox).width() + 24) / 2; 
+					
+					$(loginBox).css({ 
+						'margin-top' : -popMargTop,
+						'margin-left' : -popMargLeft
+					});
+					
+					// Add the mask to body
+					$('body').append('<div id="mask"></div>');
+					$('#mask').fadeIn(300);
+					
+					return false;
+				});
+				
+				// When clicking on the button close or the mask layer the popup closed
+				$('a.close, #mask').click(function() { 
+				  $('#mask , .login-popup').fadeOut(300 , function() {
+					$('#mask').remove();  
+				}); 
+				return false;
+				});
+			});
+		</script>
+		<link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
 
-                    }
-
-                }while(myPass == null && myID != null);
-
-                document.write("Vous avez saisi: " + myID + " et " + myPass );
-                
-            }
-        </script> 
+        
     </head>
 
     <body role="document">
@@ -58,9 +68,11 @@
                         <td><img id="img-banner" src="Images/logo2.png"></td>
                         <td><h1 id="banner-title">Research Collaborative Plateform</h1></td>
                         <td>
-                            <button onclick="test()" class="btn btn-lt btn-default connexion">
-                                Se connecter
-                            </button>
+                            <div class="post">
+        						<div class="btn-sign">
+									<a href="#login-box" class="login-window">Se Connecter</a>
+        						</div>
+							</div>
                         </td>
                     </tr>
                 </table>
@@ -152,6 +164,33 @@
 
         <!-- Latest compiled and minified JavaScript -->
         <script src="bootstrap/js/bootstrap.min.js"></script>
+
+
+        <!-- Formulaire Caché pour se connecter-->
+
+        <div id="login-box" class="login-popup">
+        <a href="#" class="close"><img src="Images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+          <form method="post" class="signin" action="#">
+                <fieldset class="textbox">
+            	<label class="username">
+                <span>Identifiant</span>
+                <input id="username" name="username" value="" type="text" autocomplete="on" placeholder="identifiant">
+                </label>
+                
+                <label class="password">
+                <span>Mot de Passe</span>
+                <input id="password" name="password" value="" type="password" placeholder="mot de passe">
+                </label>
+                
+                <button class="submit button" type="submit">Se Connecter</button>
+                </fieldset>
+          </form>
+		</div>
+
+		<?php
+				if( isset($_POST[username] ))
+					echo "<h1>  Bonjour, tu es le fils de pute : $_POST[username] </h1>";
+		?>
 
     </body>
 </html>
