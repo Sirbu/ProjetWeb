@@ -86,7 +86,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Tâches</a></li>
                                     <li><a href="#">Messages</a></li>
-                                    <li><a href="#">Documents</a></li>
+                                    <li><a href="listeDoc.php">Documents</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#">Gestion</a></li>
                                 </ul>
