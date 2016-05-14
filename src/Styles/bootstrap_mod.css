@@ -10,12 +10,17 @@ body
 
 .banner-container
 {
-	height: 140px;
+	height: auto;
 	width: auto;
 	/*background-image: url("../Images/little3.png");*/
 	background-repeat: repeat repeat-y;
 	background-color: #548DD4;
 	border-radius: 15px;
+}
+
+#banner-content
+{
+	width: 100%;
 }
 
 #img-banner
@@ -26,18 +31,15 @@ body
 
 #banner-title
 {
-	/*padding-top: 5%;*/
 	margin-left: 5%;
 	margin-bottom: 5%;
-	margin-right: 10%;
+	width: 100%;
 }
 
 .connexion
 {
-	/*float: right;*/
-	position: relative;
-	margin: auto;
-	/*margin-right: 5%;*/
+	margin-bottom: 75%;
+	margin-right: 5%;
 }
 
 .container-fluid
@@ -56,9 +58,11 @@ body
 .main-container
 {
 	background-color: white;
-	width: inherit;
+	width: 100%;
+	height: 100%;
 	padding: 15px;
 	border-radius: 7px; 
+	margin: auto;
 }
 
 .content-container
@@ -93,6 +97,5 @@ body
 	margin-top: 5px;
 	padding: 10px;
 }
-
 
 /* Penser a une classe générale content */

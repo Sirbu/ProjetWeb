@@ -26,16 +26,28 @@
 
         <div class="container-fluid">
             <div class="banner-container">
-                <table>
+                <table id="banner-content">
                     <tr>
                         <td><img id="img-banner" src="Images/logo2.png"></td>
                         <td><h1 id="banner-title">Research Collaborative Plateform</h1></td>
                         <td>
-                            <div class="post">
-        						<div class="btn-sign">
-									<a href="#login-box" class="login-window">Se Connecter</a>
-        						</div>
-							</div>
+                            <div class="connexion">
+                                <?php
+                                    if( isset($_POST["username"] ))
+                                    {
+                                        echo "<p>  Bonjour " . $_POST["username"] . "</p>";
+                                        echo "<button>Déconnexion</button>";    
+                                    }
+                                    else
+                                    {
+                                        echo "<div class=\"post\">
+                                                <div class=\"btn-sign\">
+                                                   <a href=\"#login-box\" class=\"login-window\">Se Connecter</a>
+                                                </div>
+                                             </div>";
+                                    }
+                                ?>
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -76,32 +88,33 @@
                 </div>                    
             </nav>
 
-            <div class="main-container">
+            <div class="main-container container-fluid">
                 <form action="recherche.php">
                     <input type="text" name="search" placeholder="Recherche">
                     <input type="submit" name="boutonEnvoi" value="OK">
                 </form>
 
-                <div class="personnal-sidebar">
-                    <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
-                     align="left">
-                        <caption> <h2>News</h2> </caption>
-                        <tr>
-                            <td class="news-title">
-                                <div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
-                            </td>
-                        </tr>
-                    </table>            
-                </div>
 
                 <div class="content-container">
+                    <div class="personnal-sidebar">
+                        <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
+                         align="left">
+                            <caption> <h2>News</h2> </caption>
+                            <tr>
+                                <td class="news-title">
+                                    <div>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="news-title">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
+                                </td>
+                            </tr>
+                        </table>            
+                    </div>
+
                     <h1>TOTO</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe expedita quisquam sequi minima nam adipisci dicta nulla accusantium dolorem pariatur earum cupiditate aliquam voluptatem libero, voluptate iusto non corporis dolores.</p>
                     <h2>Other lorem</h2>
@@ -128,7 +141,7 @@
         <a href="#" class="close"><img src="Images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
           <form method="post" class="signin" action="#">
                 <fieldset class="textbox">
-            	<label class="username">
+                <label class="username">
                 <span>Identifiant</span>
                 <input id="username" name="username" value="" type="text" autocomplete="on" placeholder="identifiant">
                 </label>
@@ -141,19 +154,13 @@
                 <button class="submit button" type="submit">Se Connecter</button>
                 </fieldset>
           </form>
-		</div>
-
-		<?php
-				if( isset($_POST["username"] ))
-					echo "<h1>  Bonjour " . $_POST["username"] . "</h1>";
-		?>
-
+        </div>
 
         <!-- INCLUSIONS DES SCRIPTS -->
         <!-- Include de JQuery -->
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <!-- JQuery Menu Connect -->
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
 
         <!-- Personnal script -->     
         <script type="text/javascript" src="Scripts/scripts.js"></script>
