@@ -17,45 +17,8 @@
         <!-- CSS pour le JQuery button "se connecter" -->
          <link rel="stylesheet" href="Styles/css_connecter_button.css">
 
-        <!-- JQuery Menu Connect -->
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$('a.login-window').click(function() {
-					
-					// Getting the variable's value from a link 
-					var loginBox = $(this).attr('href');
-
-					//Fade in the Popup and add close button
-					$(loginBox).fadeIn(300);
-					
-					//Set the center alignment padding + border
-					var popMargTop = ($(loginBox).height() + 24) / 2; 
-					var popMargLeft = ($(loginBox).width() + 24) / 2; 
-					
-					$(loginBox).css({ 
-						'margin-top' : -popMargTop,
-						'margin-left' : -popMargLeft
-					});
-					
-					// Add the mask to body
-					$('body').append('<div id="mask"></div>');
-					$('#mask').fadeIn(300);
-					
-					return false;
-				});
-				
-				// When clicking on the button close or the mask layer the popup closed
-				$('a.close, #mask').click(function() { 
-				  $('#mask , .login-popup').fadeOut(300 , function() {
-					$('#mask').remove();  
-				}); 
-				return false;
-				});
-			});
-		</script>
-		<link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
-
+        <!-- What is this ? -->
+        <link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
         
     </head>
 
@@ -160,14 +123,7 @@
         
         </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-
-
         <!-- Formulaire Caché pour se connecter-->
-
         <div id="login-box" class="login-popup">
         <a href="#" class="close"><img src="Images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
           <form method="post" class="signin" action="#">
@@ -188,9 +144,24 @@
 		</div>
 
 		<?php
-				if( isset($_POST[username] ))
-					echo "<h1>  Bonjour, tu es le fils de pute : $_POST[username] </h1>";
+				if( isset($_POST["username"] ))
+					echo "<h1>  Bonjour " . $_POST["username"] . "</h1>";
 		?>
 
+
+        <!-- INCLUSIONS DES SCRIPTS -->
+        <!-- Include de JQuery -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+        <!-- JQuery Menu Connect -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+        <!-- Personnal script -->     
+        <script type="text/javascript" src="Scripts/scripts.js"></script>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+
     </body>
+
+
 </html>
