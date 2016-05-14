@@ -18,14 +18,7 @@
         <!-- Personnal css -->
         <link rel="stylesheet" href="Styles/bootstrap_mod.css">
 
-        <script type="text/javascript">
-            function connexion()
-            {
-                alert("Connard!");
-            }
-        </script>
-
-        <script type="text/javascript"> 
+<!--         <script type="text/javascript"> 
             function test()
             {
                 do
@@ -47,7 +40,7 @@
 
                 }while(myPass == null && myID != null);                
             }
-        </script> 
+        </script>  -->
     </head>
 
     <body role="document">
@@ -62,10 +55,9 @@
                             <?php 
                                 if(!isset($_SESSION["connecte"]))
                                 {
-                                    echo "<button onclick=\"test()\" 
-                                            class=\"btn btn-lt btn-default connexion\">
+                                    echo "<a href=\"connexion.php\" class=\"btn btn-lt btn-default connexion\">
                                                 Se connecter
-                                            </button>";
+                                          </a>";
                                 }
                                 else
                                 {
