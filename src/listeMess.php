@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" lang="fr" />
 
-        <title>Liste des documents </title>
+        <title>Liste des messages </title>
 
         <link rel="icon" type="image/png" href="favicon.ico" />
 
@@ -92,8 +92,8 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Privé <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Tâches</a></li>
-                                    <li><a href="http://localhost/ProjetWeb/src/listeMess.php">Messages</a></li>
-                                    <li class="active"><a href="#">Documents</a></li>
+                                    <li  class="active"><a href="#">Messages</a></li>
+                                    <li><a href="/listeDoc.php">Documents</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#">Gestion</a></li>
                                 </ul>
@@ -130,37 +130,38 @@
                 </div>
             
                  <table height="100%" width="70%" border ="1" cellspacing="1" cellpadding="1">
-                 <caption> <h2>Documents</h2> </caption>
+                 <caption> <h2>Messages</h2> </caption>
                         <tr>
                             <td class="news-title">
                                 <div>
                                     <?php 
-                                    $d = 1;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
+                                    $m = 1;
+                                        echo "<p> Message $m </p>";
+                                        echo "<p> Expéditeur : Toto </p>";
+                                        echo "<p> Objet : Information sur les quiches lorraines </p>";
                                      ?>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="news-title">
-                                    <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
+                                   <?php 
+                                    $m++;
+                                        echo "<p> Message $m </p>";
+                                        echo "<p> Expéditeur : Toto </p>";
+                                        echo "<p> Objet : Information sur les quiches lorraines </p>";
                                      ?>
                             </td> 
                         </tr>
                         <tr>
                             <td class="news-title">
                                     <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>                            </td> 
+                                    $m++;
+                                        echo "<p> Message $m </p>";
+                                        echo "<p> Expéditeur : Toto </p>";
+                                        echo "<p> Objet : Information sur les quiches lorraines </p>";
+                                     ?>
+                          </td> 
                         </tr>
 
 
