@@ -1,5 +1,7 @@
 <?php 
-    session_start();
+    include 'fonctions.php';
+
+    $dbconnect = connectDB();
  ?>
 
 <!DOCTYPE html>
@@ -42,7 +44,7 @@
                         <td>
                             <div class="connexion">
                                 <?php
-                                    if( isset($_POST["username"] ))
+                                    if( isset($_SESSION["username"] ))
                                     {
                                         echo "<p>  Bonjour " . $_POST["username"] . "</p>";
                                         echo "<button>Déconnexion</button>";    
@@ -78,11 +80,50 @@
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="index.php">Accueil</a></li>
                             <li><a href="publications.php">Publications</a></li>
-                            <li><a href="laboratoires.php">Laboratoires</a></li>
+                            
+                            <li class="dropdown">
+                                <a href="laboratoires.php" class="dropdown-toggle" data-toggle="dropdown" 
+                                    role="button" aria-haspopup="true" aria-expanded="false">
+                                        Laboratoires 
+                                        <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <?php 
+                                        $requete = "SELECT nomlabo from laboratoire;";
+                                        
+                                        $labos = pg_query($dbconnect, $requete);
+                                        while($nomLabo = pg_fetch_row($labos))
+                                        {
+                                            echo "<li>
+                                                    <a href=\"#\">" . $nomLabo[0] . "</a>
+                                                    <ul class=\"dropdown-menu sub-menu pull-right\">";
+                                            
+                                            $requete =  "SELECT sigle from equipe as e, laboratoire as l
+                                                        WHERE  l.nomlabo = '" . $nomLabo[0] . "'
+                                                        AND e.idlabo = l.idlabo;";
+                                            $equipes = pg_query($dbconnect, $requete);
+                                            while($nom_equipe = pg_fetch_row($equipes))
+                                            {
+                                                echo "<li><a href=\"#\">" . $nom_equipe[0] . "</a></li>";
+                                            }
+
+                                            echo "  </ul>    
+                                                  </li>";
+                                        }
+
+                                     ?>
+                                </ul>
+                            </li>
+                            
                             <li><a href="recherche.php">Recherche</a></li>
+                            
                             <li class="dropdown">
                                 <!-- menu déroulant -->
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Privé <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" 
+                                    role="button" aria-haspopup="true" aria-expanded="false">
+                                        Privé
+                                        <span class="caret"></span>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Tâches</a></li>
                                     <li><a href="#">Messages</a></li>
@@ -148,7 +189,7 @@
         <!-- Formulaire Caché pour se connecter-->
         <div id="login-box" class="login-popup">
         <a href="#" class="close"><img src="Images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
-          <form method="post" class="signin" action="#">
+          <form method="post" class="signin" action="connexion.php">
                 <fieldset class="textbox">
                 <label class="username">
                 <span>Identifiant</span>
