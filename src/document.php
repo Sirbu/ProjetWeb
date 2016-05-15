@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" lang="fr" />
 
-        <title>Liste des documents </title>
+        <title>Document </title>
 
         <link rel="icon" type="image/png" href="favicon.ico" />
 
@@ -93,7 +93,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Tâches</a></li>
                                     <li><a href="http://localhost/ProjetWeb/src/listeMess.php">Messages</a></li>
-                                    <li class="active"><a href="#">Documents</a></li>
+                                    <li class="active"><a href="http://localhost/ProjetWeb/src/listeMess.php">Documents</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#">Gestion</a></li>
                                 </ul>
@@ -143,25 +143,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="news-title">
-                                    <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>
-                            </td> 
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                    <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>                            </td> 
-                        </tr>
+                        
 
 
                 </table>
