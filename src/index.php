@@ -1,6 +1,8 @@
 <?php 
     include 'fonctions.php';
 
+    session_start();
+
     $dbconnect = connectDB();
  ?>
 
@@ -44,10 +46,14 @@
                         <td>
                             <div class="connexion">
                                 <?php
-                                    if( isset($_SESSION["username"] ))
+                                    if(isset($_SESSION["logged"]))
                                     {
-                                        echo "<p>  Bonjour " . $_POST["username"] . "</p>";
-                                        echo "<button>Déconnexion</button>";    
+                                        echo "<p>  Bonjour " . $_SESSION["username"] . "</p>";
+                                        echo "<div class=\"post\">
+                                                <div class=\"btn-sign\">
+                                                   <a href=\"connexion.php?action=deconnexion\" class=\"login-window\">Déconnexion</a>
+                                                </div>
+                                             </div>";    
                                     }
                                     else
                                     {
@@ -95,20 +101,8 @@
                                         while($nomLabo = pg_fetch_row($labos))
                                         {
                                             echo "<li>
-                                                    <a href=\"#\">" . $nomLabo[0] . "</a>
-                                                    <ul class=\"dropdown-menu sub-menu pull-right\">";
-                                            
-                                            $requete =  "SELECT sigle from equipe as e, laboratoire as l
-                                                        WHERE  l.nomlabo = '" . $nomLabo[0] . "'
-                                                        AND e.idlabo = l.idlabo;";
-                                            $equipes = pg_query($dbconnect, $requete);
-                                            while($nom_equipe = pg_fetch_row($equipes))
-                                            {
-                                                echo "<li><a href=\"#\">" . $nom_equipe[0] . "</a></li>";
-                                            }
-
-                                            echo "  </ul>    
-                                                  </li>";
+                                                    <a href=\"#\">" . $nomLabo[0] . "</a>";
+                                            echo "</li>";
                                         }
 
                                      ?>
