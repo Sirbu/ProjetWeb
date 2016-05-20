@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<body>
-		<p>Erreur</p>
+		<p>Erreur <?php echo $_GET['error']; ?></p>
 		<a href="index.php">Accueil</a>
 	</body>
 </html>

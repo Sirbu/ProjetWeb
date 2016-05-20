@@ -1,14 +1,12 @@
 <?php 
     require_once('fonctions.php');
 
-    if($_GET['action'] == "deconnexion")
+    if($_GET["action"] == "deconnexion")
     {
-        session_destroy();
-        unset($_SESSION);
-        setcookie("PHPSESSID", "", time() - 3600);
+        setcookie("session", "", time() - 10000);
         header('Location: index.php');
+        die();
     }
-
 
     $username = (isset($_POST['username'])) ? $_POST['username'] : '' ;
     $password = (isset($_POST['password'])) ? $_POST['password'] : '' ;
@@ -16,12 +14,14 @@
     if($username == '')
     {
         // si l'username est null il y a un problème
-        header('Location: erreur.php?error=1');
+        header('Location: erreur.php?error=auth');
+        die();
     }
     else if($password == '')
     {
         // si le password est null il y a un problème
-        header('Location: erreur.php?error=2');
+        header('Location: erreur.php?error=auth');
+        die();
     }
 
     // connexion à la base de donnée
@@ -38,7 +38,8 @@
     if(!$resultat)
     {
         // il y a une erreur ! (Problème bdd)
-        header('Location: erreur.php?error=3');
+        header('Location: erreur.php?error=db_error');
+        die();
     }
 
 
@@ -48,20 +49,21 @@
         // si il n'y a aucune ligne alors
         // l'utilisateur n'existe pas !
         // réaction à changer peut être...
-        header('Location: erreur.php?error=4');
+        header('Location: erreur.php?error=auth');
+        die();
     }
     else if($db_pass[0] != $password)
     {
         // utilisateur correct mais mauvais mot de passe
-        header('Location: erreur.php?error=5');
+        header('Location: erreur.php?error=auth');
+        die();
     }
     else
     {   // username et password OK
-        session_start();
-
-        $_SESSION['username'] = $username;
-        $_SESSION['logged'] = true;
+        // le cookie expire en 15 minutes (valeur arbitraire à revoir plus tard probablement)
+        setcookie("session", "$username", time() + 600);
 
         header('Location: index.php');
+        die();
     }
 ?>

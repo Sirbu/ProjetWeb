@@ -4,7 +4,7 @@
 		$dbconnect = pg_connect("host=localhost port=5432 dbname=RCP user=postgres password=post");
 	    if(!$dbconnect)
 	    {
-	        header('Location: error.php?error=404');
+	        header('Location: erreur.php?error=bdd_connect');
 	    }
 	    else
 	    {
