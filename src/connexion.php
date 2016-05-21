@@ -61,7 +61,7 @@
     else
     {   // username et password OK
         // le cookie expire en 15 minutes (valeur arbitraire à revoir plus tard probablement)
-        setcookie("session", "$username", time() + 600);
+        setcookie("session", "$username", -1);
 
         header('Location: index.php');
         die();

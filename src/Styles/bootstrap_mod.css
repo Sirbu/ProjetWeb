@@ -107,3 +107,14 @@ body
 }
 
 /* Penser a une classe générale content */
+tr, td
+{
+	padding: 5px;
+	vertical-align: middle;
+	text-align: left;
+}
+
+.form_depot
+{
+	margin-top: 5px;
+}
