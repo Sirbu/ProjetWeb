@@ -164,12 +164,29 @@
                         </table>            
                     </div>
 
-                    <h1>TOTO</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe expedita quisquam sequi minima nam adipisci dicta nulla accusantium dolorem pariatur earum cupiditate aliquam voluptatem libero, voluptate iusto non corporis dolores.</p>
-                    <h2>Other lorem</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum esse dignissimos voluptates magnam ullam accusamus perferendis odio, ipsa et error reiciendis numquam delectus, voluptatem nesciunt quae quam minima reprehenderit sapiente.</p>
-                    <h2>Last Lorem</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero amet similique veritatis tempora, incidunt magni consequuntur repudiandae dolorem ipsum ad quidem saepe nulla, vitae consequatur dolores, dicta aliquam pariatur temporibus.</p>
+                    <fieldset><legend>
+                        <?php
+                            $query = "SELECT titre, datePubli FROM Publication WHERE idPubli='".$_GET["idpublication"]."'";
+                            $result=pg_query($query);
+                            $pub = pg_fetch_row($result);
+                            echo "$pub[0]  ||  $pub[1]";
+                            if( $pub[0] == null){
+                                echo "<script> window.location.replace('erreur.php?error=Publication+non+trouvé') </script>";
+                            }
+                            
+                        ?>
+                        </legend>
+                        <?php
+                            $query="SELECT nomch,prenomch FROM Publie, Chercheur, Publication WHERE Publie.idch = Chercheur.idch AND Publie.idpubli ='".$_GET["idpublication"]."'";
+                            $result=pg_query($query);
+                            $auteur = pg_fetch_row($result);
+                            echo "<p>Auteur/s : <a href="."chercheur.php?nomchercheur=$auteur[0]".">$auteur[1] $auteur[0]</a></p>";
+
+                            echo "[CONTENU PUBLICATION À COMPLETER]";
+
+                        ?>
+                    </fieldset>
+
                 </div>
             </div>
 

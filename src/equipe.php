@@ -164,12 +164,62 @@
                         </table>            
                     </div>
 
-                    <h1>TOTO</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe expedita quisquam sequi minima nam adipisci dicta nulla accusantium dolorem pariatur earum cupiditate aliquam voluptatem libero, voluptate iusto non corporis dolores.</p>
-                    <h2>Other lorem</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum esse dignissimos voluptates magnam ullam accusamus perferendis odio, ipsa et error reiciendis numquam delectus, voluptatem nesciunt quae quam minima reprehenderit sapiente.</p>
-                    <h2>Last Lorem</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero amet similique veritatis tempora, incidunt magni consequuntur repudiandae dolorem ipsum ad quidem saepe nulla, vitae consequatur dolores, dicta aliquam pariatur temporibus.</p>
+                    <!--Contenu principal de la page EQUIPE -->
+                    <fieldset><legend>
+                    	<?php
+                    		$query = "SELECT Equipe.idequipe FROM Equipe WHERE Equipe.sigle='".$_GET["nomequipe"]."'";
+                    		$result=pg_query($query);
+                            $eq = pg_fetch_row($result);
+                            echo $_GET["nomequipe"];
+                            if( $eq[0] == null){
+                            	echo "<script> window.location.replace('erreur.php?error=Equipe+non+trouvé') </script>";
+                            }
+                    		
+                    	?>
+                    	</legend>
+                        <?php
+                        	$query="SELECT nomeq FROM Equipe WHERE Equipe.sigle='".$_GET["nomequipe"]."'";
+                            $result=pg_query($query);
+                            $nomeq = pg_fetch_row($result);
+                            echo "<p>$nomeq[0]</p>";
+
+                            $query="SELECT nomlabo FROM Equipe,Laboratoire WHERE Equipe.idlabo=Laboratoire.idlabo AND Equipe.sigle='".$_GET["nomequipe"]."'";
+                            $result=pg_query($query);
+                            $nomlabo = pg_fetch_row($result);
+                            echo "<p>Laboratoire : <a href="."laboratoire.php?nomlaboratoire=$nomlabo[0]".">$nomlabo[0]</a></p>";
+
+                            $query="SELECT specialite FROM Equipe WHERE Equipe.sigle='".$_GET["nomequipe"]."'";
+                            $result=pg_query($query);
+                            $specialite = pg_fetch_row($result);
+                            echo "<p>Specialité : $specialite[0]</p>";
+
+                            $query="SELECT description FROM Equipe WHERE Equipe.sigle='".$_GET["nomequipe"]."'";
+                            $result=pg_query($query);
+                            $desc = pg_fetch_row($result);
+                            echo "<p>Description : </br>$desc[0]</p>";
+
+                        ?>
+                    </fieldset>
+
+                    <fieldset><legend>Membres:</legend>
+                        <?php
+                            $query="SELECT nomch, prenomch FROM Equipe, Chercheur WHERE Equipe.sigle ='".$_GET["nomequipe"]."'AND Equipe.idequipe = Chercheur.idEquipe";
+                            $result=pg_query($query);
+                            $membres = pg_fetch_all($result);
+                            
+                            $a = count($membres);
+                            for ($i = 0 ; $i < $a ; $i += 1 ){
+                            	$nom = $membres[$i][nomch];
+                            	$prenom = $membres[$i][prenomch];
+                            	$query2 = "SELECT statut FROM participe,chercheur WHERE participe.idCh=chercheur.idch AND chercheur.nomch='$nom'";
+                            	$result2=pg_query($query2);
+                            	$stat = pg_fetch_row($result2);
+                            	$aux = $i + 1;
+                            	echo "$stat[0] : <a href=\"chercheur.php?nomchercheur=$nom\"> $prenom $nom </a></br>";
+                            }
+                            
+                        ?>
+                    </fieldset>
                 </div>
             </div>
 
