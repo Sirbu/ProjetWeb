@@ -2,7 +2,7 @@
     // la variable GET type permet de savoir si
     // c'est un dépôt de document ou de publication 
     // vaut soit "document" soit "publication"
-    if(!isset($_GET["type"]))
+    if(!isset($_GET["type"]) || ($_GET["type"] != "Publication" && $_GET["type"] != "Document"))
     {
         header("Location: erreur.php?error=depot");
         die();
@@ -180,7 +180,7 @@
                         </table>            
                     </div>
                     <?php 
-                        echo "<form method=post action=\"depot.php\">";
+                        echo "<form method=post action=\"depot.php\" enctype=\"multipart/form-data\">";
                         echo "<h3>Dépôt de " . $_GET["type"] . "</h3>";
                      ?>
                         <table class="form_depot">
@@ -189,17 +189,17 @@
                                  <td><input type="text" name="titre" placeholder="Entrez le titre"></td>
                              </tr>
                              <?php 
-                                if($_GET["type"] == "document")
+                                if($_GET["type"] == "Document")
                                 {
                                     echo "
                                          <tr>
                                              <td><p>Type : </p></td>
                                              <td>
-                                                <select>
-                                                    <option value=\"reunion\">Compte rendu réunion</option>
-                                                    <option value=\"experience\">Rapport d'expérience</option>
-                                                    <option value=\"brouillon\">Brouillon</option>
-                                                    <option value=\"livrable\">Livrable</option>
+                                                <select name=\"type_doc\">
+                                                    <option value=\"Compte rendu réunion\">Compte rendu réunion</option>
+                                                    <option value=\"Rapport d'expérience\">Rapport d'expérience</option>
+                                                    <option value=\"Brouillon\">Brouillon</option>
+                                                    <option value=\"Livrable\">Livrable</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -218,7 +218,7 @@
 
                         </table>
                     <?php
-                        echo "<input type=\"hidden\" name=\"type\" value=\"" . $_GET["type"] . ">";
+                        echo '<input type="hidden" name="type" value="' . $_GET["type"] . '">';
                         echo "</form>";
                      ?>
                 </div>
