@@ -32,6 +32,19 @@
 
         <!-- What is this ? -->
         <link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
+
+        <script> 
+            /*Fcontion pour le submit de la recherche*/
+            function mysubmit(){
+                var testing = document.getElementById('texteR').value;
+                if ( testing == ""){
+                    document.getElementById('texteR').placeholder = "Saisir Objet";
+                    document.getElementById('objetR').style.color = "red";
+                }
+                else
+                    document.getElementById('research').submit();
+            }
+        </script>
         
     </head>
 
@@ -145,74 +158,49 @@
 
 
                 <div class="content-container">
-                    <div class="personnal-sidebar">
-                        <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
-                         align="left">
-                            <caption> <h2>News</h2> </caption>
-                            <tr>
-                                <td class="news-title">
-                                    <div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="news-title">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
-                                </td>
-                            </tr>
-                        </table>            
-                    </div>
+                    
+                    <!-- Contenu de la page recherche.php -->
+                    
+                    <form id="research" method="POST" action="resr.php">
+                        <div id="objetR"> Objet de la recheche: </div>
+                        <input id="texteR" type="text" name="texterecherche"/> <br>
+                        <input type="radio" name="typerecherche" value="nomprojet" checked> Nom de Projet <br>
+                        <input type="radio" name="typerecherche" value="titrepublication"/> Titre de Publication <br>
+                        <input type="radio" name="typerecherche" value="chercheur"/> Chercheur <br><br>
+                        
+                        
+                        <input type="button" value="Rechercher" onclick="mysubmit()" /><br><br>
 
-                    <!--Contenu principal de la page Laboratoire -->
-                    <fieldset><legend>
-                    	<?php
-                    		$query = "SELECT idLabo FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
-                    		$result=pg_query($query);
-                            $lab = pg_fetch_row($result);
-                            echo $_GET["nomlaboratoire"];
-                            if( $lab[0] == null){
-                            	echo "<script> window.location.replace('erreur.php?error=Laboratoire+non+trouvé') </script>";
-                            }
-                    		
-                    	?>
-                    	</legend>
-                        <?php
-                        	$query="SELECT domaine FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
-                            $result=pg_query($query);
-                            $dom = pg_fetch_row($result);
-                            echo "<p>Domaine : $dom[0]</p>";
-
-                            $query="SELECT descriptionlabo FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
-                            $result=pg_query($query);
-                            $desc = pg_fetch_row($result);
-                            echo "<p>Description : $desc[0]</p>";
-
-                            $query="SELECT adresselabo FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
-                            $result=pg_query($query);
-                            $addr = pg_fetch_row($result);
-                            echo "<p>Adresse : $addr[0]</p>";
-
-                        ?>
-                    </fieldset>
-
-                    <fieldset><legend>Équipes Membres:</legend>
-                        <?php
-                            $query="SELECT sigle FROM Equipe, Laboratoire WHERE Laboratoire.nomlabo ='".$_GET["nomlaboratoire"]."'AND Equipe.idlabo = Laboratoire.idlabo";
-                            $result=pg_query($query);
-                            $membres = pg_fetch_all($result);
+                        <input type="checkbox" name="typerechercheplus1" value="Laboratoire"> Laboratoire
+                            <?php
+                    
+                            function listesR($idR,$nomR){
+                                $query = "SELECT $idR FROM $nomR";
+                                $result = pg_query($query);
+                                $res = pg_fetch_all($result);
                             
-                            $a = count($membres);
-                            for ($i = 0 ; $i < $a ; $i += 1 ){
-                            	$eq = $membres[$i][sigle];
-                                $query2="SELECT specialite FROM Equipe WHERE Equipe.sigle='".$eq."'";
-                                $result2=pg_query($query2);
-                                $specialite = pg_fetch_row($result2);
-                            	echo "<a href='equipe.php?nomequipe=$eq'>$eq</a> ($specialite[0])</br>";
+                                $a = count($res);
+                                echo "<select name=\"selection".$idR."\">";
+                                for($i = 0 ; $i < $a ; $i++){
+                                    $b = $res[$i][$idR];
+                                    echo "<option value='$b'>$b</option>";
+                                }
+                                echo "</select>";
                             }
+
+                            listesR("nomlabo","Laboratoire");
                             
-                        ?>
-                    </fieldset>
+                            ?>
+
+                        </input> <br>
+                        <input type="checkbox" name="typerechercheplus2" value="Equipe"> Équipe <?php  listesR("nomeq","Equipe"); ?> </input> <br>
+                        <input type="checkbox" name="typerechercheplus3" value="Domaine"> Domaine <?php  listesR("domaine","Laboratoire"); ?> </input> <br>
+                        <input type="checkbox" name="typerechercheplus4" value="Specialite"> Specialité <?php  listesR("specialite","Equipe"); ?> </input> <br>
+                       
+                        
+
+                    </form>
+
                 </div>
             </div>
 
