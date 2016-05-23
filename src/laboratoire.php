@@ -101,7 +101,7 @@
                                         while($nomLabo = pg_fetch_row($labos))
                                         {
                                             echo "<li>
-                                                    <a href=\"laboratoire.php?nomlaboratoire=$nomLabo[0]\">" . $nomLabo[0] . "</a>";
+                                                    <a href=\"#\">" . $nomLabo[0] . "</a>";
                                             echo "</li>";
                                         }
 
@@ -164,42 +164,55 @@
                         </table>            
                     </div>
 
-                      <table height="100%" width="70%" border ="1" cellspacing="1" cellpadding="1">
-                 <caption> <h2>Documents</h2> </caption>
-                        <tr>
-                            <td class="news-title">
-                                <div>
-                                    <?php 
-                                    $d = 1;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                    <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>
-                            </td> 
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                    <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>                            </td> 
-                        </tr>
+                    <!--Contenu principal de la page Laboratoire -->
+                    <fieldset><legend>
+                    	<?php
+                    		$query = "SELECT idLabo FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
+                    		$result=pg_query($query);
+                            $lab = pg_fetch_row($result);
+                            echo $_GET["nomlaboratoire"];
+                            if( $lab[0] == null){
+                            	echo "<script> window.location.replace('erreur.php?error=Laboratoire+non+trouvé') </script>";
+                            }
+                    		
+                    	?>
+                    	</legend>
+                        <?php
+                        	$query="SELECT domaine FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
+                            $result=pg_query($query);
+                            $dom = pg_fetch_row($result);
+                            echo "<p>Domaine : $dom[0]</p>";
 
+                            $query="SELECT descriptionlabo FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
+                            $result=pg_query($query);
+                            $desc = pg_fetch_row($result);
+                            echo "<p>Description : $desc[0]</p>";
 
-                </table>
+                            $query="SELECT adresselabo FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
+                            $result=pg_query($query);
+                            $addr = pg_fetch_row($result);
+                            echo "<p>Adresse : $addr[0]</p>";
+
+                        ?>
+                    </fieldset>
+
+                    <fieldset><legend>Équipes Membres:</legend>
+                        <?php
+                            $query="SELECT sigle FROM Equipe, Laboratoire WHERE Laboratoire.nomlabo ='".$_GET["nomlaboratoire"]."'AND Equipe.idlabo = Laboratoire.idlabo";
+                            $result=pg_query($query);
+                            $membres = pg_fetch_all($result);
+                            
+                            $a = count($membres);
+                            for ($i = 0 ; $i < $a ; $i += 1 ){
+                            	$eq = $membres[$i][sigle];
+                                $query2="SELECT specialite FROM Equipe WHERE Equipe.sigle='".$eq."'";
+                                $result2=pg_query($query2);
+                                $specialite = pg_fetch_row($result2);
+                            	echo "<a href='equipe.php?nomequipe=$eq'>$eq</a> ($specialite[0])</br>";
+                            }
+                            
+                        ?>
+                    </fieldset>
                 </div>
             </div>
 

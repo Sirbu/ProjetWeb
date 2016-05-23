@@ -1,5 +1,9 @@
 <?php 
-    session_start();
+    include 'fonctions.php';
+
+    $dbconnect = connectDB();
+
+    isset($_COOKIE["session"]) ? $logged = true : $logged = false;
  ?>
 
 <!DOCTYPE html>
@@ -41,11 +45,15 @@
                         <td><h1 id="banner-title">Research Collaborative Plateform</h1></td>
                         <td>
                             <div class="connexion">
-                                <?php
-                                    if( isset($_POST["username"] ))
+                                <?php // vérification à faire par cookies non par session !
+                                    if($logged)
                                     {
-                                        echo "<p>  Bonjour " . $_POST["username"] . "</p>";
-                                        echo "<button>Déconnexion</button>";    
+                                        echo "<p>  Bonjour " . $_COOKIE["session"] . "</p>";
+                                        echo "<div class=\"post\">
+                                                <div class=\"btn-sign\">
+                                                   <a href=\"connexion.php?action=deconnexion\" class=\"login-window\">Déconnexion</a>
+                                                </div>
+                                             </div>";    
                                     }
                                     else
                                     {
@@ -78,19 +86,51 @@
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="index.php">Accueil</a></li>
                             <li><a href="publications.php">Publications</a></li>
-                            <li><a href="laboratoires.php">Laboratoires</a></li>
-                            <li><a href="recherche.php">Recherche</a></li>
+                            
                             <li class="dropdown">
-                                <!-- menu déroulant -->
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Privé <span class="caret"></span></a>
+                                <a href="laboratoires.php" class="dropdown-toggle" data-toggle="dropdown" 
+                                    role="button" aria-haspopup="true" aria-expanded="false">
+                                        Laboratoires 
+                                        <span class="caret"></span>
+                                </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Tâches</a></li>
-                                    <li><a href="#">Messages</a></li>
-                                    <li><a href="listeDoc.php">Documents</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Gestion</a></li>
+                                    <?php 
+                                        $requete = "SELECT nomlabo from laboratoire;";
+                                        
+                                        $labos = pg_query($dbconnect, $requete);
+                                        while($nomLabo = pg_fetch_row($labos))
+                                        {
+                                            echo "<li>
+                                                    <a href=\"laboratoire.php?nomlaboratoire=$nomLabo[0]\">" . $nomLabo[0] . "</a>";
+                                            echo "</li>";
+                                        }
+
+                                     ?>
                                 </ul>
                             </li>
+                            
+                            <li><a href="recherche.php">Recherche</a></li>
+                            <?php 
+                                if($logged)
+                                {
+                                    echo "<li class=\"dropdown\">
+                                            <!-- menu déroulant -->
+                                            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" 
+                                                role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">
+                                                    Privé
+                                                    <span class=\"caret\"></span>
+                                            </a>
+                                            <ul class=\"dropdown-menu\">
+                                                <li><a href=\"#\">Tâches</a></li>
+                                                <li><a href=\"#\">Messages</a></li>
+                                                <li><a href=\"listeDoc.php\">Documents</a></li>
+                                                <li role=\"separator\" class=\"divider\"></li>
+                                                <li><a href=\"#\">Gestion</a></li>
+                                            </ul>
+                                        </li>";                                    
+                                }
+                             ?>    
+
                             <li><a href="about.html">About us</a></li>
                         </ul>
                     </div>
@@ -148,7 +188,7 @@
         <!-- Formulaire Caché pour se connecter-->
         <div id="login-box" class="login-popup">
         <a href="#" class="close"><img src="Images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
-          <form method="post" class="signin" action="#">
+          <form method="post" class="signin" action="connexion.php">
                 <fieldset class="textbox">
                 <label class="username">
                 <span>Identifiant</span>

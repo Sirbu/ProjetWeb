@@ -164,42 +164,29 @@
                         </table>            
                     </div>
 
-                      <table height="100%" width="70%" border ="1" cellspacing="1" cellpadding="1">
-                 <caption> <h2>Documents</h2> </caption>
-                        <tr>
-                            <td class="news-title">
-                                <div>
-                                    <?php 
-                                    $d = 1;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                    <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>
-                            </td> 
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                    <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>                            </td> 
-                        </tr>
+                    <fieldset><legend>
+                        <?php
+                            $query = "SELECT titre, datePubli FROM Publication WHERE idPubli='".$_GET["idpublication"]."'";
+                            $result=pg_query($query);
+                            $pub = pg_fetch_row($result);
+                            echo "$pub[0]  ||  $pub[1]";
+                            if( $pub[0] == null){
+                                echo "<script> window.location.replace('erreur.php?error=Publication+non+trouvé') </script>";
+                            }
+                            
+                        ?>
+                        </legend>
+                        <?php
+                            $query="SELECT nomch,prenomch FROM Publie, Chercheur, Publication WHERE Publie.idch = Chercheur.idch AND Publie.idpubli ='".$_GET["idpublication"]."'";
+                            $result=pg_query($query);
+                            $auteur = pg_fetch_row($result);
+                            echo "<p>Auteur/s : <a href="."chercheur.php?nomchercheur=$auteur[0]".">$auteur[1] $auteur[0]</a></p>";
 
+                            echo "[CONTENU PUBLICATION À COMPLETER]";
 
-                </table>
+                        ?>
+                    </fieldset>
+
                 </div>
             </div>
 

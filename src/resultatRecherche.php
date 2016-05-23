@@ -165,15 +165,17 @@
                     </div>
 
                       <table height="100%" width="70%" border ="1" cellspacing="1" cellpadding="1">
-                 <caption> <h2>Documents</h2> </caption>
+                 <caption> <h2>Résultat recherche </h2> </caption>
                         <tr>
                             <td class="news-title">
                                 <div>
                                     <?php 
-                                    $d = 1;
-                                        echo "<p> Document $d </p>";
+                                    $p = 1;
+                                     $today = date("j/n/Y");
+                                        echo "<p> Publication $p </p>";
+                                        echo "<p> Description : Coucou les amis </p>";
                                         echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
+                                        echo "<p> Date : $today </p>";
                                      ?>
                                 </div>
                             </td>
@@ -181,21 +183,24 @@
                         <tr>
                             <td class="news-title">
                                     <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
+                                        $p++;
+                                        echo "<p> Publication $p </p>";
+                                       echo "<p> Description : Yo les gens !</p>";
+                                       echo "<p> Auteur : Toto </p>";
+                                        echo "<p> Date : $today </p>";
                                      ?>
                             </td> 
                         </tr>
                         <tr>
                             <td class="news-title">
                                     <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
+                                        $p++;
+                                        echo "<p> Publication $p </p>";
+                                        echo "<p> Description : Salut les gars !</p>";
                                         echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>                            </td> 
+                                        echo "<p> Date : $today </p>";
+                                     ?>                            
+                            </td> 
                         </tr>
 
 

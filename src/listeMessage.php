@@ -165,40 +165,39 @@
                     </div>
 
                       <table height="100%" width="70%" border ="1" cellspacing="1" cellpadding="1">
-                 <caption> <h2>Documents</h2> </caption>
+                 <caption> <h2>Messages</h2> </caption>
                         <tr>
                             <td class="news-title">
                                 <div>
                                     <?php 
-                                    $d = 1;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
+                                    $m = 1;
+                                        echo "<p> Message $m </p>";
+                                        echo "<p> Expéditeur : Toto </p>";
+                                        echo "<p> Objet : Information sur les quiches lorraines </p>";
                                      ?>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="news-title">
-                                    <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
+                                   <?php 
+                                    $m++;
+                                        echo "<p> Message $m </p>";
+                                        echo "<p> Expéditeur : Toto </p>";
+                                        echo "<p> Objet : Information sur les quiches lorraines </p>";
                                      ?>
                             </td> 
                         </tr>
                         <tr>
                             <td class="news-title">
                                     <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>                            </td> 
+                                    $m++;
+                                        echo "<p> Message $m </p>";
+                                        echo "<p> Expéditeur : Toto </p>";
+                                        echo "<p> Objet : Information sur les quiches lorraines </p>";
+                                     ?>
+                          </td> 
                         </tr>
-
-
                 </table>
                 </div>
             </div>
