@@ -145,31 +145,39 @@
 
 
                 <div class="content-container">
-                    <div class="personnal-sidebar">
-                        <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
-                         align="left">
-                            <caption> <h2>News</h2> </caption>
-                            <tr>
-                                <td class="news-title">
-                                    <div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="news-title">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
-                                </td>
-                            </tr>
-                        </table>            
-                    </div>
+                    
+                    <!-- Contenu de la page resr.php -->
 
-                    <h1>TOTO</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe expedita quisquam sequi minima nam adipisci dicta nulla accusantium dolorem pariatur earum cupiditate aliquam voluptatem libero, voluptate iusto non corporis dolores.</p>
-                    <h2>Other lorem</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum esse dignissimos voluptates magnam ullam accusamus perferendis odio, ipsa et error reiciendis numquam delectus, voluptatem nesciunt quae quam minima reprehenderit sapiente.</p>
-                    <h2>Last Lorem</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero amet similique veritatis tempora, incidunt magni consequuntur repudiandae dolorem ipsum ad quidem saepe nulla, vitae consequatur dolores, dicta aliquam pariatur temporibus.</p>
+                    <?php                                              // je vais te montrer comment recuperer les inputs de la page recherche.php
+                        $texte = $_POST["texterecherche"];              // recupere ce que l'user a mis dans le txt input 
+                        if (empty($texte)) {
+                            echo 'Please correct the fields';         // cela teste que l'input de la page recherche.php ne soit pas vide
+                            return false;
+                        }                                            
+                        $type = $_POST["typerecherche"];            // recupere l'une des 3 radios choisis
+                        $t1 = $_POST["typerechercheplus1"];         // t1,t2,t3,t4 servent a voir si les checkBox sont cochés
+                        $t2 = $_POST["typerechercheplus2"];
+                        $t3 = $_POST["typerechercheplus3"];
+                        $t4 =$_POST["typerechercheplus4"];
+                        $s1 = $_POST["selectionnomlabo"];           // s1,s2,s3,s4 recuperent respectivement le choix dans le menu déroulant de chaque checkBox
+                        $s2 = $_POST["selectionnomeq"];
+                        $s3 = $_POST["selectiondomaine"];
+                        $s4 = $_POST["selectionspecialite"];
+
+                       
+                        echo "input $texte <br>";                   // affichages test
+                        echo "typer: $type <br>";
+                        echo "t1: $t1 <br>";
+                        echo "t2: $t2 <br>";
+                        echo "t3: $t3 <br>";
+                        echo "t4: $t4 <br>";
+                        echo "s1: $s1 <br>";
+                        echo "s2: $s2 <br>";
+                        echo "s3: $s3 <br>";
+                        echo "s4: $s4 <br>";
+
+                    ?>
+
                 </div>
             </div>
 

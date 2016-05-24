@@ -32,6 +32,19 @@
 
         <!-- What is this ? -->
         <link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
+
+        <script> 
+            /*Fcontion pour le submit de la recherche*/
+            function mysubmit(){
+                var testing = document.getElementById('texteR').value;
+                if ( testing == ""){
+                    document.getElementById('texteR').placeholder = "Saisir Objet";
+                    document.getElementById('objetR').style.color = "red";
+                }
+                else
+                    document.getElementById('research').submit();
+            }
+        </script>
         
     </head>
 
@@ -145,31 +158,49 @@
 
 
                 <div class="content-container">
-                    <div class="personnal-sidebar">
-                        <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
-                         align="left">
-                            <caption> <h2>News</h2> </caption>
-                            <tr>
-                                <td class="news-title">
-                                    <div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="news-title">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
-                                </td>
-                            </tr>
-                        </table>            
-                    </div>
+                    
+                    <!-- Contenu de la page recherche.php -->
+                    
+                    <form id="research" method="POST" action="resr.php">
+                        <div id="objetR"> Objet de la recheche: </div>
+                        <input id="texteR" type="text" name="texterecherche"/> <br>
+                        <input type="radio" name="typerecherche" value="nomprojet" checked> Nom de Projet <br>
+                        <input type="radio" name="typerecherche" value="titrepublication"/> Titre de Publication <br>
+                        <input type="radio" name="typerecherche" value="chercheur"/> Chercheur <br><br>
+                        
+                        
+                        <input type="button" value="Rechercher" onclick="mysubmit()" /><br><br>
 
-                    <h1>TOTO</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe expedita quisquam sequi minima nam adipisci dicta nulla accusantium dolorem pariatur earum cupiditate aliquam voluptatem libero, voluptate iusto non corporis dolores.</p>
-                    <h2>Other lorem</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum esse dignissimos voluptates magnam ullam accusamus perferendis odio, ipsa et error reiciendis numquam delectus, voluptatem nesciunt quae quam minima reprehenderit sapiente.</p>
-                    <h2>Last Lorem</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero amet similique veritatis tempora, incidunt magni consequuntur repudiandae dolorem ipsum ad quidem saepe nulla, vitae consequatur dolores, dicta aliquam pariatur temporibus.</p>
+                        <input type="checkbox" name="typerechercheplus1" value="Laboratoire"> Laboratoire
+                            <?php
+                    
+                            function listesR($idR,$nomR){
+                                $query = "SELECT $idR FROM $nomR";
+                                $result = pg_query($query);
+                                $res = pg_fetch_all($result);
+                            
+                                $a = count($res);
+                                echo "<select name=\"selection".$idR."\">";
+                                for($i = 0 ; $i < $a ; $i++){
+                                    $b = $res[$i][$idR];
+                                    echo "<option value='$b'>$b</option>";
+                                }
+                                echo "</select>";
+                            }
+
+                            listesR("nomlabo","Laboratoire");
+                            
+                            ?>
+
+                        </input> <br>
+                        <input type="checkbox" name="typerechercheplus2" value="Equipe"> Équipe <?php  listesR("nomeq","Equipe"); ?> </input> <br>
+                        <input type="checkbox" name="typerechercheplus3" value="Domaine"> Domaine <?php  listesR("domaine","Laboratoire"); ?> </input> <br>
+                        <input type="checkbox" name="typerechercheplus4" value="Specialite"> Specialité <?php  listesR("specialite","Equipe"); ?> </input> <br>
+                       
+                        
+
+                    </form>
+
                 </div>
             </div>
 

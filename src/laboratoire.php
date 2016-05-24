@@ -164,12 +164,55 @@
                         </table>            
                     </div>
 
-                    <h1>TOTO</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe expedita quisquam sequi minima nam adipisci dicta nulla accusantium dolorem pariatur earum cupiditate aliquam voluptatem libero, voluptate iusto non corporis dolores.</p>
-                    <h2>Other lorem</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum esse dignissimos voluptates magnam ullam accusamus perferendis odio, ipsa et error reiciendis numquam delectus, voluptatem nesciunt quae quam minima reprehenderit sapiente.</p>
-                    <h2>Last Lorem</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero amet similique veritatis tempora, incidunt magni consequuntur repudiandae dolorem ipsum ad quidem saepe nulla, vitae consequatur dolores, dicta aliquam pariatur temporibus.</p>
+                    <!--Contenu principal de la page Laboratoire -->
+                    <fieldset><legend>
+                    	<?php
+                    		$query = "SELECT idLabo FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
+                    		$result=pg_query($query);
+                            $lab = pg_fetch_row($result);
+                            echo $_GET["nomlaboratoire"];
+                            if( $lab[0] == null){
+                            	echo "<script> window.location.replace('erreur.php?error=Laboratoire+non+trouvé') </script>";
+                            }
+                    		
+                    	?>
+                    	</legend>
+                        <?php
+                        	$query="SELECT domaine FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
+                            $result=pg_query($query);
+                            $dom = pg_fetch_row($result);
+                            echo "<p>Domaine : $dom[0]</p>";
+
+                            $query="SELECT descriptionlabo FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
+                            $result=pg_query($query);
+                            $desc = pg_fetch_row($result);
+                            echo "<p>Description : $desc[0]</p>";
+
+                            $query="SELECT adresselabo FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
+                            $result=pg_query($query);
+                            $addr = pg_fetch_row($result);
+                            echo "<p>Adresse : $addr[0]</p>";
+
+                        ?>
+                    </fieldset>
+
+                    <fieldset><legend>Équipes Membres:</legend>
+                        <?php
+                            $query="SELECT sigle FROM Equipe, Laboratoire WHERE Laboratoire.nomlabo ='".$_GET["nomlaboratoire"]."'AND Equipe.idlabo = Laboratoire.idlabo";
+                            $result=pg_query($query);
+                            $membres = pg_fetch_all($result);
+                            
+                            $a = count($membres);
+                            for ($i = 0 ; $i < $a ; $i += 1 ){
+                            	$eq = $membres[$i][sigle];
+                                $query2="SELECT specialite FROM Equipe WHERE Equipe.sigle='".$eq."'";
+                                $result2=pg_query($query2);
+                                $specialite = pg_fetch_row($result2);
+                            	echo "<a href='equipe.php?nomequipe=$eq'>$eq</a> ($specialite[0])</br>";
+                            }
+                            
+                        ?>
+                    </fieldset>
                 </div>
             </div>
 
