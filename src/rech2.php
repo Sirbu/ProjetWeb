@@ -32,6 +32,19 @@
 
         <!-- What is this ? -->
         <link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
+
+        <script> 
+            /*Fcontion pour le submit de la recherche*/
+            function mysubmit(){
+                var testing = document.getElementById('texteR').value;
+                if ( testing == ""){
+                    document.getElementById('texteR').placeholder = "Saisir Objet";
+                    document.getElementById('objetR').style.color = "red";
+                }
+                else
+                    document.getElementById('research').submit();
+            }
+        </script>
         
     </head>
 
@@ -146,37 +159,114 @@
 
                 <div class="content-container">
                     
-                    <!-- Contenu de la page resr.php -->
+                    <!-- Contenu de la page recherche.php -->
+                    
+                    <form id="research" method="POST" action="resr.php">
+                        <div id="objetR"> Objet de la recheche: </div>
+                        <input id="texteR" type="text" name="texterecherche"/> <br>
+                        <input type="radio" name="typerecherche" value="titre" checked/> Titre de Publication <br>
+                        <input type="radio" name="typerecherche" value="nomch"/> Chercheur <br><br>
+                        
+                        
+                        <input type="button" value="Rechercher" onclick="mysubmit()" /><br><br>
 
-                    <?php                                              // je vais te montrer comment recuperer les inputs de la page recherche.php
-                        $texte = $_POST["texterecherche"];              // recupere ce que l'user a mis dans le txt input 
-                        if (empty($texte)) {
-                            echo 'Please correct the fields';         // cela teste que l'input de la page recherche.php ne soit pas vide
-                            return false;
-                        }                                            
-                        $type = $_POST["typerecherche"];            // recupere l'une des 3 radios choisis
-                        $t1 = $_POST["typerechercheplus1"];         // t1,t2,t3,t4 servent a voir si les checkBox sont cochés
-                        $t2 = $_POST["typerechercheplus2"];
-                        $t3 = $_POST["typerechercheplus3"];
-                        $t4 = $_POST["typerechercheplus4"];
-                        $s1 = $_POST["selectionnomlabo"];           // s1,s2,s3,s4 recuperent respectivement le choix dans le menu déroulant de chaque checkBox
-                        $s2 = $_POST["selectionnomeq"];
-                        $s3 = $_POST["selectiondomaine"];
-                        $s4 = $_POST["selectionspecialite"];
+                        <script>
+                            function redir(){
+                                var labo = document.getElementById("selectionnomlabo").value;
+                                var eq = document.getElementById("selectionnomeq").value;
+                                var dom = document.getElementById("selectiondomaine").value;
+                                var spec = document.getElementById("selectionspecialite").value;
+                                window.location="rech2.php?lab=" + labo + "&equipe=" + eq + "&dom=" + dom +"&spec=" + spec;
+                            }
+                        </script>
 
+                        <input type="checkbox" name="typerechercheplus1" value="Laboratoire"> Laboratoire
+                            <?php
+                    
+                            function listesR($idR,$nomR){
+                                
+                                
+                                if(isset($_GET["lab"]) && $idR == "nomeq"){
+                                    $query = "SELECT $idR FROM Laboratoire, $nomR WHERE nomlabo='".$_GET["lab"]."'";
+                                    $result = pg_query($query);
+                                    $res = pg_fetch_all($result);
+                                
+                                    $a = count($res);
+                                    
+                                    echo "<select id=\"selection".$idR."\" name=\"selection".$idR."\" onchange=redir()>";
+                                    
+                                    for($i = 0 ; $i < $a ; $i++){
+                                        $b = $res[$i][$idR];
+                                        if ($b == $_GET["equipe"])
+                                            echo "<option selected value='$b'>$b</option>";
+                                        else
+                                            echo "<option value='$b'>$b</option>";
+                                    }
+                                    echo "</select>";
+                                }
+                                else if(isset($_GET["equipe"]) && $idR == "specialite"){
+                                    $query = "SELECT $idR FROM $nomR WHERE nomeq='".$_GET["equipe"]."'";
+                                    $result = pg_query($query);
+                                    $res = pg_fetch_all($result);
+                                
+                                    $a = count($res);
+                                    echo "<select id=\"selection".$idR."\" name=\"selection".$idR."\" onchange=redir()>";
+                                    
+                                    for($i = 0 ; $i < $a ; $i++){
+                                        $b = $res[$i][$idR];
+                                        if ($b == $_GET["spec"])
+                                            echo "<option selected value='$b'>$b</option>";
+                                        else
+                                            echo "<option value='$b'>$b</option>";
+                                    }
+                                    echo "</select>";  
+                                
+                                   
+                                }else if(isset($_GET["lab"]) && $idR == "domaine"){
+                                    $query = "SELECT $idR FROM $nomR WHERE nomlabo='".$_GET["lab"]."'";
+                                    $result = pg_query($query);
+                                    $res = pg_fetch_all($result);
+                                
+                                    $a = count($res);
+                                    echo "<select id=\"selection".$idR."\" name=\"selection".$idR."\" onchange=redir()>";
+                                    
+                                    for($i = 0 ; $i < $a ; $i++){
+                                        $b = $res[$i][$idR];
+                                        if ($b == $_GET["dom"])
+                                            echo "<option selected value='$b'>$b</option>";
+                                        else
+                                            echo "<option value='$b'>$b</option>";
+                                    }
+                                    echo "</select>";
+                                   
+                                }else{
+
+                                    $query = "SELECT $idR FROM $nomR";
+                                    $result = pg_query($query);
+                                    $res = pg_fetch_all($result);
+                                
+                                    $a = count($res);
+                                    echo "<select id=\"selection".$idR."\" name=\"selection".$idR."\" onchange=redir()>";
+                                    for($i = 0 ; $i < $a ; $i++){
+                                        $b = $res[$i][$idR];
+                                        echo "<option value='$b'>$b</option>";
+                                    }
+                                    echo "</select>";
+                                }
+                            }
+
+                            listesR("nomlabo","Laboratoire");
+                            
+                            ?>
+
+                        </input> <br>
+                        <input type="checkbox" name="typerechercheplus2" value="Equipe"> Équipe <?php  listesR("nomeq","Equipe"); ?> </input> <br>
+                        <input type="checkbox" name="typerechercheplus3" value="Domaine"> Domaine <?php  listesR("domaine","Laboratoire"); ?> </input> <br>
+                        <input type="checkbox" name="typerechercheplus4" value="specialite"> Specialité <?php  listesR("specialite","Equipe"); ?> </input> <br>
                        
-                        echo "input $texte <br>";                   // affichages test
-                        echo "typer: $type <br>";
-                        echo "t1: $t1 <br>";
-                        echo "t2: $t2 <br>";
-                        echo "t3: $t3 <br>";
-                        echo "t4: $t4 <br>";
-                        echo "s1: $s1 <br>";
-                        echo "s2: $s2 <br>";
-                        echo "s3: $s3 <br>";
-                        echo "s4: $s4 <br>";
+                        
 
-                    ?>
+                    </form>
 
                 </div>
             </div>

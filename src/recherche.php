@@ -165,8 +165,8 @@
                         <div id="objetR"> Objet de la recheche: </div>
                         <input id="texteR" type="text" name="texterecherche"/> <br>
                         <input type="radio" name="typerecherche" value="nomprojet" checked> Nom de Projet <br>
-                        <input type="radio" name="typerecherche" value="titrepublication"/> Titre de Publication <br>
-                        <input type="radio" name="typerecherche" value="chercheur"/> Chercheur <br><br>
+                        <input type="radio" name="typerecherche" value="titre"/> Titre de Publication <br>
+                        <input type="radio" name="typerecherche" value="nomch"/> Chercheur <br><br>
                         
                         
                         <input type="button" value="Rechercher" onclick="mysubmit()" /><br><br>
@@ -195,7 +195,7 @@
                         </input> <br>
                         <input type="checkbox" name="typerechercheplus2" value="Equipe"> Équipe <?php  listesR("nomeq","Equipe"); ?> </input> <br>
                         <input type="checkbox" name="typerechercheplus3" value="Domaine"> Domaine <?php  listesR("domaine","Laboratoire"); ?> </input> <br>
-                        <input type="checkbox" name="typerechercheplus4" value="Specialite"> Specialité <?php  listesR("specialite","Equipe"); ?> </input> <br>
+                        <input type="checkbox" name="typerechercheplus4" value="specialite"> Specialité <?php  listesR("specialite","Equipe"); ?> </input> <br>
                        
                         
 
