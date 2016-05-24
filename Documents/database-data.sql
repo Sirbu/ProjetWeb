@@ -9,9 +9,6 @@ INSERT INTO Equipe VALUES (2, 'Visual Objects : from Reality To EXpression', 'VO
 INSERT INTO Chercheur VALUES (1, 'aoun', 'papaaoun', 1, 'Aoun', 'André', 'aoun@irit.fr', '0534662395', 1);
 INSERT INTO Chercheur VALUES (2, 'dave', 'favoris', 2, 'Vanderhaeghe', 'David', 'David.Vanderhaeghe@irit.fr', '0664852677', 2);
 
--- Publications
-INSERT INTO Publication VALUES (1, 'Théorie des réseaux !', '12/05/2016', 'ftp://serveur.fr');
-
 -- Calendrier
 INSERT INTO Calendrier VALUES (1, '11/05/2016', '30/05/2016');
 

@@ -30,7 +30,7 @@
     // on forme la requête permettant de trouver
     // le mot de passe correspondant à l'utilisateur
     // donné dans le forumlaire
-    $query = "SELECT passch from Chercheur
+    $query = "SELECT * from Chercheur
               WHERE Chercheur.loginch = '" . $username . "';";
 
     // exécution de la requête sql
@@ -43,8 +43,8 @@
     }
 
 
-    $db_pass = pg_fetch_row($resultat);
-    if(!$db_pass)
+    $info_ch = pg_fetch_row($resultat);
+    if(!$info_ch)
     {
         // si il n'y a aucune ligne alors
         // l'utilisateur n'existe pas !
@@ -52,7 +52,7 @@
         header('Location: erreur.php?error=auth');
         die();
     }
-    else if($db_pass[0] != $password)
+    else if($info_ch[2] != $password)
     {
         // utilisateur correct mais mauvais mot de passe
         header('Location: erreur.php?error=auth');
@@ -61,7 +61,7 @@
     else
     {   // username et password OK
         // le cookie expire en 15 minutes (valeur arbitraire à revoir plus tard probablement)
-        setcookie("session", "$username", -1);
+        setcookie("session", "$info_ch[4]", -1);
 
         header('Location: index.php');
         die();

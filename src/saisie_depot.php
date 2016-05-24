@@ -197,7 +197,7 @@
                                              <td>
                                                 <select name=\"type_doc\">
                                                     <option value=\"Compte rendu réunion\">Compte rendu réunion</option>
-                                                    <option value=\"Rapport d'expérience\">Rapport d'expérience</option>
+                                                    <option value=\"Rapport expérience\">Rapport d'expérience</option>
                                                     <option value=\"Brouillon\">Brouillon</option>
                                                     <option value=\"Livrable\">Livrable</option>
                                                 </select>

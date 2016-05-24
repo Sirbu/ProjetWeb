@@ -43,6 +43,7 @@
 
     // on met à jour la base de donnée uniquement si
     // l'upload s'est bien passé, donc teste d'abord l'upload
+    // si la maj de la bdd se passe mal on effacera ce fichier.
     if(move_uploaded_file($_FILES["file"]["tmp_name"], $fichier_dest))
     {
         echo "Le fichier " . basename($fichier_dest) . " a bien été uploadé";
@@ -104,9 +105,12 @@
     }
 
     $result = pg_query($connector, $query);
-    // éventuellement vérifier le résultat, mais si
-    // on en est à ce niveau du code, je crois pas
-    // qu'il puisse y avoir de problème ...
+    if(!$result)
+    {
+        unlink($fichier_dest);
+        header("Location: erreur.php?error=bdd_upload_error");
+        die();
+    }
 
     // maintenant il faut aussi insérer une ligne
     // dans la table publie si c'est une publication
@@ -114,19 +118,20 @@
 
     // il faut l'id du chercheur qui dépose le fichier...
     // (trop de requêtes, j'en ai marre)
-    // pour l'instant un peu la flemme de vérifier si tout se
-    // passe sans problème...
     $requete_ch = "SELECT idCH from Chercheur WHERE nomch = '" . $_COOKIE["session"] . "';";
 
     $result = pg_query($connector, $requete_ch);
     if(!$result)
     {
+        unlink($fichier_dest);
         header("Location: erreur.php?error=BDD_ERR_IDCH");
         die();
     }
+
     $info_ch = pg_fetch_row($result);
 
-    // là c'est la requête d'insertion
+    // là c'est la requête d'insertion dans la table
+    // Dépose ou Publie en fonction du type de dépot
     $query = "INSERT INTO ";
     if($_POST["type"] == "Publication")
     {
@@ -138,8 +143,10 @@
     }
 
     $query .= "VALUES(" . $info_ch[0] . ", " . $idDepot . ");";
+
     if(!pg_query($connector, $query))
     {
+        unlink($fichier_dest);
         header("Location: erreur.php?error=INSERT");
         die();
     }
