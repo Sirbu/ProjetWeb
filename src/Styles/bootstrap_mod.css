@@ -12,7 +12,6 @@ body
 {
 	height: auto;
 	width: auto;
-	/*background-image: url("../Images/little3.png");*/
 	background-repeat: repeat repeat-y;
 	background-color: #548DD4;
 	border-radius: 15px;
@@ -96,6 +95,15 @@ body
 	border-radius: 15px;
 	margin-top: 5px;
 	padding: 10px;
+}
+
+.dropdown-menu li:hover .sub-menu
+{
+	visibility: visible;
+	position: absolute;
+	top: 0%;
+	left: 100%;
+	display: block;
 }
 
 /* Penser a une classe générale content */
