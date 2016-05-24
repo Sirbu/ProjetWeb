@@ -85,7 +85,7 @@
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="index.php">Accueil</a></li>
-                            <li><a href="publications.php">Publications</a></li>
+                            <li><a href="publication.php">Publications</a></li>
                             
                             <li class="dropdown">
                                 <a href="laboratoires.php" class="dropdown-toggle" data-toggle="dropdown" 
@@ -122,7 +122,7 @@
                                             </a>
                                             <ul class=\"dropdown-menu\">
                                                 <li><a href=\"#\">Tâches</a></li>
-                                                <li><a href=\"#\">Messages</a></li>
+                                                <li><a href=\"listeMessage.php\">Messages</a></li>
                                                 <li><a href=\"listeDoc.php\">Documents</a></li>
                                                 <li role=\"separator\" class=\"divider\"></li>
                                                 <li><a href=\"#\">Gestion</a></li>
@@ -164,41 +164,39 @@
                         </table>            
                     </div>
 
-                      <table height="100%" width="70%" border ="1" cellspacing="1" cellpadding="1">
-                 <caption> <h2>Messages</h2> </caption>
-                        <tr>
-                            <td class="news-title">
-                                <div>
-                                    <?php 
-                                    $m = 1;
-                                        echo "<p> Message $m </p>";
-                                        echo "<p> Expéditeur : Toto </p>";
-                                        echo "<p> Objet : Information sur les quiches lorraines </p>";
-                                     ?>
+                     
+                <caption> <h2>Messages</h2> </caption>
+                      
+                               <div>
+                                     <fieldset>  
+                                                <?php 
+
+                                        $query= " SELECT idDiscussion,objet,nomch,dateEnvoi FROM Message,Chercheur WHERE message.idch = chercheur.idch AND chercheur.loginch='".$_COOKIE["session"]."'";
+                                        $result=pg_query($query);
+                                        $mess = pg_fetch_all($result);
+                           
+                                        $a = count($mess);
+                                       
+                                       
+                                        for ($i = 0 ; $i < $a ; $i++){ 
+                                            $idmess = $mess[$i][iddiscussion];
+                                            $obj = $mess[$i][objet];
+                                            $nomcher = $mess[$i][nomch];
+                                            $date = $mess[$i][dateenvoi];
+                                            if($obj != ""){
+                                                
+                                                echo "<legend> - <a href=message.php?iddiscussion=$idmess>$obj</a> </legend>";
+                                                echo "<p> Expéditeur : $nomcher </p>";
+                                                echo "<p> Date de réception : $date </p>";
+                                                
+                                            }
+                                            else{
+                                                echo "Aucun messages. <br>";
+                                            }
+                                        }
+                                                 ?>
+                                    </fieldset>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                   <?php 
-                                    $m++;
-                                        echo "<p> Message $m </p>";
-                                        echo "<p> Expéditeur : Toto </p>";
-                                        echo "<p> Objet : Information sur les quiches lorraines </p>";
-                                     ?>
-                            </td> 
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                    <?php 
-                                    $m++;
-                                        echo "<p> Message $m </p>";
-                                        echo "<p> Expéditeur : Toto </p>";
-                                        echo "<p> Objet : Information sur les quiches lorraines </p>";
-                                     ?>
-                          </td> 
-                        </tr>
-                </table>
                 </div>
             </div>
 

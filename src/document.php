@@ -165,16 +165,20 @@
                     </div>
 
                       <table height="100%" width="70%" border ="1" cellspacing="1" cellpadding="1">
-                 <caption> <h2>Documents</h2> </caption>
+                 <caption> <h2>Document</h2> </caption>
                         <tr>
                             <td class="news-title">
                                 <div>
-                                    <?php 
-                                    $d = 1;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>
+                                       <?php
+                                            $query = "SELECT titreDoc, urlDoc,nomch,typeDoc FROM Document,Depose,Chercheur WHERE Document.idDoc='".$_GET["iddoc"]."' AND chercheur.loginch='".$_COOKIE["session"]."'";
+                                                $result=pg_query($query);
+                                                $data= pg_fetch_row($result);
+                                                echo "<p>$data[0] </p>";
+                                                echo "<p>Auteur : $data[2] </p>";
+                                                echo " <p>Type : $data[3] </p>  ";
+                                                echo " <p><a href=#>$data[1]</a> </p>";                                          
+                                        ?>
+                    
                                 </div>
                             </td>
                         </tr>

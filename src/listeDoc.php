@@ -85,7 +85,7 @@
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="index.php">Accueil</a></li>
-                            <li><a href="publications.php">Publications</a></li>
+                            <li><a href="publication.php">Publications</a></li>
                             
                             <li class="dropdown">
                                 <a href="laboratoires.php" class="dropdown-toggle" data-toggle="dropdown" 
@@ -122,7 +122,7 @@
                                             </a>
                                             <ul class=\"dropdown-menu\">
                                                 <li><a href=\"#\">Tâches</a></li>
-                                                <li><a href=\"#\">Messages</a></li>
+                                                <li><a href=\"listeMessage.php\">Messages</a></li>
                                                 <li><a href=\"listeDoc.php\">Documents</a></li>
                                                 <li role=\"separator\" class=\"divider\"></li>
                                                 <li><a href=\"#\">Gestion</a></li>
@@ -164,42 +164,43 @@
                         </table>            
                     </div>
 
-                      <table height="100%" width="70%" border ="1" cellspacing="1" cellpadding="1">
+                     
                  <caption> <h2>Documents</h2> </caption>
-                        <tr>
-                            <td class="news-title">
+                        
                                 <div>
-                                    <?php 
-                                    $d = 1;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>
+                                     <fieldset>  
+                                        <?php 
+
+                                $query= " SELECT document.idDoc, typeDoc, titreDoc,nomch FROM Document,Depose,Chercheur WHERE document.idDoc = depose.idDoc AND chercheur.idch= depose.idch AND chercheur.loginch='".$_COOKIE["session"]."'";
+                                $result=pg_query($query);
+                                $docs = pg_fetch_all($result);
+                                    
+                                
+                                
+                                $a = count($docs);
+                               
+                               
+                                for ($i = 0 ; $i < $a ; $i++){ 
+                                    $idd = $docs[$i][iddoc];
+                                    $titred = $docs[$i][titredoc];
+                                    $nomcher = $docs[$i][nomch];
+                                    $type = $docs[$i][typedoc];
+                                    if($titred != ""){
+                                        
+                                        echo "<legend> - <a href=document.php?iddoc=$idd>$titred</a> </legend>";
+                                        echo "<p> Auteur : $nomcher </p>";
+                                        echo "<p> Type : $type </p>";
+                                        
+                                    }
+                                    else{
+                                        echo "Aucun documents. <br>";
+                                    }
+                                }
+                                         ?>
+                                
+                            
+                                    </fieldset>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                    <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>
-                            </td> 
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                    <?php 
-                                        $d++;
-                                        echo "<p> Document $d </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Titre : Information sur les quiches lorraines </p>";
-                                     ?>                            </td> 
-                        </tr>
-
-
-                </table>
                 </div>
             </div>
 
