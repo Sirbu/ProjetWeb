@@ -9,6 +9,13 @@ caption, h2
 	margin-top: 0;
 }
 
+tr, td
+{
+	padding: 5px;
+	vertical-align: middle;
+	text-align: left;
+}
+
 .search-form
 {
 	margin: 10px;
@@ -113,14 +120,14 @@ caption, h2
 }
 
 /* Penser a une classe générale content */
-tr, td
-{
-	padding: 5px;
-	vertical-align: middle;
-	text-align: left;
-}
-
 .form_depot
 {
 	margin-top: 5px;
+}
+
+.carousel
+{
+/*	width: 50%;
+	height: auto;
+	margin-left: 30%;*/
 }

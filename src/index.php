@@ -164,12 +164,54 @@
                         </table>            
                     </div>
 
-                    <h1>TOTO</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe expedita quisquam sequi minima nam adipisci dicta nulla accusantium dolorem pariatur earum cupiditate aliquam voluptatem libero, voluptate iusto non corporis dolores.</p>
-                    <h2>Other lorem</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum esse dignissimos voluptates magnam ullam accusamus perferendis odio, ipsa et error reiciendis numquam delectus, voluptatem nesciunt quae quam minima reprehenderit sapiente.</p>
-                    <h2>Last Lorem</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero amet similique veritatis tempora, incidunt magni consequuntur repudiandae dolorem ipsum ad quidem saepe nulla, vitae consequatur dolores, dicta aliquam pariatur temporibus.</p>
+                    <caption><h2>Dernières publications :</h2></caption>
+                    <div id="publi-carousel" class="carousel slide" data-ride="carousel">
+                          <ol class="carousel-indicators">
+                            <li data-target="#publi-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#publi-carousel" data-slide-to="1"></li>
+                            <li data-target="#publi-carousel" data-slide-to="2"></li>
+                          </ol>
+                          <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                              <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+                              <div class="container">
+                                <div class="carousel-caption">
+                                  <h1>Example headline.</h1>
+                                  <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
+                                  <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="item">
+                              <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+                              <div class="container">
+                                <div class="carousel-caption">
+                                  <h1>Another example headline.</h1>
+                                  <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                  <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="item">
+                              <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
+                              <div class="container">
+                                <div class="carousel-caption">
+                                  <h1>One more for good measure.</h1>
+                                  <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                  <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <a class="left carousel-control" href="#publi-carousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                          </a>
+                          <a class="right carousel-control" href="#publi-carousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                          </a>
+                        </div>
                 </div>
             </div>
 
