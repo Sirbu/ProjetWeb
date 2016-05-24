@@ -98,4 +98,19 @@ body
 	padding: 10px;
 }
 
+.dropdown-menu li:hover .sub-menu
+{
+	visibility: visible;
+	position: absolute;
+	top: 0%;
+	left: 100%;
+	display: block;
+}
+
+/*Placement du bouton ajout d'une tache*/
+.bouton-tache{
+	position: absolute;
+	right :15%;
+}
+
 /* Penser a une classe générale content */
