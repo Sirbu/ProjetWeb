@@ -1,25 +1,9 @@
-<?php
-    // la variable GET type permet de savoir si
-    // c'est un dépôt de document ou de publication 
-    // vaut soit "document" soit "publication"
-    if(!isset($_GET["type"]) || ($_GET["type"] != "Publication" && $_GET["type"] != "Document"))
-    {
-        header("Location: erreur.php?error=depot");
-        die();
-    }
-   
-    isset($_COOKIE["session"]) ? $logged = true : $logged = false;
-
-    if(!$logged)
-    {
-        header('Location: erreur.php?error=forbidden');
-        die();
-    }
-
+<?php 
     include 'fonctions.php';
 
     $dbconnect = connectDB();
 
+    isset($_COOKIE["session"]) ? $logged = true : $logged = false;
  ?>
 
 <!DOCTYPE html>
@@ -100,8 +84,8 @@
                      
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="index.php">Accueil</a></li>
-                            <li><a href="liste_publications.php">Publications</a></li>
+                            <li><a href="index.php">Accueil</a></li>
+                            <li class="active"><a href="liste_publications.php">Publications</a></li>
                             
                             <li class="dropdown">
                                 <a href="laboratoires.php" class="dropdown-toggle" data-toggle="dropdown" 
@@ -179,48 +163,34 @@
                             </tr>
                         </table>            
                     </div>
-                    <?php 
-                        echo "<form method=post action=\"depot.php\" enctype=\"multipart/form-data\">";
-                        echo "<h3>Dépôt de " . $_GET["type"] . "</h3>";
-                     ?>
-                        <table class="form_depot">
-                             <tr>
-                                 <td><p>Titre : </p></td>
-                                 <td><input type="text" name="titre" placeholder="Entrez le titre"></td>
-                             </tr>
-                             <?php 
-                                if($_GET["type"] == "Document")
+
+                    <!-- Le contenu commence ici ! -->
+                    <fieldset>
+                        <?php 
+                            $query = "SELECT * FROM Publication";
+                            $result = pg_query($dbconnect, $query);
+                            if(!$result)
+                            {
+                                echo "<legend>Aucune publication !</legend>";
+                            }
+                            else
+                            {
+                                while($list_publi = pg_fetch_row($result))
                                 {
-                                    echo "
-                                         <tr>
-                                             <td><p>Type : </p></td>
-                                             <td>
-                                                <select name=\"type_doc\">
-                                                    <option value=\"Compte rendu réunion\">Compte rendu réunion</option>
-                                                    <option value=\"Rapport expérience\">Rapport d'expérience</option>
-                                                    <option value=\"Brouillon\">Brouillon</option>
-                                                    <option value=\"Livrable\">Livrable</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    ";
+                                    echo "<legend>" . $list_publi[1] . "</legend>";
+                                    echo "<p>Publiée le : " . $list_publi[2] . "</p>";
+                                    echo "<p>Lien : <a href=\"$list_publi[3]\">"
+                                        . basename($list_publi[3]) . "</a></p>";
                                 }
+                            }
 
-                              ?>
-                             
-                             <tr>
-                                 <td>Fichier : </td>
-                                 <td><input type="file" name="file"></td>
-                             </tr>
-                             <tr>
-                                <td><input type="submit" name="button" value="Valider"></td>
-                             </tr>
+                            if(isset($_COOKIE["session"]))
+                            {
+                                echo "<p><a href=\"saisie_depot.php?type=Publication\">Déposer une Publication</a></p>";
+                            }
+                        ?>
+                    </fieldset>
 
-                        </table>
-                    <?php
-                        echo '<input type="hidden" name="type" value="' . $_GET["type"] . '">';
-                        echo "</form>";
-                     ?>
                 </div>
             </div>
 
