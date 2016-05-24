@@ -165,6 +165,7 @@
                     </div>
 
                     <!-- Le contenu commence ici ! -->
+                    <caption><h2>Liste des publications</h2></caption>
                     <fieldset>
                         <?php 
                             $query = "SELECT * FROM Publication";
