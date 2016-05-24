@@ -145,17 +145,13 @@
 
                         <?php                        
                         
-                        /*Récupérer l'id de la derniere tache*/
-                        $fin = idLastElement("idtache","tache");
-                        echo"Fin du tableau : $fin";
+                        /*Récupérer l'id de la derniere tache et du dernier idcal*/
+                        $idLastT = idLastElement("idtache","tache");
+                        $idLastC = idLastElement("idcal","calendrier");
 
-                        /*Créer la date dans le calendrier*/
-                        $requete2 = "SELECT idcal FROM calendrier;";
-                        $resultat = pg_query($dbconnect, $requete2);
-                        $taches = pg_fetch_all($resultat);
-                        $cpt = count($taches);
-                        $cpt++;
-
+                        /*Ajoute la date dans le calendrier*/                        
+                        $requete1 = "INSERT INTO calendrier VALUES ($idLastC,'11/05/2016','22/05/2016');";
+                        
                         /*Demande la */
                         /* Ajoute une taches à la BDD*/
                         $requete3 = "INSERT INTO tache VALUES ($cpt,$nom,$type,$description,1,1);";
