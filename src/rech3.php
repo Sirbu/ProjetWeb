@@ -175,7 +175,7 @@
                                 var labo = document.getElementById("selectionnomlabo").value;
                                 var eq = document.getElementById("selectionnomeq").value;
                                 var spec = document.getElementById("selectionspecialite").value;
-                                window.location="rech3.php?lab=" + labo + "&equipe=" + eq +"&spec=" + spec;
+                                window.location="rech3.php?lab=" + labo + "&equipe=" + eq + "&spec=" + spec;
                             }
                         </script>
 
@@ -187,8 +187,7 @@
                                     $query = "SELECT $idR FROM Laboratoire, $nomR WHERE Equipe.idlabo = Laboratoire.idLabo AND nomlabo='".$_GET["lab"]."'";
 
                                 }else if(isset($_GET["equipe"]) && $idR == "specialite"){
-                                    $query = "SELECT $idR FROM $nomR WHERE nomeq='".$_GET["equipe"]."'"; 
-                                    $query = "SELECT $idR FROM $nomR WHERE nomeq IN (SELECT nomeq FROM Equipe, Laboratoire WHERE Laboratoire.idlabo = Equipe.idLabo AND Laboratoire.nomlabo='".$_GET["lab"]."')";  
+                                   $query = "SELECT $idR FROM $nomR WHERE nomeq IN (SELECT nomeq FROM Equipe, Laboratoire WHERE Laboratoire.idlabo = Equipe.idLabo AND Laboratoire.nomlabo='".$_GET["lab"]."')";
                                 }else{
                                     $query = "SELECT $idR FROM $nomR";
                                 }
