@@ -79,7 +79,6 @@ tr, td
 
 .content-container
 {
-	
 	padding: 2%;
 	border-radius: 15px;
 	height: auto;
@@ -89,18 +88,9 @@ tr, td
 {
 	width: 15%;
 	text-align: center;
-	padding-left: 10px;
-	padding-right: 10px;
 	padding-top: 10px;
-
 }
 
-.personnal-sidebar
-{
-	float: left;
-	width: 25%;
-	margin-right: 15px;
-}
 
 .mentions
 {
@@ -114,7 +104,7 @@ tr, td
 {
 	visibility: visible;
 	position: absolute;
-	top: 0%;
+
 	left: 100%;
 	display: block;
 }
@@ -125,9 +115,42 @@ tr, td
 	margin-top: 5px;
 }
 
+.desc-projet
+{
+	margin-left: 10%;
+	/*text-align: center;*/
+}
+
+.sidebar-container
+{
+	width: 20%;
+	float: left;
+	margin-right: 50px;
+	padding-top: 2%;
+	display: inline-block;
+}
+
+.last-publi
+{
+	/*float: right;*/
+	/*height: 250px;*/
+	width: 75%;
+	height: auto;
+	margin-left: 23%;
+}
+
 .carousel
 {
-/*	width: 50%;
-	height: auto;
-	margin-left: 30%;*/
+	display: inline-block;
+	width: 90%;
+	text-align: center;
+
+	/* Dégueulasse mais je vois pas trop comment faire
+	autrement. Essayez de commenter la ligne vous verrez... */
+	/*margin-top: -500px; */
+}
+
+.carousel-caption
+{
+	margin-bottom: 15%;
 }

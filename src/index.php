@@ -95,13 +95,14 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <?php 
-                                        $requete = "SELECT nomlabo from laboratoire;";
+                                        $requete = "SELECT nomlabo from Laboratoire;";
                                         
                                         $labos = pg_query($dbconnect, $requete);
                                         while($nomLabo = pg_fetch_row($labos))
                                         {
                                             echo "<li>
-                                                    <a href=\"laboratoire.php?nomlaboratoire=$nomLabo[0]\">" . $nomLabo[0] . "</a>";
+                                                    <a href=\"laboratoire.php?nomlaboratoire=$nomLabo[0]\">" 
+                                                    . $nomLabo[0] . "</a>";
                                             echo "</li>";
                                         }
 
@@ -142,76 +143,97 @@
                     <input type="text" name="search" placeholder="Recherche">
                     <input type="submit" name="boutonEnvoi" value="OK">
                 </form>
-
+                
+                <div class="sidebar-container">
+                    <table class="personnal-sidebar" height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
+                     align="left">
+                        <caption> <h2>News</h2> </caption>
+                        <tr>
+                            <td class="news-title">
+                                <div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
+                            </td>
+                        </tr>
+                    </table>            
+                </div>
 
                 <div class="content-container">
-                    <div class="personnal-sidebar">
-                        <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
-                         align="left">
-                            <caption> <h2>News</h2> </caption>
-                            <tr>
-                                <td class="news-title">
-                                    <div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="news-title">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
-                                </td>
-                            </tr>
-                        </table>            
+                    <div class="desc-projet">
+                        <caption>
+                            <h2>
+                            <?php
+                                // À METTRE DANS FONCTIONS.PHP !
+                                $query = "SELECT * FROM Projet;";
+                                $result = pg_query($dbconnect, $query);
+                                if(!$result)
+                                {
+                                    header("Location: erreur.php?error=SQL_ERROR");
+                                    die();
+                                }
+
+                                $desc = pg_fetch_row($result);
+
+                                echo $desc[1] . "</h2>";
+                                                                           
+                                echo "<p>" . $desc[3] . "</p>";
+                            ?> 
+                        </caption>
                     </div>
 
-                    <caption><h2>Dernières publications :</h2></caption>
-                    <div id="publi-carousel" class="carousel slide" data-ride="carousel">
-                          <ol class="carousel-indicators">
-                            <li data-target="#publi-carousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#publi-carousel" data-slide-to="1"></li>
-                            <li data-target="#publi-carousel" data-slide-to="2"></li>
-                          </ol>
-                          <div class="carousel-inner" role="listbox">
-                            <div class="item active">
-                              <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
-                              <div class="container">
-                                <div class="carousel-caption">
-                                  <h1>Example headline.</h1>
-                                  <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-                                  <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                    <?php 
+                        // ici on prépare l'affichage du carousel
+                        $query = "SELECT "
+                     ?>
+
+                    <div class="last-publi">
+                        <caption><h2>Dernières publications :</h2></caption>
+                        <br>
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                              <ol class="carousel-indicators">
+                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                              </ol>
+                              <div class="carousel-inner">
+                                <div class="item active">
+                                    <img class="img-responsive center-block" src="Images/blue-paper-texture.jpg" alt="Slide 1" />
+                                    <div class="carousel-caption">
+                                        <h1>TOTO</h1>
+                                        <p>Description</p>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <img class="img-responsive center-block" src="Images/blue-paper-texture.jpg" alt="Slide 2" />
+                                    <div class="carousel-caption">
+                                        <h1>TITI</h1>
+                                        <p>Description</p>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <img class="img-responsive center-block" src="Images/blue-paper-texture.jpg" alt="Slide 3" />
+                                    <div class="carousel-caption">
+                                        <h1>TUTU<br>TITI</h1>
+                                        <p>Description</p>
+                                    </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="item">
-                              <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
-                              <div class="container">
-                                <div class="carousel-caption">
-                                  <h1>Another example headline.</h1>
-                                  <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                  <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="item">
-                              <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
-                              <div class="container">
-                                <div class="carousel-caption">
-                                  <h1>One more for good measure.</h1>
-                                  <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                  <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <a class="left carousel-control" href="#publi-carousel" role="button" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                          </a>
-                          <a class="right carousel-control" href="#publi-carousel" role="button" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                          </a>
-                        </div>
+
+                              <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                              </a>
+                              <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                              </a>
+                            </div>                        
+                    </div>
                 </div>
             </div>
 

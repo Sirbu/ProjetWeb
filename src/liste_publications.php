@@ -84,8 +84,8 @@
                      
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li><a href="index.php">Accueil</a></li>
-                            <li class="active"><a href="liste_publications.php">Publications</a></li>
+                            <li class="active"><a href="index.php">Accueil</a></li>
+                            <li><a href="liste_publications.php">Publications</a></li>
                             
                             <li class="dropdown">
                                 <a href="laboratoires.php" class="dropdown-toggle" data-toggle="dropdown" 
@@ -101,7 +101,8 @@
                                         while($nomLabo = pg_fetch_row($labos))
                                         {
                                             echo "<li>
-                                                    <a href=\"#\">" . $nomLabo[0] . "</a>";
+                                                    <a href=\"laboratoire.php?nomlaboratoire=$nomLabo[0]\">" 
+                                                    . $nomLabo[0] . "</a>";
                                             echo "</li>";
                                         }
 
@@ -142,27 +143,25 @@
                     <input type="text" name="search" placeholder="Recherche">
                     <input type="submit" name="boutonEnvoi" value="OK">
                 </form>
-
-
-                <div class="content-container">
-                    <div class="personnal-sidebar">
-                        <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
-                         align="left">
-                            <caption> <h2>News</h2> </caption>
-                            <tr>
-                                <td class="news-title">
-                                    <div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="news-title">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
-                                </td>
-                            </tr>
-                        </table>            
-                    </div>
+                
+                <div class="sidebar-container">
+                    <table class="personnal-sidebar" height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
+                     align="left">
+                        <caption> <h2>News</h2> </caption>
+                        <tr>
+                            <td class="news-title">
+                                <div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
+                            </td>
+                        </tr>
+                    </table>            
+                </div>
 
                     <!-- Le contenu commence ici ! -->
                     <caption><h2>Liste des publications</h2></caption>
