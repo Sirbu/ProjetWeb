@@ -148,34 +148,58 @@
                     
                     <!-- Contenu de la page resr.php -->
 
-                    <?php                                              // je vais te montrer comment recuperer les inputs de la page recherche.php
-                        $texte = $_POST["texterecherche"];              // recupere ce que l'user a mis dans le txt input 
-                        if (empty($texte)) {
-                            echo 'Please correct the fields';         // cela teste que l'input de la page recherche.php ne soit pas vide
-                            return false;
-                        }                                            
-                        $type = $_POST["typerecherche"];            // recupere l'une des 3 radios choisis
-                        $t1 = $_POST["typerechercheplus1"];         // t1,t2,t3,t4 servent a voir si les checkBox sont cochés
-                        $t2 = $_POST["typerechercheplus2"];
-                        $t3 = $_POST["typerechercheplus3"];
-                        $t4 = $_POST["typerechercheplus4"];
-                        $s1 = $_POST["selectionnomlabo"];           // s1,s2,s3,s4 recuperent respectivement le choix dans le menu déroulant de chaque checkBox
-                        $s2 = $_POST["selectionnomeq"];
-                        $s3 = $_POST["selectiondomaine"];
-                        $s4 = $_POST["selectionspecialite"];
+                    <?php 
+                        if(isset($_GET["rechrapide"]) && $_GET["rechrapide"] != ""){
+                            $upup = strtoupper($_GET["rechrapide"]);
+                            echo "yay $upup";
+                            $query = "SELECT Chercheur.nomch, Publication.idpubli, Publication.titre FROM Chercheur, Publication, Publie WHERE publie.idch = chercheur.idch AND publie.idpubli = publication.idpubli AND (upper(nomch) LIKE '%".$upup."%' OR upper(titre) LIKE '%".$upup."%')";
+                            $result = pg_query($query);
+                            $req = pg_fetch_all($result);
 
-                       
-                        echo "input $texte <br>";                   // affichages test
-                        echo "typer: $type <br>";
-                        echo "t1: $t1 <br>";
-                        echo "t2: $t2 <br>";
-                        echo "t3: $t3 <br>";
-                        echo "t4: $t4 <br>";
-                        echo "s1: $s1 <br>";
-                        echo "s2: $s2 <br>";
-                        echo "s3: $s3 <br>";
-                        echo "s4: $s4 <br>";
+                            if(empty($req[0]['nomch']))
+                                $cpt = 0;
+                            else
+                                $cpt = count($req);
+                            
+                            echo "<h1> $cpt </h1>";
 
+                            echo "Chercheur:                Publication: <br>";
+                            for($i = 0 ; $i < $cpt ; $i++){
+                                $nom=$req[$i]['nomch'];
+                                $pub=$req[$i]['titre'];
+                                $pub2=$req[$i]['idpubli'];
+                                echo "<a href='chercheur.php?nomchercheur=$nom'> $nom </a>"; 
+                                echo "<a href='publication.php?idpublication=$pub2'> $pub </a><br>";
+                            }
+
+                        }
+                        else if(isset($_POST["texterecherche"]) && $_POST["texterecherche"] != ""){
+                            $texte = $_POST["texterecherche"];
+                            $type = $_POST["typerecherche"];            // recupere l'une des 3 radios choisis
+                            $t1 = $_POST["typerechercheplus1"];         // t1,t2,t3,t4 servent a voir si les checkBox sont cochés
+                            $t2 = $_POST["typerechercheplus2"];
+                            $t3 = $_POST["typerechercheplus3"];
+                            $t4 = $_POST["typerechercheplus4"];
+                            $s1 = $_POST["selectionnomlabo"];           // s1,s2,s3,s4 recuperent respectivement le choix dans le menu déroulant de chaque checkBox
+                            $s2 = $_POST["selectionnomeq"];
+                            $s3 = $_POST["selectiondomaine"];
+                            $s4 = $_POST["selectionspecialite"];
+
+                           
+                            echo "input $texte <br>";                   // affichages test
+                            echo "typer: $type <br>";
+                            echo "t1: $t1 <br>";
+                            echo "t2: $t2 <br>";
+                            echo "t3: $t3 <br>";
+                            echo "t4: $t4 <br>";
+                            echo "s1: $s1 <br>";
+                            echo "s2: $s2 <br>";
+                            echo "s3: $s3 <br>";
+                            echo "s4: $s4 <br>";
+                        }
+                        else
+                            echo "Erreur lors de la saisie de Recherche !";
+                        
                     ?>
 
                 </div>
