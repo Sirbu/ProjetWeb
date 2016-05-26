@@ -154,3 +154,8 @@ tr, td
 {
 	margin-bottom: 15%;
 }
+
+.carousel-caption > a
+{
+	color: white;
+}
