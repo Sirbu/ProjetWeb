@@ -4,6 +4,22 @@
     $dbconnect = connectDB();
 
     isset($_COOKIE["session"]) ? $logged = true : $logged = false;
+
+    $file = fopen("nbr_visites.txt", "c+");
+    if(!$file)
+    {
+        header("Location: erreur.php?error=file_access_denied");
+        die();
+    }
+
+    $visites = fgets($file);
+    if(!$visites)
+    {
+        $visites = 0;
+    }
+    $visites++;
+    rewind($file);
+    fwrite($file, $visites);
  ?>
 
 <!DOCTYPE html>
@@ -97,12 +113,12 @@
                                     <?php 
                                         $requete = "SELECT nomlabo from Laboratoire;";
                                         
-                                        $labos = pg_query($dbconnect, $requete);
-                                        while($nomLabo = pg_fetch_row($labos))
+                                        $labos = send_query($dbconnect, $requete);
+                                        foreach($ligne as $result)
                                         {
                                             echo "<li>
-                                                    <a href=\"laboratoire.php?nomlaboratoire=$nomLabo[0]\">" 
-                                                    . $nomLabo[0] . "</a>";
+                                                    <a href=\"laboratoire.php?nomlaboratoire=".$ligne['nomLabo']."\">" 
+                                                    . $ligne['nomLabo'] . "</a>";
                                             echo "</li>";
                                         }
 
@@ -147,17 +163,66 @@
                 <div class="sidebar-container">
                     <table class="personnal-sidebar" height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
                      align="left">
-                        <caption> <h2>News</h2> </caption>
+                        <caption> <h2>Statistiques</h2> </caption>
                         <tr>
                             <td class="news-title">
                                 <div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
+                                    <p><b>Nombre de publications :</b></p>
+                                    <?php 
+                                        $query = "SELECT COUNT(idpubli) FROM Publication;";
+                                        $result = send_query($dbconnect, $query);
+                                        echo "<p>";
+                                        echo $result[0]['count'];
+                                        echo "</p>";
+                                     ?>
+
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="news-title">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
+                                <p><b>Nombre de chercheurs :</b></p>
+                                <?php 
+                                    $query = "SELECT COUNT(idch) FROM Chercheur;";
+                                    $result = send_query($dbconnect, $query);
+                                    echo "<p>";
+                                    echo $result[0]['count'];
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Nombre de laboratoires :</b></p>
+                                <?php 
+                                    $query = "SELECT count(idLabo) FROM Laboratoire;";
+                                    $result = send_query($dbconnect, $query);
+                                    echo "<p>";
+                                    echo $result[0]['count'];
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Nombre de visites :</b></p>
+                                <?php 
+                                    echo "<p>";
+                                    echo $visites;
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Budget moyen des projet :</b></p>
+                                <?php 
+                                    $query = "SELECT avg(budget) FROM Projet;";
+                                    $result = send_query($dbconnect, $query);
+                                    echo "<p>";
+                                    printf("%d €", $result[0]['avg']);
+                                    echo "</p>";
+                                 ?>
                             </td>
                         </tr>
                     </table>            
