@@ -114,14 +114,13 @@
                                         $requete = "SELECT nomlabo from Laboratoire;";
                                         
                                         $labos = send_query($dbconnect, $requete);
-                                        foreach($ligne as $result)
+                                        foreach($labos as $ligne)
                                         {
                                             echo "<li>
-                                                    <a href=\"laboratoire.php?nomlaboratoire=".$ligne['nomLabo']."\">" 
-                                                    . $ligne['nomLabo'] . "</a>";
+                                                    <a href=\"laboratoire.php?nomlaboratoire=".$ligne['nomlabo']."\">" 
+                                                    . $ligne['nomlabo'] . "</a>";
                                             echo "</li>";
                                         }
-
                                      ?>
                                 </ul>
                             </li>
