@@ -214,7 +214,7 @@
 
                         <input type="checkbox" name="typerechercheplus1" value="Laboratoire"> Laboratoire <?php listesR("nomlabo","Laboratoire"); ?> </input> <br>
                         <input type="checkbox" name="typerechercheplus2" value="Equipe"> Équipe <?php  listesR("nomeq","Equipe"); ?> </input> <br>
-                        <input type="checkbox" name="typerechercheplus4" value="specialite"> Specialité <?php  listesR("specialite","Equipe"); ?> </input> <br>
+                        <input type="checkbox" name="typerechercheplus3" value="specialite"> Specialité <?php  listesR("specialite","Equipe"); ?> </input> <br>
                        
                         
 
