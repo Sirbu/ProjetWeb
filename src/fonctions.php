@@ -13,15 +13,21 @@
 	    }
 	}
 
-	function send_query($dbconnect, $query)
+	function send_query($query)
 	{
+		$dbconnect = connectDB();
+
 		$result = pg_query($dbconnect, $query);
 		if(!$result)
 		{
 			header('Location: erreur.php?error=err_fct_req');
 		}
 
-		return pg_fetch_all($result);
+		$lignes = pg_fetch_all($result);
+
+		pg_close($dbconnect);
+
+		return $lignes;
 	}
  
 

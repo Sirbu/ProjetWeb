@@ -1,8 +1,6 @@
 <?php 
     include 'fonctions.php';
 
-    $dbconnect = connectDB();
-
     isset($_COOKIE["session"]) ? $logged = true : $logged = false;
 
     $file = fopen("nbr_visites.txt", "c+");
@@ -98,7 +96,7 @@
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="index.php">Accueil</a></li>
-                            <li><a href="publications.php">Publications</a></li>
+                            <li><a href="liste_publications.php">Publications</a></li>
                             
                             <li class="dropdown">
                                 <a href="laboratoires.php" class="dropdown-toggle" data-toggle="dropdown" 
@@ -110,7 +108,7 @@
                                     <?php 
                                         $requete = "SELECT nomlabo from Laboratoire;";
                                         
-                                        $labos = send_query($dbconnect, $requete);
+                                        $labos = send_query($requete);
                                         foreach($labos as $ligne)
                                         {
                                             echo "<li>
@@ -122,7 +120,7 @@
                                 </ul>
                             </li>
                             
-                            <li><a href="recherche.php">Recherche</a></li>
+                            <li><a href="rech3.php">Recherche</a></li>
                             <?php 
                                 if($logged)
                                 {
@@ -164,7 +162,7 @@
                                     <p><b>Nombre de publications</b></p>
                                     <?php 
                                         $query = "SELECT COUNT(idpubli) FROM Publication;";
-                                        $result = send_query($dbconnect, $query);
+                                        $result = send_query($query);
                                         echo "<p>";
                                         echo $result[0]['count'];
                                         echo "</p>";
@@ -178,7 +176,7 @@
                                 <p><b>Nombre de chercheurs</b></p>
                                 <?php 
                                     $query = "SELECT COUNT(idch) FROM Chercheur;";
-                                    $result = send_query($dbconnect, $query);
+                                    $result = send_query($query);
                                     echo "<p>";
                                     echo $result[0]['count'];
                                     echo "</p>";
@@ -190,7 +188,7 @@
                                 <p><b>Nombre de laboratoires</b></p>
                                 <?php 
                                     $query = "SELECT count(idLabo) FROM Laboratoire;";
-                                    $result = send_query($dbconnect, $query);
+                                    $result = send_query($query);
                                     echo "<p>";
                                     echo $result[0]['count'];
                                     echo "</p>";
@@ -212,7 +210,7 @@
                                 <p><b>Budget moyen des projet</b></p>
                                 <?php 
                                     $query = "SELECT avg(budget) FROM Projet;";
-                                    $result = send_query($dbconnect, $query);
+                                    $result = send_query($query);
                                     echo "<p>";
                                     printf("%d €", $result[0]['avg']);
                                     echo "</p>";
@@ -229,18 +227,11 @@
                             <?php
                                 // À METTRE DANS FONCTIONS.PHP !
                                 $query = "SELECT * FROM Projet;";
-                                $result = pg_query($dbconnect, $query);
-                                if(!$result)
-                                {
-                                    header("Location: erreur.php?error=SQL_ERROR");
-                                    die();
-                                }
+                                $desc = send_query($query);
 
-                                $desc = pg_fetch_row($result);
-
-                                echo $desc[1] . "</h2>";
+                                echo $desc[0]['nomprojet'] . "</h2>";
                                                                            
-                                echo "<p>" . $desc[3] . "</p>";
+                                echo "<p>" . $desc[0]['descriptionprojet'] . "</p>";
                             ?> 
                         </caption>
                     </div>
@@ -263,18 +254,11 @@
                                     ." AND Pb.idch = C.idch"
                                     ." ORDER BY datePubli;";
 
-                            $result = pg_query($dbconnect, $query);
-                            if(!$result)
-                            {
-                                header('Location: erreur.php?error=err_SQL');
-                                die();
-                            }
+                            $info_publi = send_query($query);
 
                             // nombre de publications à afficher
                             // dans le carousel
                             $nbr_publi = 3;
-
-                            $info_publi = pg_fetch_all($result);
 
                             // on ne doit pas faire plus de slides que de publications
                             // disponibles. Même si au départ on veut en afficher 3, il 
@@ -309,7 +293,7 @@
                                 echo "          <a href=\"publication.php?idpublication=".$info_publi[$i]['idpubli']."\">
                                                     <h1>" . $info_publi[$i]['titre'] . "</h1>
                                                 </a>";
-                                echo "          <a href=\"chercheur.php?nomchercheur=".$info_publi[$i]['titre']."\">
+                                echo "          <a href=\"chercheur.php?nomchercheur=".$info_publi[$i]['nomch']."\">
                                                     <p>" . $info_publi[$i]['nomch'] . "</p>
                                                 </a>";
 

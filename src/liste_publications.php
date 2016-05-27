@@ -242,27 +242,33 @@
                             {
 
                                 $list_publi = pg_fetch_all($result);
-
-                                foreach($list_publi as $ligne)
+                                if(!$list_publi)
                                 {
-                                    // on cherche le nom de l'auteur aussi !
-                                    $requete_auteur = "
-                                    SELECT nomch FROM Chercheur, Publie, Publication"
-                                     . " WHERE Publication.idpubli = ". $ligne['idpubli']
-                                     . " AND Publication.idpubli = Publie.idpubli"
-                                     . " AND Publie.idch = Chercheur.idch;";
+                                    foreach($list_publi as $ligne)
+                                    {
+                                        // on cherche le nom de l'auteur aussi !
+                                        $requete_auteur = "
+                                        SELECT nomch FROM Chercheur, Publie, Publication"
+                                         . " WHERE Publication.idpubli = ". $ligne['idpubli']
+                                         . " AND Publication.idpubli = Publie.idpubli"
+                                         . " AND Publie.idch = Chercheur.idch;";
 
-                                    $result = pg_query($dbconnect, $requete_auteur);
-                                    // vérifier si !$result ?
-                                    $auteur = pg_fetch_row($result);
+                                        $result = pg_query($dbconnect, $requete_auteur);
+                                        // vérifier si !$result ?
+                                        $auteur = pg_fetch_row($result);
 
-                                    echo "<legend>" . $ligne['titre'] . "</legend>";
-                                    echo "<p>Publiée le : " . $ligne['datepubli'] 
-                                            . " par <a href=\"chercheur.php?nomchercheur=" . $auteur[0] . "\">"
-                                            . $auteur[0] . "</a></p>";
+                                        echo "<legend>" . $ligne['titre'] . "</legend>";
+                                        echo "<p>Publiée le : " . $ligne['datepubli'] 
+                                                . " par <a href=\"chercheur.php?nomchercheur=" . $auteur[0] . "\">"
+                                                . $auteur[0] . "</a></p>";
 
-                                    echo "<p>Lien : <a href=" . $ligne['urlpub'] . ">"
-                                        . basename($ligne['urlpub']) . "</a></p>";
+                                        echo "<p>Lien : <a href=" . $ligne['urlpub'] . ">"
+                                            . basename($ligne['urlpub']) . "</a></p>";
+                                    }
+                                }
+                                else
+                                {
+                                    echo "<p>Aucune publication</p>";
                                 }
                             }
 

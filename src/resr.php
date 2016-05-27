@@ -109,7 +109,7 @@
                                 </ul>
                             </li>
                             
-                            <li><a href="recherche.php">Recherche</a></li>
+                            <li><a href="rech3.php">Recherche</a></li>
                             <?php 
                                 if($logged)
                                 {
@@ -121,11 +121,9 @@
                                                     <span class=\"caret\"></span>
                                             </a>
                                             <ul class=\"dropdown-menu\">
-                                                <li><a href=\"#\">Tâches</a></li>
-                                                <li><a href=\"#\">Messages</a></li>
+                                                <li><a href=\"taches.php\">Tâches</a></li>
+                                                <li><a href=\"isteMessage.php\">Messages</a></li>
                                                 <li><a href=\"listeDoc.php\">Documents</a></li>
-                                                <li role=\"separator\" class=\"divider\"></li>
-                                                <li><a href=\"#\">Gestion</a></li>
                                             </ul>
                                         </li>";                                    
                                 }
@@ -138,9 +136,9 @@
             </nav>
 
             <div class="main-container container-fluid">
-                <form action="recherche.php">
-                    <input type="text" name="search" placeholder="Recherche">
-                    <input type="submit" name="boutonEnvoi" value="OK">
+                <form action="resr.php" method="GET">
+                    <input type="text" name="rechrapide" placeholder="Recherche">
+                    <input type="submit" name="boutonEnvoi" value="Rechercher">
                 </form>
 
 
@@ -176,9 +174,11 @@
                         else if(isset($_POST["texterecherche"]) && $_POST["texterecherche"] != ""){
                             $texte = strtoupper($_POST["texterecherche"]);
                             $type = $_POST["typerecherche"];            // recupere l'une des 3 radios choisis
-                            $t1 = $_POST["typerechercheplus1"];         // t1,t2,t3,t4 servent a voir si les checkBox sont cochés
-                            $t2 = $_POST["typerechercheplus2"];
-                            $t3 = $_POST["typerechercheplus3"];
+                            
+                            // t1,t2,t3,t4 servent a voir si les checkBox sont cochés
+                            isset($_POST["typerechercheplus1"]) ? $t1 = $_POST["typerechercheplus1"] : $t1 = "";
+                            isset($_POST["typerechercheplus2"]) ? $t2 = $_POST["typerechercheplus2"] : $t2 = "";
+                            isset($_POST["typerechercheplus3"]) ? $t3 = $_POST["typerechercheplus3"] : $t3 = "";
                             $s1 = $_POST["selectionnomlabo"];           // s1,s2,s3,s4 recuperent respectivement le choix dans le menu déroulant de chaque checkBox
                             $s2 = $_POST["selectionnomeq"];
                             $s3 = $_POST["selectionspecialite"];
@@ -233,7 +233,7 @@
                                 echo "<h1> Publications Trouvés: $cpt</h1>";
 
                             for($i=0; $i < $cpt ; $i++){
-                                if($type == nomch){
+                                if($type == "nomch"){
                                     $nom = $res[$i]['nomch'];
                                     echo "<a href=chercheur.php?nomchercheur=$nom> $nom </a> <br>";
                                 }
