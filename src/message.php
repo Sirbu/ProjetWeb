@@ -172,15 +172,18 @@
                         
                         <?php 
                         /*Récupère le message de la BDD*/
-                        $requete2 = "SELECT chercheur.nomch,objet,dateenvoi,contenumess from message,chercheur WHERE chercheur.loginch='".$_COOKIE["session"]."' AND message.iddiscussion = '".$_GET["idmess"]."'";
+                        $requete2 = "SELECT chercheur.nomch,objet,dateenvoi,contenumess from message,chercheur WHERE chercheur.loginch='"
+                        .$_COOKIE["session"]."' AND message.iddiscussion = '".$_GET["iddiscussion"]."';";
 
+                        echo $requete2;
                         $resultat = pg_query($dbconnect, $requete2);
                         if(!$resultat)
                             echo "Erreur DB résultat";                       
 
                         $colonne = pg_fetch_all($resultat);
                                                                     
-                        
+                        print_r($colonne[0]);
+
                         $objet= $colonne[0][objet];                       
                     
                         $date = $colonne[0][dateenvoi];
@@ -190,7 +193,7 @@
                         echo('<legend class="rubrique"> Objet : ' . $objet .'</legend>');              
                         echo("Expediteur : $expediteur<BR>");
                         echo("Date :$date<BR>");
-                        echo("<BR>$contenu");
+                        echo("Contenu :<BR>$contenu");
                                                
                         
                         ?>

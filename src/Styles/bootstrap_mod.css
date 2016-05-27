@@ -109,10 +109,10 @@ body
 
 
 
-/*Placement du bouton ajout d'une tache*/
-.bouton-tache{
-	position: absolute;
-	right :15%;
+/*Placement des boutons*/
+.inline{
+	display : inline-block;
 }
+
 
 /* Penser a une classe générale content */

@@ -1,7 +1,7 @@
 <?php 
 	function connectDB()
 	{
-		$dbconnect = pg_connect("host=localhost port=5432 dbname=RCP user=postgres password=post");
+		$dbconnect = pg_connect("host=localhost port=5432 dbname=RCP user=postgres password=stri");
 
 	    if(!$dbconnect)
 	    {
@@ -14,6 +14,7 @@
 	}
 
 	function idLastElement($id,$table)
+/*Retourne le dernier élément d'une table incrémenté de 1 */
 	{
 		$requete = "SELECT max($id) FROM $table;";
         $resultat = pg_query(connectDB(), $requete);
@@ -27,4 +28,18 @@
         return $cpt;
 	}
 
- ?>
+	
+	function idcalFind($nomT)
+/*Récupère la clé de la date (idcal) associée à la tâche*/
+	{
+	    $requete1 = "SELECT idcal FROM tache WHERE nomtache = '".$nomT."';";    
+	    $resultat = pg_query(connectDB(), $requete1);    
+	    $lignes = pg_fetch_row($resultat);	            
+	    $idcal = $lignes[0];
+	    return $idcal;
+	}
+
+	
+
+
+?>

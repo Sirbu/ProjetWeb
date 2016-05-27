@@ -141,17 +141,29 @@
 
                 <!-- Contenu de la page -->
                 <div class="content-container">
-                        <!-- Bouton vers la page d'ajout de tache -->
-                        <div class="bouton-tache">
-                            <form action="ajoutTaches.php" method="post">
-                            <input type="submit" value="Ajouter une tache"> </form>
-                        </div>
-                    <fieldset class="task-container"> 
-
+                       
+                    <fieldset class="task-container">
                         <legend class="rubrique"> Tâches </legend>
 
-                        <?php                        
+                        <!-- Bouton vers la page d'ajout de tache -->
+                        <div class="inline">                       
+                            <form action="ajoutTaches.php" method="post">
+                            <input class="bouton-ajoutT" type="submit" value="Ajouter une tache"> </form>
+                        </div> 
 
+                        <!-- Bouton vers la page de modification de date -->                        
+                        <div class="inline">
+                            <form action="modifTaches1.php" method="post">
+                            <input class="bouton-modifT" type="submit" value="Modifier une tâche"> </form>
+                        </div>
+
+                        <!-- Bouton vers la page de suppression de tache -->                        
+                        <div class="inline">
+                            <form action="retraitTaches.php" method="post">
+                            <input class="bouton-supprimerT" type="submit" value="Supprimer une tache"> </form>
+                        </div>
+
+                        <?php  
                         /*Récupère les taches de la BDD*/
                         $requete = "SELECT calendrier.datedebut, calendrier.datefin,nomtache,typetache,descriptiontaches FROM tache,calendrier WHERE tache.idcal = calendrier.idcal;";
                                         
@@ -175,10 +187,7 @@
                                 
                             }
                                              
-                    echo '</fieldset>'; 
-
-                    
-                    
+                    echo '</fieldset>';                 
                           
                     ?>                       
                 </div>
