@@ -4,22 +4,6 @@
     $dbconnect = connectDB();
 
     isset($_COOKIE["session"]) ? $logged = true : $logged = false;
-
-    $file = fopen("nbr_visites.txt", "c+");
-    if(!$file)
-    {
-        header("Location: erreur.php?error=file_access_denied");
-        die();
-    }
-
-    $visites = fgets($file);
-    if(!$visites)
-    {
-        $visites = 0;
-    }
-    $visites++;
-    rewind($file);
-    fwrite($file, $visites);
  ?>
 
 <!DOCTYPE html>
@@ -48,6 +32,19 @@
 
         <!-- What is this ? -->
         <link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
+
+        <script> 
+            /*Fcontion pour le submit de la recherche*/
+            function mysubmit(){
+                var testing = document.getElementById('texteR').value;
+                if ( testing == ""){
+                    document.getElementById('texteR').placeholder = "Saisir Objet";
+                    document.getElementById('objetR').style.color = "red";
+                }
+                else
+                    document.getElementById('research').submit();
+            }
+        </script>
         
     </head>
 
@@ -100,8 +97,8 @@
                      
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li><a href="index.php">Accueil</a></li>
-                            <li><a href="liste_publications.php">Publications</a></li>
+                            <li class="active"><a href="index.php">Accueil</a></li>
+                            <li><a href="publications.php">Publications</a></li>
                             
                             <li class="dropdown">
                                 <a href="laboratoires.php" class="dropdown-toggle" data-toggle="dropdown" 
@@ -111,21 +108,21 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <?php 
-                                        $requete = "SELECT nomlabo from Laboratoire;";
+                                        $requete = "SELECT nomlabo from laboratoire;";
                                         
-                                        $labos = send_query($dbconnect, $requete);
-                                        foreach($labos as $ligne)
+                                        $labos = pg_query($dbconnect, $requete);
+                                        while($nomLabo = pg_fetch_row($labos))
                                         {
                                             echo "<li>
-                                                    <a href=\"laboratoire.php?nomlaboratoire=".$ligne['nomlabo']."\">" 
-                                                    . $ligne['nomlabo'] . "</a>";
+                                                    <a href=\"laboratoire.php?nomlaboratoire=$nomLabo[0]\">" . $nomLabo[0] . "</a>";
                                             echo "</li>";
                                         }
+
                                      ?>
                                 </ul>
                             </li>
                             
-                            <li class="active"><a href="recherche.php">Recherche</a></li>
+                            <li><a href="recherche.php">Recherche</a></li>
                             <?php 
                                 if($logged)
                                 {
@@ -138,7 +135,7 @@
                                             </a>
                                             <ul class=\"dropdown-menu\">
                                                 <li><a href=\"#\">Tâches</a></li>
-                                                <li><a href=\"listeMessage.php\">Messages</a></li>
+                                                <li><a href=\"#\">Messages</a></li>
                                                 <li><a href=\"listeDoc.php\">Documents</a></li>
                                                 <li role=\"separator\" class=\"divider\"></li>
                                                 <li><a href=\"#\">Gestion</a></li>
@@ -154,78 +151,11 @@
             </nav>
 
             <div class="main-container container-fluid">
-                <form action="resr.php" method="GET">
-                    <input type="text" name="rechrapide" placeholder="Recherche">
-                    <input type="submit" name="boutonEnvoi" value="Rechercher">
+                <form action="recherche.php">
+                    <input type="text" name="search" placeholder="Recherche">
+                    <input type="submit" name="boutonEnvoi" value="OK">
                 </form>
-                
-                <div class="sidebar-container">
-                    <table class="personnal-sidebar" height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
-                     align="left">
-                        <caption> <h2>Statistiques</h2> </caption>
-                        <tr>
-                            <td class="news-title">
-                                <div>
-                                    <p><b>Nombre de publications :</b></p>
-                                    <?php 
-                                        $query = "SELECT COUNT(idpubli) FROM Publication;";
-                                        $result = send_query($dbconnect, $query);
-                                        echo "<p>";
-                                        echo $result[0]['count'];
-                                        echo "</p>";
-                                     ?>
 
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                <p><b>Nombre de chercheurs :</b></p>
-                                <?php 
-                                    $query = "SELECT COUNT(idch) FROM Chercheur;";
-                                    $result = send_query($dbconnect, $query);
-                                    echo "<p>";
-                                    echo $result[0]['count'];
-                                    echo "</p>";
-                                 ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                <p><b>Nombre de laboratoires :</b></p>
-                                <?php 
-                                    $query = "SELECT count(idLabo) FROM Laboratoire;";
-                                    $result = send_query($dbconnect, $query);
-                                    echo "<p>";
-                                    echo $result[0]['count'];
-                                    echo "</p>";
-                                 ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                <p><b>Nombre de visites :</b></p>
-                                <?php 
-                                    echo "<p>";
-                                    echo $visites;
-                                    echo "</p>";
-                                 ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                <p><b>Budget moyen des projet :</b></p>
-                                <?php 
-                                    $query = "SELECT avg(budget) FROM Projet;";
-                                    $result = send_query($dbconnect, $query);
-                                    echo "<p>";
-                                    printf("%d €", $result[0]['avg']);
-                                    echo "</p>";
-                                 ?>
-                            </td>
-                        </tr>
-                    </table>            
-                </div>
 
                 <div class="content-container">
                     
@@ -234,28 +164,95 @@
                     <form id="research" method="POST" action="resr.php">
                         <div id="objetR"> Objet de la recheche: </div>
                         <input id="texteR" type="text" name="texterecherche"/> <br>
-                        <input type="radio" name="typerecherche" value="nomprojet" checked> Nom de Projet <br>
-                        <input type="radio" name="typerecherche" value="titre"/> Titre de Publication <br>
+                        <input type="radio" name="typerecherche" value="titre" checked/> Titre de Publication <br>
                         <input type="radio" name="typerecherche" value="nomch"/> Chercheur <br><br>
                         
                         
                         <input type="button" value="Rechercher" onclick="mysubmit()" /><br><br>
 
+                        <script>
+                            function redir(){
+                                var labo = document.getElementById("selectionnomlabo").value;
+                                var eq = document.getElementById("selectionnomeq").value;
+                                var dom = document.getElementById("selectiondomaine").value;
+                                var spec = document.getElementById("selectionspecialite").value;
+                                window.location="rech2.php?lab=" + labo + "&equipe=" + eq + "&dom=" + dom +"&spec=" + spec;
+                            }
+                        </script>
+
                         <input type="checkbox" name="typerechercheplus1" value="Laboratoire"> Laboratoire
                             <?php
                     
                             function listesR($idR,$nomR){
-                                $query = "SELECT $idR FROM $nomR";
-                                $result = pg_query($query);
-                                $res = pg_fetch_all($result);
-                            
-                                $a = count($res);
-                                echo "<select name=\"selection".$idR."\">";
-                                for($i = 0 ; $i < $a ; $i++){
-                                    $b = $res[$i][$idR];
-                                    echo "<option value='$b'>$b</option>";
+                                
+                                
+                                if(isset($_GET["lab"]) && $idR == "nomeq"){
+                                    $query = "SELECT $idR FROM Laboratoire, $nomR WHERE nomlabo='".$_GET["lab"]."'";
+                                    $result = pg_query($query);
+                                    $res = pg_fetch_all($result);
+                                
+                                    $a = count($res);
+                                    
+                                    echo "<select id=\"selection".$idR."\" name=\"selection".$idR."\" onchange=redir()>";
+                                    
+                                    for($i = 0 ; $i < $a ; $i++){
+                                        $b = $res[$i][$idR];
+                                        if ($b == $_GET["equipe"])
+                                            echo "<option selected value='$b'>$b</option>";
+                                        else
+                                            echo "<option value='$b'>$b</option>";
+                                    }
+                                    echo "</select>";
                                 }
-                                echo "</select>";
+                                else if(isset($_GET["equipe"]) && $idR == "specialite"){
+                                    $query = "SELECT $idR FROM $nomR WHERE nomeq='".$_GET["equipe"]."'";
+                                    $result = pg_query($query);
+                                    $res = pg_fetch_all($result);
+                                
+                                    $a = count($res);
+                                    echo "<select id=\"selection".$idR."\" name=\"selection".$idR."\" onchange=redir()>";
+                                    
+                                    for($i = 0 ; $i < $a ; $i++){
+                                        $b = $res[$i][$idR];
+                                        if ($b == $_GET["spec"])
+                                            echo "<option selected value='$b'>$b</option>";
+                                        else
+                                            echo "<option value='$b'>$b</option>";
+                                    }
+                                    echo "</select>";  
+                                
+                                   
+                                }else if(isset($_GET["lab"]) && $idR == "domaine"){
+                                    $query = "SELECT $idR FROM $nomR WHERE nomlabo='".$_GET["lab"]."'";
+                                    $result = pg_query($query);
+                                    $res = pg_fetch_all($result);
+                                
+                                    $a = count($res);
+                                    echo "<select id=\"selection".$idR."\" name=\"selection".$idR."\" onchange=redir()>";
+                                    
+                                    for($i = 0 ; $i < $a ; $i++){
+                                        $b = $res[$i][$idR];
+                                        if ($b == $_GET["dom"])
+                                            echo "<option selected value='$b'>$b</option>";
+                                        else
+                                            echo "<option value='$b'>$b</option>";
+                                    }
+                                    echo "</select>";
+                                   
+                                }else{
+
+                                    $query = "SELECT $idR FROM $nomR";
+                                    $result = pg_query($query);
+                                    $res = pg_fetch_all($result);
+                                
+                                    $a = count($res);
+                                    echo "<select id=\"selection".$idR."\" name=\"selection".$idR."\" onchange=redir()>";
+                                    for($i = 0 ; $i < $a ; $i++){
+                                        $b = $res[$i][$idR];
+                                        echo "<option value='$b'>$b</option>";
+                                    }
+                                    echo "</select>";
+                                }
                             }
 
                             listesR("nomlabo","Laboratoire");
@@ -319,5 +316,6 @@
         <script src="bootstrap/js/bootstrap.min.js"></script>
 
     </body>
-</html>
 
+
+</html>
