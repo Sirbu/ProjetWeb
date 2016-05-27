@@ -13,8 +13,20 @@
 	    }
 	}
 
+	function send_query($dbconnect, $query)
+	{
+		$result = pg_query($dbconnect, $query);
+		if(!$result)
+		{
+			header('Location: erreur.php?error=err_fct_req');
+		}
+
+		return pg_fetch_all($result);
+	}
+ 
+
+	/* Retourne le dernier élément d'une table incrémenté de 1 */
 	function idLastElement($id,$table)
-/*Retourne le dernier élément d'une table incrémenté de 1 */
 	{
 		$requete = "SELECT max($id) FROM $table;";
         $resultat = pg_query(connectDB(), $requete);
@@ -29,8 +41,8 @@
 	}
 
 	
+	/*Récupère la clé de la date (idcal) associée à la tâche*/
 	function idcalFind($nomT)
-/*Récupère la clé de la date (idcal) associée à la tâche*/
 	{
 	    $requete1 = "SELECT idcal FROM tache WHERE nomtache = '".$nomT."';";    
 	    $resultat = pg_query(connectDB(), $requete1);    
@@ -38,8 +50,5 @@
 	    $idcal = $lignes[0];
 	    return $idcal;
 	}
-
-	
-
 
 ?>

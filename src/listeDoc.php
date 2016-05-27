@@ -4,6 +4,28 @@
     $dbconnect = connectDB();
 
     isset($_COOKIE["session"]) ? $logged = true : $logged = false;
+
+    if(!$logged)
+    {
+        header('Location: erreur.php?error=forbidden');
+        die();
+    }
+
+    $file = fopen("nbr_visites.txt", "c+");
+    if(!$file)
+    {
+        header("Location: erreur.php?error=file_access_denied");
+        die();
+    }
+
+    $visites = fgets($file);
+    if(!$visites)
+    {
+        $visites = 0;
+    }
+    $visites++;
+    rewind($file);
+    fwrite($file, $visites);
  ?>
 
 <!DOCTYPE html>
@@ -29,9 +51,6 @@
 
         <!-- CSS pour le JQuery button "se connecter" -->
          <link rel="stylesheet" href="Styles/css_connecter_button.css">
-
-        <!-- What is this ? -->
-        <link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
         
     </head>
 
@@ -84,8 +103,8 @@
                      
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="index.php">Accueil</a></li>
-                            <li><a href="publication.php">Publications</a></li>
+                            <li><a href="index.php">Accueil</a></li>
+                            <li><a href="liste_publications.php">Publications</a></li>
                             
                             <li class="dropdown">
                                 <a href="laboratoires.php" class="dropdown-toggle" data-toggle="dropdown" 
@@ -95,16 +114,16 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <?php 
-                                        $requete = "SELECT nomlabo from laboratoire;";
+                                        $requete = "SELECT nomlabo from Laboratoire;";
                                         
-                                        $labos = pg_query($dbconnect, $requete);
-                                        while($nomLabo = pg_fetch_row($labos))
+                                        $labos = send_query($dbconnect, $requete);
+                                        foreach($labos as $ligne)
                                         {
                                             echo "<li>
-                                                    <a href=\"laboratoire.php?nomlaboratoire=$nomLabo[0]\">" . $nomLabo[0] . "</a>";
+                                                    <a href=\"laboratoire.php?nomlaboratoire=".$ligne['nomlabo']."\">" 
+                                                    . $ligne['nomlabo'] . "</a>";
                                             echo "</li>";
                                         }
-
                                      ?>
                                 </ul>
                             </li>
@@ -138,69 +157,111 @@
             </nav>
 
             <div class="main-container container-fluid">
-                <form action="recherche.php">
-                    <input type="text" name="search" placeholder="Recherche">
-                    <input type="submit" name="boutonEnvoi" value="OK">
+                <form action="resr.php" method="GET">
+                    <input type="text" name="rechrapide" placeholder="Recherche">
+                    <input type="submit" name="boutonEnvoi" value="Rechercher">
                 </form>
-
-
-                <div class="content-container">
-                    <div class="personnal-sidebar">
-                        <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
-                         align="left">
-                            <caption> <h2>News</h2> </caption>
-                            <tr>
-                                <td class="news-title">
-                                    <div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="news-title">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
-                                </td>
-                            </tr>
-                        </table>            
-                    </div>
-
-                     
-                 <caption> <h2>Documents</h2> </caption>
-                        
+                
+                <div class="sidebar-container">
+                    <table class="personnal-sidebar" height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
+                     align="left">
+                        <caption> <h2>Statistiques</h2> </caption>
+                        <tr>
+                            <td class="news-title">
                                 <div>
-                                     <fieldset>  
-                                        <?php 
+                                    <p><b>Nombre de publications :</b></p>
+                                    <?php 
+                                        $query = "SELECT COUNT(idpubli) FROM Publication;";
+                                        $result = send_query($dbconnect, $query);
+                                        echo "<p>";
+                                        echo $result[0]['count'];
+                                        echo "</p>";
+                                     ?>
 
-                                $query= " SELECT document.idDoc, typeDoc, titreDoc,nomch FROM Document,Depose,Chercheur WHERE document.idDoc = depose.idDoc AND chercheur.idch= depose.idch AND chercheur.loginch='".$_COOKIE["session"]."'";
-                                $result=pg_query($query);
-                                $docs = pg_fetch_all($result);
-                                    
-                                
-                                
-                                $a = count($docs);
-                               
-                               
-                                for ($i = 0 ; $i < $a ; $i++){ 
-                                    $idd = $docs[$i][iddoc];
-                                    $titred = $docs[$i][titredoc];
-                                    $nomcher = $docs[$i][nomch];
-                                    $type = $docs[$i][typedoc];
-                                    if($titred != ""){
-                                        
-                                        echo "<legend> - <a href=document.php?iddoc=$idd>$titred</a> </legend>";
-                                        echo "<p> Auteur : $nomcher </p>";
-                                        echo "<p> Type : $type </p>";
-                                        
-                                    }
-                                    else{
-                                        echo "Aucun documents. <br>";
-                                    }
-                                }
-                                         ?>
-                                
-                            
-                                    </fieldset>
                                 </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Nombre de chercheurs :</b></p>
+                                <?php 
+                                    $query = "SELECT COUNT(idch) FROM Chercheur;";
+                                    $result = send_query($dbconnect, $query);
+                                    echo "<p>";
+                                    echo $result[0]['count'];
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Nombre de laboratoires :</b></p>
+                                <?php 
+                                    $query = "SELECT count(idLabo) FROM Laboratoire;";
+                                    $result = send_query($dbconnect, $query);
+                                    echo "<p>";
+                                    echo $result[0]['count'];
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Nombre de visites :</b></p>
+                                <?php 
+                                    echo "<p>";
+                                    echo $visites;
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Budget moyen des projet :</b></p>
+                                <?php 
+                                    $query = "SELECT avg(budget) FROM Projet;";
+                                    $result = send_query($dbconnect, $query);
+                                    echo "<p>";
+                                    printf("%d €", $result[0]['avg']);
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                    </table>            
+                </div>
+                        
+                <div class="content-container">
+                    <caption> <h2>Documents</h2> </caption>
+                    <fieldset>  
+                    <?php 
+
+                        $query= " SELECT document.idDoc, typeDoc, titreDoc,nomch FROM Document,Depose,Chercheur WHERE document.idDoc = depose.idDoc AND chercheur.idch= depose.idch AND chercheur.loginch='".$_COOKIE["session"]."'";
+                        $result=pg_query($query);
+                        $docs = pg_fetch_all($result);
+                        
+                        $a = count($docs);
+                                
+                        for ($i = 0 ; $i < $a ; $i++){ 
+                            $idd = $docs[$i]['iddoc'];
+                            $titred = $docs[$i]['titredoc'];
+                            $nomcher = $docs[$i]['nomch'];
+                            $type = $docs[$i]['typedoc'];
+                            
+                            if($titred != "")
+                            {
+                                
+                                echo "<legend> - <a href=document.php?iddoc=$idd>$titred</a> </legend>";
+                                echo "<p> Auteur : $nomcher </p>";
+                                echo "<p> Type : $type </p>";
+                                
+                            }
+                            else
+                            {
+                                echo "Aucun document. <br>";
+                            }
+                        }
+                     ?>
+                    </fieldset>
                 </div>
             </div>
 

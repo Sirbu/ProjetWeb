@@ -11,9 +11,6 @@ INSERT INTO Chercheur VALUES (2, 'dave', 'favoris', 2, 'Vanderhaeghe', 'David', 
 INSERT INTO Chercheur VALUES (3, 'toto', 'mdp', 1, 'Barrere', 'Francois', 'Francois.barrere@irit.fr', '0668897516', 1);
 INSERT INTO Chercheur VALUES (4, 'jesus', 'christ', 3, 'Rouanet', 'jl', 'jl.rouanet@irit.fr', '0689326547', 2);
 
--- Publications
-INSERT INTO Publication VALUES (1, 'Théorie des réseaux !', '12/05/2016', 'ftp://serveur.fr');
-
 -- Calendrier
 INSERT INTO Calendrier VALUES (1, '11/05/2016', '30/05/2016');
 

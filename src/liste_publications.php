@@ -4,6 +4,22 @@
     $dbconnect = connectDB();
 
     isset($_COOKIE["session"]) ? $logged = true : $logged = false;
+
+    $file = fopen("nbr_visites.txt", "c+");
+    if(!$file)
+    {
+        header("Location: erreur.php?error=file_access_denied");
+        die();
+    }
+
+    $visites = fgets($file);
+    if(!$visites)
+    {
+        $visites = 0;
+    }
+    $visites++;
+    rewind($file);
+    fwrite($file, $visites);
  ?>
 
 <!DOCTYPE html>
@@ -84,8 +100,8 @@
                      
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="index.php">Accueil</a></li>
-                            <li><a href="publications.php">Publications</a></li>
+                            <li><a href="index.php">Accueil</a></li>
+                            <li class="active"><a href="liste_publications.php">Publications</a></li>
                             
                             <li class="dropdown">
                                 <a href="laboratoires.php" class="dropdown-toggle" data-toggle="dropdown" 
@@ -95,16 +111,16 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <?php 
-                                        $requete = "SELECT nomlabo from laboratoire;";
+                                        $requete = "SELECT nomlabo from Laboratoire;";
                                         
-                                        $labos = pg_query($dbconnect, $requete);
-                                        while($nomLabo = pg_fetch_row($labos))
+                                        $labos = send_query($dbconnect, $requete);
+                                        foreach($labos as $ligne)
                                         {
                                             echo "<li>
-                                                    <a href=\"laboratoire.php?nomlaboratoire=$nomLabo[0]\">" . $nomLabo[0] . "</a>";
+                                                    <a href=\"laboratoire.php?nomlaboratoire=".$ligne['nomlabo']."\">" 
+                                                    . $ligne['nomlabo'] . "</a>";
                                             echo "</li>";
                                         }
-
                                      ?>
                                 </ul>
                             </li>
@@ -122,7 +138,7 @@
                                             </a>
                                             <ul class=\"dropdown-menu\">
                                                 <li><a href=\"#\">Tâches</a></li>
-                                                <li><a href=\"#\">Messages</a></li>
+                                                <li><a href=\"listeMessage.php\">Messages</a></li>
                                                 <li><a href=\"listeDoc.php\">Documents</a></li>
                                                 <li role=\"separator\" class=\"divider\"></li>
                                                 <li><a href=\"#\">Gestion</a></li>
@@ -138,60 +154,128 @@
             </nav>
 
             <div class="main-container container-fluid">
-                <form action="recherche.php">
-                    <input type="text" name="search" placeholder="Recherche">
-                    <input type="submit" name="boutonEnvoi" value="OK">
+                <form action="resr.php" method="GET">
+                    <input type="text" name="rechrapide" placeholder="Recherche">
+                    <input type="submit" name="boutonEnvoi" value="Rechercher">
                 </form>
+                
+                <div class="sidebar-container">
+                    <table class="personnal-sidebar" height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
+                     align="left">
+                        <caption> <h2>Statistiques</h2> </caption>
+                        <tr>
+                            <td class="news-title">
+                                <div>
+                                    <p><b>Nombre de publications :</b></p>
+                                    <?php 
+                                        $query = "SELECT COUNT(idpubli) FROM Publication;";
+                                        $result = send_query($dbconnect, $query);
+                                        echo "<p>";
+                                        echo $result[0]['count'];
+                                        echo "</p>";
+                                     ?>
 
-
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Nombre de chercheurs :</b></p>
+                                <?php 
+                                    $query = "SELECT COUNT(idch) FROM Chercheur;";
+                                    $result = send_query($dbconnect, $query);
+                                    echo "<p>";
+                                    echo $result[0]['count'];
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Nombre de laboratoires :</b></p>
+                                <?php 
+                                    $query = "SELECT count(idLabo) FROM Laboratoire;";
+                                    $result = send_query($dbconnect, $query);
+                                    echo "<p>";
+                                    echo $result[0]['count'];
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Nombre de visites :</b></p>
+                                <?php 
+                                    echo "<p>";
+                                    echo $visites;
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Budget moyen des projet :</b></p>
+                                <?php 
+                                    $query = "SELECT avg(budget) FROM Projet;";
+                                    $result = send_query($dbconnect, $query);
+                                    echo "<p>";
+                                    printf("%d €", $result[0]['avg']);
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                    </table>            
+                </div>
+                
+                <!-- Le contenu commence ici ! -->
                 <div class="content-container">
-                    <div class="personnal-sidebar">
-                        <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
-                         align="left">
-                            <caption> <h2>News</h2> </caption>
-                            <tr>
-                                <td class="news-title">
-                                    <div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="news-title">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
-                                </td>
-                            </tr>
-                        </table>            
-                    </div>
-
-                    <fieldset><legend>
-                        <?php
-                            $query = "SELECT titre, datePubli FROM Publication WHERE idPubli='".$_GET["idpublication"]."'";
-                            $result=pg_query($query);
-                            $pub = pg_fetch_row($result);
-                            echo "$pub[0]  ||  $pub[1]";
-                            if( $pub[0] == null){
-                                echo "<script> window.location.replace('erreur.php?error=Publication+non+trouvé') </script>";
+                    <caption><h2>Liste des publications</h2></caption>
+                    <fieldset>
+                        <?php 
+                            $query = "SELECT * FROM Publication";
+                            $result = pg_query($dbconnect, $query);
+                            if(!$result)
+                            {
+                                echo "<legend>Aucune publication !</legend>";
                             }
-                            
-                        ?>
-                        </legend>
-                        <?php
-                            $query="SELECT nomch,prenomch FROM Publie, Chercheur, Publication WHERE Publie.idch = Chercheur.idch AND Publie.idpubli ='".$_GET["idpublication"]."'";
-                            $result=pg_query($query);
-                            $auteur = pg_fetch_row($result);
-                            echo "<p>Auteur/s : <a href="."chercheur.php?nomchercheur=$auteur[0]".">$auteur[1] $auteur[0]</a></p>";
+                            else
+                            {
 
-                            echo "[CONTENU PUBLICATION À COMPLETER]";
+                                $list_publi = pg_fetch_all($result);
 
+                                foreach($list_publi as $ligne)
+                                {
+                                    // on cherche le nom de l'auteur aussi !
+                                    $requete_auteur = "
+                                    SELECT nomch FROM Chercheur, Publie, Publication"
+                                     . " WHERE Publication.idpubli = ". $ligne['idpubli']
+                                     . " AND Publication.idpubli = Publie.idpubli"
+                                     . " AND Publie.idch = Chercheur.idch;";
+
+                                    $result = pg_query($dbconnect, $requete_auteur);
+                                    // vérifier si !$result ?
+                                    $auteur = pg_fetch_row($result);
+
+                                    echo "<legend>" . $ligne['titre'] . "</legend>";
+                                    echo "<p>Publiée le : " . $ligne['datepubli'] 
+                                            . " par <a href=\"chercheur.php?nomchercheur=" . $auteur[0] . "\">"
+                                            . $auteur[0] . "</a></p>";
+
+                                    echo "<p>Lien : <a href=" . $ligne['urlpub'] . ">"
+                                        . basename($ligne['urlpub']) . "</a></p>";
+                                }
+                            }
+
+                            if(isset($_COOKIE["session"]))
+                            {
+                                echo "<p><a href=\"saisie_depot.php?type=Publication\">Déposer une Publication</a></p>";
+                            }
                         ?>
                     </fieldset>
-
                 </div>
+
             </div>
-
-
-            <div class="mentions">
+             <div class="mentions">
                 <table height="75px" width="100%" border ="1" cellspacing="1" cellpadding="1" >
                     <caption>Mention légales</caption>
                     <tr>
@@ -199,7 +283,6 @@
                     </tr>
                 </table>
             </div>
-        
         </div>
 
         <!-- Formulaire Caché pour se connecter-->
@@ -235,4 +318,6 @@
         <script src="bootstrap/js/bootstrap.min.js"></script>
 
     </body>
+
+
 </html>

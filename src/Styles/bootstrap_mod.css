@@ -3,6 +3,19 @@ body
 	background-color: #C6D9F0;
 }
 
+caption, h2
+{
+	padding-top: 0;
+	margin-top: 0;
+}
+
+tr, td
+{
+	padding: 5px;
+	vertical-align: middle;
+	text-align: left;
+}
+
 .search-form
 {
 	margin: 10px;
@@ -67,7 +80,6 @@ body
 
 .content-container
 {
-	
 	padding: 2%;
 	border-radius: 15px;
 	height: auto;
@@ -77,32 +89,24 @@ body
 {
 	width: 15%;
 	text-align: center;
-	padding-left: 10px;
-	padding-right: 10px;
 	padding-top: 10px;
-
 }
 
-.personnal-sidebar
-{
-	float: left;
-	width: 25%;
-	margin-right: 15px;
-}
 
 .mentions
 {
 	background-color: white;
 	border-radius: 15px;
-	margin-top: 5px;
+	margin-top: 10px;
 	padding: 10px;
+	width: auto;
 }
 
 .dropdown-menu li:hover .sub-menu
 {
 	visibility: visible;
 	position: absolute;
-	top: 0%;
+
 	left: 100%;
 	display: block;
 }
@@ -116,3 +120,52 @@ body
 
 
 /* Penser a une classe générale content */
+.form_depot
+{
+	margin-top: 5px;
+}
+
+.desc-projet
+{
+	margin-left: 10%;
+	/*text-align: center;*/
+}
+
+.sidebar-container
+{
+	width: 20%;
+	float: left;
+	margin-right: 50px;
+	padding-top: 2%;
+	display: inline-block;
+}
+
+.last-publi
+{
+	/*float: right;*/
+	/*height: 250px;*/
+	width: 75%;
+	height: auto;
+	margin-left: 23%;
+}
+
+.carousel
+{
+	display: inline-block;
+	width: 90%;
+	text-align: center;
+
+	/* Dégueulasse mais je vois pas trop comment faire
+	autrement. Essayez de commenter la ligne vous verrez... */
+	/*margin-top: -500px; */
+}
+
+.carousel-caption
+{
+	margin-bottom: 15%;
+}
+
+.carousel-caption > a
+{
+	color: white;
+}
