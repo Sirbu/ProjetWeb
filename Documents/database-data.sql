@@ -8,6 +8,8 @@ INSERT INTO Equipe VALUES (2, 'Visual Objects : from Reality To EXpression', 'VO
 -- Chercheurs
 INSERT INTO Chercheur VALUES (1, 'aoun', 'papaaoun', 1, 'Aoun', 'André', 'aoun@irit.fr', '0534662395', 1);
 INSERT INTO Chercheur VALUES (2, 'dave', 'favoris', 2, 'Vanderhaeghe', 'David', 'David.Vanderhaeghe@irit.fr', '0664852677', 2);
+INSERT INTO Chercheur VALUES (3, 'toto', 'mdp', 1, 'Barrere', 'Francois', 'Francois.barrere@irit.fr', '0668897516', 1);
+INSERT INTO Chercheur VALUES (4, 'jesus', 'christ', 3, 'Rouanet', 'jl', 'jl.rouanet@irit.fr', '0689326547', 2);
 
 -- Calendrier
 INSERT INTO Calendrier VALUES (1, '11/05/2016', '30/05/2016');
@@ -20,3 +22,26 @@ INSERT INTO Participe VALUES (1, 1, 'Coordinateur');
 
 -- Publie
 INSERT INTO Publie VALUES (1, 1);
+
+--Documents
+INSERT INTO Document VALUES (1, 'Les réseaux', 'Brouillon', 'ftp://serveur.fr');
+INSERT INTO Document VALUES (2, ' Protocole MPLS', 'Rapport expérience', 'ftp://serveur.fr');
+INSERT INTO Document VALUES (3, 'RIP', 'Brouillon', 'ftp://serveur.fr');
+INSERT INTO Document VALUES (4, 'OSPF', 'Brouillon', 'ftp://serveur.fr');
+INSERT INTO Document VALUES (5, 'Java', 'Rapport expérience', 'ftp://serveur.fr');
+INSERT INTO Document VALUES (6, 'ATM', 'Brouillon', 'ftp://serveuririt.fr');
+INSERT INTO Document VALUES (7, 'Gestion', 'Compte rendu réunion', 'ftp://serveuririt.fr');
+
+-- Participe
+INSERT INTO Depose VALUES (1, 1);
+INSERT INTO Depose VALUES (2, 1);
+INSERT INTO Depose VALUES (3, 2);
+INSERT INTO Depose VALUES (4, 1);
+INSERT INTO Depose VALUES (5, 2);
+INSERT INTO Depose VALUES (6, 3);
+INSERT INTO Depose VALUES (7, 4);
+
+-- Publications
+INSERT INTO Message VALUES (1, 'blabla', 'Salut ma couille', 'coucou comment va tu ?',1998,1,1);
+INSERT INTO Message VALUES (2, 'blablabis', 'Salut ma couillasse', 'yoyoyoyoyo ?',2015,2,1);
+

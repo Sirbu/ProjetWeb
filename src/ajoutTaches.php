@@ -1,12 +1,17 @@
+<?php 
+    include 'fonctions.php';
+
+    session_start();
+
+    $dbconnect = connectDB();
+ ?>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" lang="fr" />
 
-        <title>Liste des messages </title>
-
-        <link rel="icon" type="image/png" href="favicon.ico" />
-
+        <title>RCP : Research Collaborative Platform</title>
         
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -24,6 +29,7 @@
             }
         </script>
 
+        <!-- Connexion -->
         <script type="text/javascript"> 
             function test()
             {
@@ -54,7 +60,9 @@
 
     <body role="document">
 
+        
         <div class="container-fluid">
+            <!-- Bannière -->
             <div class="banner-container">
                 <table>
                     <tr>
@@ -69,6 +77,7 @@
                 </table>
             </div>
 
+            <!-- Barre de menu -->
             <nav class="navbar navbar-default">
                 <div class="container">
                     <div class="navbar-header">
@@ -83,7 +92,7 @@
                      
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li><a href="index.php">Accueil</a></li>
+                            <li class="active"><a href="index.php">Accueil</a></li>
                             <li><a href="publications.php">Publications</a></li>
                             <li><a href="laboratoires.php">Laboratoires</a></li>
                             <li><a href="recherche.php">Recherche</a></li>
@@ -92,8 +101,8 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Privé <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Tâches</a></li>
-                                    <li  class="active"><a href="#">Messages</a></li>
-                                    <li><a href="/listeDoc.php">Documents</a></li>
+                                    <li><a href="#">Messages</a></li>
+                                    <li><a href="#">Documents</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#">Gestion</a></li>
                                 </ul>
@@ -128,44 +137,62 @@
                         </tr>
                     </table>            
                 </div>
-            
-                 <table height="100%" width="70%" border ="1" cellspacing="1" cellpadding="1">
-                 <caption> <h2>Messages</h2> </caption>
-                        <tr>
-                            <td class="news-title">
-                                <div>
-                                    <?php 
-                                    $m = 1;
-                                        echo "<p> Message $m </p>";
-                                        echo "<p> Expéditeur : Toto </p>";
-                                        echo "<p> Objet : Information sur les quiches lorraines </p>";
-                                     ?>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                   <?php 
-                                    $m++;
-                                        echo "<p> Message $m </p>";
-                                        echo "<p> Expéditeur : Toto </p>";
-                                        echo "<p> Objet : Information sur les quiches lorraines </p>";
-                                     ?>
-                            </td> 
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                    <?php 
-                                    $m++;
-                                        echo "<p> Message $m </p>";
-                                        echo "<p> Expéditeur : Toto </p>";
-                                        echo "<p> Objet : Information sur les quiches lorraines </p>";
-                                     ?>
-                          </td> 
-                        </tr>
 
+                <!-- Contenu de la page -->
+                <div class="content-container">
+                    <fieldset class="task-container"> 
+                        <legend class="rubrique"> Ajouter une tâche </legend>
 
-                </table>
+                                              
+                        <!-- FORMULAIRE -->
+                        <form method="post" action="creerTaches.php" >
+                        <p>
+                            <label class="nomT">
+                            <span>Nom de la tâche</span>
+                            <input id="nomT" name="nomT" value="" type="text" placeholder="tache">
+                            </label>
+
+                            <span>Type :</span>
+                            <select name="typeT">
+                                <option value="Avancement">Avancement</option>
+                                <option value="Documentation">Documentation</option>
+                                <option value="Expérience">Expérience</option>
+                                <option value="Jalon">Jalon</option>
+                                <option value="Réunion">Réunion</option>                                
+                                <option value="Tests">Tests</option>
+                            </select>
+
+                            <button class="submit button" type="submit">Créer la tâche</button>                             
+                            <br/>
+
+                            <label class="debutT">
+                            <span>Date de début</span>
+                            <input id="debutT" name="debutT" value="" type="date" placeholder="jj/mm/aaaa">
+                            </label>
+
+                            <label class="finT">
+                            <span>Date de fin</span>
+                            <input id="finT" name="finT" value="" type="date" placeholder="jj/mm/aaaa">
+                            </label>
+                            
+
+                            <label class="descriptionT">
+                            <span>Description</span>
+                            <input id="descriptionT" name="descriptionT" value="" type="text" placeholder="description">
+                            </label>
+                        </p>                         
+                        </form>
+
+                        
+                       
+                        
+
+                    </fieldset>
+
+                                          
+                </div>
+            </div>
+
 
             <div class="mentions">
                 <table height="75px" width="100%" border ="1" cellspacing="1" cellpadding="1" >

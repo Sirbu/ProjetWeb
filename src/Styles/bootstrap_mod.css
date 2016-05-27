@@ -25,6 +25,7 @@ tr, td
 {
 	height: auto;
 	width: auto;
+	/*background-image: url("../Images/little3.png");*/
 	background-repeat: repeat repeat-y;
 	background-color: #548DD4;
 	border-radius: 15px;
@@ -108,6 +109,14 @@ tr, td
 	left: 100%;
 	display: block;
 }
+
+
+
+/*Placement des boutons*/
+.inline{
+	display : inline-block;
+}
+
 
 /* Penser a une classe générale content */
 .form_depot

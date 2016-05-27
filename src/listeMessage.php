@@ -85,7 +85,7 @@
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="index.php">Accueil</a></li>
-                            <li><a href="publications.php">Publications</a></li>
+                            <li><a href="publication.php">Publications</a></li>
                             
                             <li class="dropdown">
                                 <a href="laboratoires.php" class="dropdown-toggle" data-toggle="dropdown" 
@@ -122,7 +122,7 @@
                                             </a>
                                             <ul class=\"dropdown-menu\">
                                                 <li><a href=\"#\">Tâches</a></li>
-                                                <li><a href=\"#\">Messages</a></li>
+                                                <li><a href=\"listeMessage.php\">Messages</a></li>
                                                 <li><a href=\"listeDoc.php\">Documents</a></li>
                                                 <li role=\"separator\" class=\"divider\"></li>
                                                 <li><a href=\"#\">Gestion</a></li>
@@ -164,68 +164,39 @@
                         </table>            
                     </div>
 
-                    <fieldset><legend>
-                        <?php
-                            $query = "SELECT prenomch FROM Chercheur WHERE nomch='".$_GET["nomchercheur"]."'";
-                            $result=pg_query($query);
-                            $ch = pg_fetch_row($result);
-                            echo "$ch[0] ".$_GET["nomchercheur"];
-                            if( $ch[0] == null){
-                                echo "<script> window.location.replace('erreur.php?error=Chercheur+non+trouvé') </script>";
-                            }
-                            
-                        ?>
-                        </legend>
-                        <?php
-                            $query="SELECT nomlabo FROM Equipe, Chercheur, Laboratoire WHERE Chercheur.nomch='".$_GET["nomchercheur"]."' AND Chercheur.idequipe=Equipe.idequipe AND Equipe.idlabo=Laboratoire.idlabo";
-                            $result=pg_query($query);
-                            $nomlabo = pg_fetch_row($result);
-                            echo "<p>Laboratoire : <a href="."laboratoire.php?nomlaboratoire=$nomlabo[0]".">$nomlabo[0]</a></p>";
+                     
+                <caption> <h2>Messages</h2> </caption>
+                      
+                               <div>
+                                     <fieldset>  
+                                                <?php 
 
-                            $query="SELECT numbureau FROM Chercheur WHERE Chercheur.nomch='".$_GET["nomchercheur"]."'";
-                            $result=pg_query($query);
-                            $numBur = pg_fetch_row($result);
-                            echo "<p>Bureau : $numBur[0]</p>";
-
-                            $query="SELECT sigle FROM Equipe, Chercheur WHERE Chercheur.nomch='".$_GET["nomchercheur"]."' AND Chercheur.idequipe= Equipe.idequipe";
-                            $result=pg_query($query);
-                            $eq = pg_fetch_row($result);
-                            echo "<p>Équipe : <a href='equipe.php?nomequipe=$eq[0]'>$eq[0]</a></p>";
-
-                            $query="SELECT mail FROM Chercheur WHERE nomch='".$_GET["nomchercheur"]."'";
-                            $result=pg_query($query);
-                            $mail = pg_fetch_row($result);
-                            echo "<p>E-Mail : $mail[0]</p>";
-
-                            $query="SELECT numtel FROM Chercheur WHERE nomch='".$_GET["nomchercheur"]."'";
-                            $result=pg_query($query);
-                            $tel = pg_fetch_row($result);
-                            echo "<p>Téléphone : $tel[0]</p>";
-
-                        ?>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend>Publications</legend>
-                        <?php 
-                            $query="SELECT titre, datepubli, Publication.idpubli FROM Publication, Chercheur, Publie WHERE Chercheur.nomch ='".$_GET["nomchercheur"]."' AND Publication.idpubli= Publie.idpubli AND Chercheur.idch = Publie.idch";
-                            $result=pg_query($query);
-                            $pubs = pg_fetch_all($result);
-                            $a = count($pubs);
-                            for ($i = 0 ; $i < $a ; $i += 1 ){
-                                $titrep = $pubs[$i][titre]; 
-                                $datep = $pubs[$i][datepubli];
-                                $idp = $pubs[$i][idpubli];
-                                if($titrep != ""){
-                                    echo "-<a href=publication.php?idpublication=$idp>$titrep</a> ($datep)</br>";
-                                }
-                                else{
-                                    echo "Aucune Publication.";
-                                }
-                            }
-                        ?>
-                    </fieldset>
-
+                                        $query= " SELECT idDiscussion,objet,nomch,dateEnvoi FROM Message,Chercheur WHERE message.idch = chercheur.idch AND chercheur.loginch='".$_COOKIE["session"]."'";
+                                        $result=pg_query($query);
+                                        $mess = pg_fetch_all($result);
+                           
+                                        $a = count($mess);
+                                       
+                                       
+                                        for ($i = 0 ; $i < $a ; $i++){ 
+                                            $idmess = $mess[$i][iddiscussion];
+                                            $obj = $mess[$i][objet];
+                                            $nomcher = $mess[$i][nomch];
+                                            $date = $mess[$i][dateenvoi];
+                                            if($obj != ""){
+                                                
+                                                echo "<legend> - <a href=message.php?iddiscussion=$idmess>$obj</a> </legend>";
+                                                echo "<p> Expéditeur : $nomcher </p>";
+                                                echo "<p> Date de réception : $date </p>";
+                                                
+                                            }
+                                            else{
+                                                echo "Aucun messages. <br>";
+                                            }
+                                        }
+                                                 ?>
+                                    </fieldset>
+                                </div>
                 </div>
             </div>
 

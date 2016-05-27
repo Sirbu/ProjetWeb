@@ -1,12 +1,17 @@
+<?php 
+    include 'fonctions.php';
+
+    session_start();
+
+    $dbconnect = connectDB();
+ ?>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" lang="fr" />
 
-        <title>Résultat de la recherche</title>
-
-        <link rel="icon" type="image/png" href="favicon.ico" />
-
+        <title>RCP : Research Collaborative Platform</title>
         
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -24,6 +29,7 @@
             }
         </script>
 
+        <!-- Connexion -->
         <script type="text/javascript"> 
             function test()
             {
@@ -54,7 +60,9 @@
 
     <body role="document">
 
+        
         <div class="container-fluid">
+            <!-- Bannière -->
             <div class="banner-container">
                 <table>
                     <tr>
@@ -69,6 +77,7 @@
                 </table>
             </div>
 
+            <!-- Barre de menu -->
             <nav class="navbar navbar-default">
                 <div class="container">
                     <div class="navbar-header">
@@ -83,7 +92,7 @@
                      
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li><a href="index.php">Accueil</a></li>
+                            <li class="active"><a href="index.php">Accueil</a></li>
                             <li><a href="publications.php">Publications</a></li>
                             <li><a href="laboratoires.php">Laboratoires</a></li>
                             <li><a href="recherche.php">Recherche</a></li>
@@ -92,8 +101,8 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Privé <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Tâches</a></li>
-                                    <li><a href="http://localhost/ProjetWeb/src/listeMess.php">Messages</a></li>
-                                    <li class="active"><a href="#">Documents</a></li>
+                                    <li><a href="#">Messages</a></li>
+                                    <li><a href="#">Documents</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#">Gestion</a></li>
                                 </ul>
@@ -128,48 +137,31 @@
                         </tr>
                     </table>            
                 </div>
-            
-                 <table height="100%" width="70%" border ="1" cellspacing="1" cellpadding="1">
-                 <caption> <h2>Résultat recherche </h2> </caption>
-                        <tr>
-                            <td class="news-title">
-                                <div>
-                                    <?php 
-                                    $p = 1;
-                                     $today = date("j/n/Y");
-                                        echo "<p> Publication $p </p>";
-                                        echo "<p> Description : Coucou les amis </p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Date : $today </p>";
-                                     ?>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                    <?php 
-                                        $p++;
-                                        echo "<p> Publication $p </p>";
-                                       echo "<p> Description : Yo les gens !</p>";
-                                       echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Date : $today </p>";
-                                     ?>
-                            </td> 
-                        </tr>
-                        <tr>
-                            <td class="news-title">
-                                    <?php 
-                                        $p++;
-                                        echo "<p> Publication $p </p>";
-                                        echo "<p> Description : Salut les gars !</p>";
-                                        echo "<p> Auteur : Toto </p>";
-                                        echo "<p> Date : $today </p>";
-                                     ?>                            
-                            </td> 
-                        </tr>
 
+                <!-- Contenu de la page -->
+                <div class="content-container">
+                    <fieldset class="task-container"> 
+                        <legend class="rubrique"> Supprimer une tâche </legend>
 
-                </table>
+                                              
+                        <!-- FORMULAIRE -->
+                        <form method="post" action="supprimerTaches.php">
+                        <p>
+                            <label class="nomT">
+                            <span>Nom de la tâche à supprimer</span>
+                            <input id="nomT" name="nomT" value="" type="text" placeholder="tache">
+                            </label>
+                        </p>                            
+                        <p>
+                            <button class="submit button" type="submit">Supprimer la tâche</button>   
+                        </p>        
+                        </form>
+                                             
+                    </fieldset>
+                                          
+                </div>
+            </div>
+
 
             <div class="mentions">
                 <table height="75px" width="100%" border ="1" cellspacing="1" cellpadding="1" >
