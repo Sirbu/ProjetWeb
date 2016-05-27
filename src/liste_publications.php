@@ -114,14 +114,13 @@
                                         $requete = "SELECT nomlabo from Laboratoire;";
                                         
                                         $labos = send_query($dbconnect, $requete);
-                                        foreach($ligne as $result)
+                                        foreach($labos as $ligne)
                                         {
                                             echo "<li>
-                                                    <a href=\"laboratoire.php?nomlaboratoire=".$ligne['nomLabo']."\">" 
-                                                    . $ligne['nomLabo'] . "</a>";
+                                                    <a href=\"laboratoire.php?nomlaboratoire=".$ligne['nomlabo']."\">" 
+                                                    . $ligne['nomlabo'] . "</a>";
                                             echo "</li>";
                                         }
-
                                      ?>
                                 </ul>
                             </li>
@@ -139,7 +138,7 @@
                                             </a>
                                             <ul class=\"dropdown-menu\">
                                                 <li><a href=\"#\">Tâches</a></li>
-                                                <li><a href=\"#\">Messages</a></li>
+                                                <li><a href=\"listeMessage.php\">Messages</a></li>
                                                 <li><a href=\"listeDoc.php\">Documents</a></li>
                                                 <li role=\"separator\" class=\"divider\"></li>
                                                 <li><a href=\"#\">Gestion</a></li>
@@ -155,9 +154,9 @@
             </nav>
 
             <div class="main-container container-fluid">
-                <form action="recherche.php">
-                    <input type="text" name="search" placeholder="Recherche">
-                    <input type="submit" name="boutonEnvoi" value="OK">
+                <form action="resr.php" method="GET">
+                    <input type="text" name="rechrapide" placeholder="Recherche">
+                    <input type="submit" name="boutonEnvoi" value="Rechercher">
                 </form>
                 
                 <div class="sidebar-container">
@@ -227,8 +226,9 @@
                         </tr>
                     </table>            
                 </div>
-
-                    <!-- Le contenu commence ici ! -->
+                
+                <!-- Le contenu commence ici ! -->
+                <div class="content-container">
                     <caption><h2>Liste des publications</h2></caption>
                     <fieldset>
                         <?php 
@@ -272,12 +272,10 @@
                             }
                         ?>
                     </fieldset>
-
                 </div>
+
             </div>
-
-
-            <div class="mentions">
+             <div class="mentions">
                 <table height="75px" width="100%" border ="1" cellspacing="1" cellpadding="1" >
                     <caption>Mention légales</caption>
                     <tr>
@@ -285,7 +283,6 @@
                     </tr>
                 </table>
             </div>
-        
         </div>
 
         <!-- Formulaire Caché pour se connecter-->

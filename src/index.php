@@ -45,10 +45,7 @@
 
         <!-- CSS pour le JQuery button "se connecter" -->
          <link rel="stylesheet" href="Styles/css_connecter_button.css">
-
-        <!-- What is this ? -->
-        <link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
-        
+       
     </head>
 
     <body role="document">
@@ -137,11 +134,9 @@
                                                     <span class=\"caret\"></span>
                                             </a>
                                             <ul class=\"dropdown-menu\">
-                                                <li><a href=\"#\">Tâches</a></li>
+                                                <li><a href=\"taches.php\">Tâches</a></li>
                                                 <li><a href=\"listeMessage.php\">Messages</a></li>
                                                 <li><a href=\"listeDoc.php\">Documents</a></li>
-                                                <li role=\"separator\" class=\"divider\"></li>
-                                                <li><a href=\"#\">Gestion</a></li>
                                             </ul>
                                         </li>";                                    
                                 }
@@ -154,9 +149,9 @@
             </nav>
 
             <div class="main-container container-fluid">
-                <form action="recherche.php">
-                    <input type="text" name="search" placeholder="Recherche">
-                    <input type="submit" name="boutonEnvoi" value="OK">
+                <form action="resr.php" method="GET">
+                    <input type="text" name="rechrapide" placeholder="Recherche">
+                    <input type="submit" name="boutonEnvoi" value="Rechercher">
                 </form>
                 
                 <div class="sidebar-container">
@@ -166,7 +161,7 @@
                         <tr>
                             <td class="news-title">
                                 <div>
-                                    <p><b>Nombre de publications :</b></p>
+                                    <p><b>Nombre de publications</b></p>
                                     <?php 
                                         $query = "SELECT COUNT(idpubli) FROM Publication;";
                                         $result = send_query($dbconnect, $query);
@@ -180,7 +175,7 @@
                         </tr>
                         <tr>
                             <td class="news-title">
-                                <p><b>Nombre de chercheurs :</b></p>
+                                <p><b>Nombre de chercheurs</b></p>
                                 <?php 
                                     $query = "SELECT COUNT(idch) FROM Chercheur;";
                                     $result = send_query($dbconnect, $query);
@@ -192,7 +187,7 @@
                         </tr>
                         <tr>
                             <td class="news-title">
-                                <p><b>Nombre de laboratoires :</b></p>
+                                <p><b>Nombre de laboratoires</b></p>
                                 <?php 
                                     $query = "SELECT count(idLabo) FROM Laboratoire;";
                                     $result = send_query($dbconnect, $query);
@@ -204,7 +199,7 @@
                         </tr>
                         <tr>
                             <td class="news-title">
-                                <p><b>Nombre de visites :</b></p>
+                                <p><b>Nombre de visites</b></p>
                                 <?php 
                                     echo "<p>";
                                     echo $visites;
@@ -214,7 +209,7 @@
                         </tr>
                         <tr>
                             <td class="news-title">
-                                <p><b>Budget moyen des projet :</b></p>
+                                <p><b>Budget moyen des projet</b></p>
                                 <?php 
                                     $query = "SELECT avg(budget) FROM Projet;";
                                     $result = send_query($dbconnect, $query);
@@ -252,76 +247,77 @@
 
                     
                     <div class="last-publi">
-                        <caption><h2>Dernières publications :</h2></caption>
+                        <caption>
+                            <h2>Dernières publications :</h2>
+                        </caption>
                         <br>
                         <div id="myCarousel" class="carousel slide" data-ride="carousel">
                               <ol class="carousel-indicators">    
-                    <?php 
-                        // ici on prépare l'affichage du carousel
-                        // c'est un beau bordel d'ailleurs parce qu'un
-                        // carousel ça prend un paquet de lignes et faire
-                        // tout ça avec des echo ça fait mal aux yeux...
-                        $query = "SELECT P.idpubli, titre, nomch FROM Publication as P, Publie as Pb, Chercheur as C"
-                                ." WHERE P.idpubli = Pb.idpubli"
-                                ." AND Pb.idch = C.idch"
-                                ." ORDER BY datePubli;";
+                        <?php 
+                            // ici on prépare l'affichage du carousel
+                            // c'est un beau bordel d'ailleurs parce qu'un
+                            // carousel ça prend un paquet de lignes et faire
+                            // tout ça avec des echo ça fait mal aux yeux...
+                            $query = "SELECT P.idpubli, titre, nomch FROM Publication as P, Publie as Pb, Chercheur as C"
+                                    ." WHERE P.idpubli = Pb.idpubli"
+                                    ." AND Pb.idch = C.idch"
+                                    ." ORDER BY datePubli;";
 
-                        $result = pg_query($dbconnect, $query);
-                        if(!$result)
-                        {
-                            header('Location: erreur.php?error=err_SQL');
-                            die();
-                        }
-
-                        // nombre de publications à afficher
-                        // dans le carousel
-                        $nbr_publi = 3;
-
-                        $info_publi = pg_fetch_all($result);
-
-                        // on ne doit pas faire plus de slides que de publications
-                        // disponibles. Même si au départ on veut en afficher 3, il 
-                        // se peut qu'il n'y en aie que 2 dans la base de donnée.
-                        for($i = 0; $i < min($nbr_publi, count($info_publi)); $i++)
-                        {
-                            echo "\t\t\t\t\t<li data-target=\"#myCarousel\" data-slide-to=\"$i\" ";
-                            if($i == 0)
+                            $result = pg_query($dbconnect, $query);
+                            if(!$result)
                             {
-                                echo "class=\"active\"";
+                                header('Location: erreur.php?error=err_SQL');
+                                die();
                             }
-                            echo "></li>\n\t\t\t\t\t";
-                        }
 
-                        echo "</ol>
-                              <div class=\"carousel-inner\">
-                              ";
+                            // nombre de publications à afficher
+                            // dans le carousel
+                            $nbr_publi = 3;
 
-                        for($i = 0; $i < min($nbr_publi, count($info_publi)); $i++)
-                        {
-                            echo "\n<div class=\"item ";
-                            if($i == 0)
+                            $info_publi = pg_fetch_all($result);
+
+                            // on ne doit pas faire plus de slides que de publications
+                            // disponibles. Même si au départ on veut en afficher 3, il 
+                            // se peut qu'il n'y en aie que 2 dans la base de donnée.
+                            for($i = 0; $i < min($nbr_publi, count($info_publi)); $i++)
                             {
-                                echo "active";
+                                echo "\t\t\t\t\t<li data-target=\"#myCarousel\" data-slide-to=\"$i\" ";
+                                if($i == 0)
+                                {
+                                    echo "class=\"active\"";
+                                }
+                                echo "></li>\n\t\t\t\t\t";
                             }
-                            echo "\">";
+
+                            echo "</ol>
+                                  <div class=\"carousel-inner\">
+                                  ";
+
+                            for($i = 0; $i < min($nbr_publi, count($info_publi)); $i++)
+                            {
+                                echo "\n<div class=\"item ";
+                                if($i == 0)
+                                {
+                                    echo "active";
+                                }
+                                echo "\">";
+                                    
+                                echo  "<img class=\"img-responsive center-block\" src=\"Images/blue-paper-texture.jpg\""
+                                            . " alt=\"Slide $i\" />
+                                        <div class=\"carousel-caption\">";
+
+                                echo "          <a href=\"publication.php?idpublication=".$info_publi[$i]['idpubli']."\">
+                                                    <h1>" . $info_publi[$i]['titre'] . "</h1>
+                                                </a>";
+                                echo "          <a href=\"chercheur.php?nomchercheur=".$info_publi[$i]['titre']."\">
+                                                    <p>" . $info_publi[$i]['nomch'] . "</p>
+                                                </a>";
+
+                                echo"        </div>
+                                        </div>";
                                 
-                            echo  "<img class=\"img-responsive center-block\" src=\"Images/blue-paper-texture.jpg\""
-                                        . " alt=\"Slide $i\" />
-                                    <div class=\"carousel-caption\">";
-
-                            echo "          <a href=\"publication.php?idpublication=".$info_publi[$i]['idpubli']."\">
-                                                <h1>" . $info_publi[$i]['titre'] . "</h1>
-                                            </a>";
-                            echo "          <a href=\"chercheur.php?nomchercheur=".$info_publi[$i]['titre']."\">
-                                                <p>" . $info_publi[$i]['nomch'] . "</p>
-                                            </a>";
-
-                            echo"        </div>
-                                    </div>";
-                            
-                        }
-
-                     ?>
+                            }
+                         ?>
                               <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
                                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                                 <span class="sr-only">Previous</span>
@@ -331,6 +327,7 @@
                                 <span class="sr-only">Next</span>
                               </a>
                             </div>                        
+                        </div>
                     </div>
                 </div>
             </div>

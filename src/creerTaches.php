@@ -13,14 +13,6 @@
     $descriptionT = (isset($_POST['descriptionT'])) ? $_POST['descriptionT'] : '' ;
     $idProjet = 1;    
 
-    echo"$nomT<BR>";
-    echo"$typeT<BR>";
-    echo"$debutT<BR>";
-    echo"$finT<BR>";
-    echo"$descriptionT<BR>";
-    echo"$idProjet<BR><BR>";
-    echo"$idLastT<BR>";
-    echo"$idLastC<BR><BR>";
     /*Ajoute la date dans le calendrier*/                        
     $requete1 = "INSERT INTO calendrier VALUES ('".$idLastC."','".$debutT."','".$finT."');";    
     pg_query(connectDB(), $requete1);       

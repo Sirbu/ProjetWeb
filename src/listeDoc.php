@@ -5,6 +5,12 @@
 
     isset($_COOKIE["session"]) ? $logged = true : $logged = false;
 
+    if(!$logged)
+    {
+        header('Location: erreur.php?error=forbidden');
+        die();
+    }
+
     $file = fopen("nbr_visites.txt", "c+");
     if(!$file)
     {
@@ -45,9 +51,6 @@
 
         <!-- CSS pour le JQuery button "se connecter" -->
          <link rel="stylesheet" href="Styles/css_connecter_button.css">
-
-        <!-- What is this ? -->
-        <link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
         
     </head>
 
@@ -101,7 +104,8 @@
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li><a href="index.php">Accueil</a></li>
-                            <li><a href="liste_publications.php">Publications</a></li>                     
+                            <li><a href="liste_publications.php">Publications</a></li>
+                            
                             <li class="dropdown">
                                 <a href="laboratoires.php" class="dropdown-toggle" data-toggle="dropdown" 
                                     role="button" aria-haspopup="true" aria-expanded="false">
@@ -113,14 +117,13 @@
                                         $requete = "SELECT nomlabo from Laboratoire;";
                                         
                                         $labos = send_query($dbconnect, $requete);
-                                        foreach($ligne as $result)
+                                        foreach($labos as $ligne)
                                         {
                                             echo "<li>
-                                                    <a href=\"laboratoire.php?nomlaboratoire=".$ligne['nomLabo']."\">" 
-                                                    . $ligne['nomLabo'] . "</a>";
+                                                    <a href=\"laboratoire.php?nomlaboratoire=".$ligne['nomlabo']."\">" 
+                                                    . $ligne['nomlabo'] . "</a>";
                                             echo "</li>";
                                         }
-
                                      ?>
                                 </ul>
                             </li>
@@ -154,9 +157,9 @@
             </nav>
 
             <div class="main-container container-fluid">
-                <form action="recherche.php">
-                    <input type="text" name="search" placeholder="Recherche">
-                    <input type="submit" name="boutonEnvoi" value="OK">
+                <form action="resr.php" method="GET">
+                    <input type="text" name="rechrapide" placeholder="Recherche">
+                    <input type="submit" name="boutonEnvoi" value="Rechercher">
                 </form>
                 
                 <div class="sidebar-container">
@@ -226,44 +229,39 @@
                         </tr>
                     </table>            
                 </div>
-            
-                 <table height="100%" width="70%" border ="1" cellspacing="1" cellpadding="1">
-                 <caption> <h2>Documents</h2> </caption>
                         
-                                <div>
-                                     <fieldset>  
-                                        <?php 
+                <div class="content-container">
+                    <caption> <h2>Documents</h2> </caption>
+                    <fieldset>  
+                    <?php 
 
-                                $query= " SELECT document.idDoc, typeDoc, titreDoc,nomch FROM Document,Depose,Chercheur WHERE document.idDoc = depose.idDoc AND chercheur.idch= depose.idch AND chercheur.loginch='".$_COOKIE["session"]."'";
-                                $result=pg_query($query);
-                                $docs = pg_fetch_all($result);
-                                    
+                        $query= " SELECT document.idDoc, typeDoc, titreDoc,nomch FROM Document,Depose,Chercheur WHERE document.idDoc = depose.idDoc AND chercheur.idch= depose.idch AND chercheur.loginch='".$_COOKIE["session"]."'";
+                        $result=pg_query($query);
+                        $docs = pg_fetch_all($result);
+                        
+                        $a = count($docs);
                                 
-                                
-                                $a = count($docs);
-                               
-                               
-                                for ($i = 0 ; $i < $a ; $i++){ 
-                                    $idd = $docs[$i][iddoc];
-                                    $titred = $docs[$i][titredoc];
-                                    $nomcher = $docs[$i][nomch];
-                                    $type = $docs[$i][typedoc];
-                                    if($titred != ""){
-                                        
-                                        echo "<legend> - <a href=document.php?iddoc=$idd>$titred</a> </legend>";
-                                        echo "<p> Auteur : $nomcher </p>";
-                                        echo "<p> Type : $type </p>";
-                                        
-                                    }
-                                    else{
-                                        echo "Aucun documents. <br>";
-                                    }
-                                }
-                                         ?>
-                                
+                        for ($i = 0 ; $i < $a ; $i++){ 
+                            $idd = $docs[$i]['iddoc'];
+                            $titred = $docs[$i]['titredoc'];
+                            $nomcher = $docs[$i]['nomch'];
+                            $type = $docs[$i]['typedoc'];
                             
-                                    </fieldset>
-                                </div>
+                            if($titred != "")
+                            {
+                                
+                                echo "<legend> - <a href=document.php?iddoc=$idd>$titred</a> </legend>";
+                                echo "<p> Auteur : $nomcher </p>";
+                                echo "<p> Type : $type </p>";
+                                
+                            }
+                            else
+                            {
+                                echo "Aucun document. <br>";
+                            }
+                        }
+                     ?>
+                    </fieldset>
                 </div>
             </div>
 

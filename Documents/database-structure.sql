@@ -47,10 +47,9 @@ PRIMARY KEY (idPubli) )  ;
 
 DROP TABLE IF EXISTS Message CASCADE;
 CREATE TABLE Message (idDiscussion SERIAL NOT NULL,
-titreMessage VARCHAR(50),
 objet VARCHAR(100),
-contenuMess VARCHAR(500),
-dateEnvoi INT,
+contenuMess VARCHAR(2000),
+dateEnvoi DATE,
 idCh INT NOT NULL,
 idProjet INT NOT NULL,
 PRIMARY KEY (idDiscussion) )  ;
@@ -59,7 +58,7 @@ DROP TABLE IF EXISTS Tache CASCADE;
 CREATE TABLE Tache (idTache SERIAL NOT NULL,
 nomTache VARCHAR(50),
 typeTache TYPE_TACHE,
-descriptionTaches VARCHAR(500),
+descriptionTaches VARCHAR(2000),
 idProjet INT NOT NULL,
 idCal INT NOT NULL,
 PRIMARY KEY (idTache) )  ;

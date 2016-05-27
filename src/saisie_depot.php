@@ -4,7 +4,7 @@
     // vaut soit "document" soit "publication"
     if(!isset($_GET["type"]) || ($_GET["type"] != "Publication" && $_GET["type"] != "Document"))
     {
-        header("Location: erreur.php?error=depot");
+        header("Location: erreur.php?error=type_depot");
         die();
     }
    
@@ -15,6 +15,22 @@
         header('Location: erreur.php?error=forbidden');
         die();
     }
+
+    $file = fopen("nbr_visites.txt", "c+");
+    if(!$file)
+    {
+        header("Location: erreur.php?error=file_access_denied");
+        die();
+    }
+
+    $visites = fgets($file);
+    if(!$visites)
+    {
+        $visites = 0;
+    }
+    $visites++;
+    rewind($file);
+    fwrite($file, $visites);
 
     include 'fonctions.php';
 
@@ -111,16 +127,16 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <?php 
-                                        $requete = "SELECT nomlabo from laboratoire;";
+                                        $requete = "SELECT nomlabo from Laboratoire;";
                                         
-                                        $labos = pg_query($dbconnect, $requete);
-                                        while($nomLabo = pg_fetch_row($labos))
+                                        $labos = send_query($dbconnect, $requete);
+                                        foreach($labos as $ligne)
                                         {
                                             echo "<li>
-                                                    <a href=\"#\">" . $nomLabo[0] . "</a>";
+                                                    <a href=\"laboratoire.php?nomlaboratoire=".$ligne['nomlabo']."\">" 
+                                                    . $ligne['nomlabo'] . "</a>";
                                             echo "</li>";
                                         }
-
                                      ?>
                                 </ul>
                             </li>
@@ -138,7 +154,7 @@
                                             </a>
                                             <ul class=\"dropdown-menu\">
                                                 <li><a href=\"#\">Tâches</a></li>
-                                                <li><a href=\"#\">Messages</a></li>
+                                                <li><a href=\"listeMessage.php\">Messages</a></li>
                                                 <li><a href=\"listeDoc.php\">Documents</a></li>
                                                 <li role=\"separator\" class=\"divider\"></li>
                                                 <li><a href=\"#\">Gestion</a></li>
@@ -154,73 +170,123 @@
             </nav>
 
             <div class="main-container container-fluid">
-                <form action="recherche.php">
-                    <input type="text" name="search" placeholder="Recherche">
-                    <input type="submit" name="boutonEnvoi" value="OK">
+                <form action="resr.php" method="GET">
+                    <input type="text" name="rechrapide" placeholder="Recherche">
+                    <input type="submit" name="boutonEnvoi" value="Rechercher">
                 </form>
+                
+                <div class="sidebar-container">
+                    <table class="personnal-sidebar" height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
+                     align="left">
+                        <caption> <h2>Statistiques</h2> </caption>
+                        <tr>
+                            <td class="news-title">
+                                <div>
+                                    <p><b>Nombre de publications :</b></p>
+                                    <?php 
+                                        $query = "SELECT COUNT(idpubli) FROM Publication;";
+                                        $result = send_query($dbconnect, $query);
+                                        echo "<p>";
+                                        echo $result[0]['count'];
+                                        echo "</p>";
+                                     ?>
 
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Nombre de chercheurs :</b></p>
+                                <?php 
+                                    $query = "SELECT COUNT(idch) FROM Chercheur;";
+                                    $result = send_query($dbconnect, $query);
+                                    echo "<p>";
+                                    echo $result[0]['count'];
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Nombre de laboratoires :</b></p>
+                                <?php 
+                                    $query = "SELECT count(idLabo) FROM Laboratoire;";
+                                    $result = send_query($dbconnect, $query);
+                                    echo "<p>";
+                                    echo $result[0]['count'];
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Nombre de visites :</b></p>
+                                <?php 
+                                    echo "<p>";
+                                    echo $visites;
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="news-title">
+                                <p><b>Budget moyen des projet :</b></p>
+                                <?php 
+                                    $query = "SELECT avg(budget) FROM Projet;";
+                                    $result = send_query($dbconnect, $query);
+                                    echo "<p>";
+                                    printf("%d €", $result[0]['avg']);
+                                    echo "</p>";
+                                 ?>
+                            </td>
+                        </tr>
+                    </table>            
+                </div>
 
                 <div class="content-container">
-                    <div class="personnal-sidebar">
-                        <table height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
-                         align="left">
-                            <caption> <h2>News</h2> </caption>
-                            <tr>
-                                <td class="news-title">
-                                    <div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dignissimos odit quaerat, eos ex provident explicabo voluptas, aliquam quia sequi tenetur sint doloribus vel ut, veritatis libero iste, doloremque. Totam.</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="news-title">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos iste autem quasi nostrum quia et, culpa mollitia blanditiis repellat quis ut beatae, accusantium fugit quod sapiente non doloremque, sed quam!</p>
-                                </td>
-                            </tr>
-                        </table>            
-                    </div>
                     <?php 
                         echo "<form method=post action=\"depot.php\" enctype=\"multipart/form-data\">";
                         echo "<h3>Dépôt de " . $_GET["type"] . "</h3>";
                      ?>
-                        <table class="form_depot">
-                             <tr>
-                                 <td><p>Titre : </p></td>
-                                 <td><input type="text" name="titre" placeholder="Entrez le titre"></td>
-                             </tr>
-                             <?php 
-                                if($_GET["type"] == "Document")
-                                {
-                                    echo "
-                                         <tr>
-                                             <td><p>Type : </p></td>
-                                             <td>
-                                                <select name=\"type_doc\">
-                                                    <option value=\"Compte rendu réunion\">Compte rendu réunion</option>
-                                                    <option value=\"Rapport expérience\">Rapport d'expérience</option>
-                                                    <option value=\"Brouillon\">Brouillon</option>
-                                                    <option value=\"Livrable\">Livrable</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    ";
-                                }
 
-                              ?>
-                             
-                             <tr>
-                                 <td>Fichier : </td>
-                                 <td><input type="file" name="file"></td>
-                             </tr>
-                             <tr>
-                                <td><input type="submit" name="button" value="Valider"></td>
-                             </tr>
+                    <table class="form_depot">
+                         <tr>
+                             <td><p>Titre : </p></td>
+                             <td><input type="text" name="titre" placeholder="Entrez le titre"></td>
+                         </tr>
+                         <?php 
+                            if($_GET["type"] == "Document")
+                            {
+                                echo "
+                                     <tr>
+                                         <td><p>Type : </p></td>
+                                         <td>
+                                            <select name=\"type_doc\">
+                                                <option value=\"Compte rendu réunion\">Compte rendu réunion</option>
+                                                <option value=\"Rapport expérience\">Rapport d'expérience</option>
+                                                <option value=\"Brouillon\">Brouillon</option>
+                                                <option value=\"Livrable\">Livrable</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                ";
+                            }
 
-                        </table>
+                          ?>
+                         
+                         <tr>
+                             <td>Fichier : </td>
+                             <td><input type="file" name="file"></td>
+                         </tr>
+                         <tr>
+                            <td><input type="submit" name="button" value="Valider"></td>
+                         </tr>
+
+                    </table>
                     <?php
                         echo '<input type="hidden" name="type" value="' . $_GET["type"] . '">';
                         echo "</form>";
-                     ?>
+                     ?>                    
                 </div>
             </div>
 
