@@ -170,8 +170,14 @@
                                <div>
                                      <fieldset>  
                                                 <?php 
+                                                $login = $_COOKIE["session"];
 
-                                        $query= " SELECT idDiscussion,objet,nomch,dateEnvoi FROM Message,Chercheur WHERE message.idch = chercheur.idch AND chercheur.loginch='".$_COOKIE["session"]."'";
+                                                $query1="SELECT projet.idprojet FROM projet, participe, chercheur WHERE loginch='".$login."' AND chercheur.idch = participe.idch AND participe.idprojet= projet.idprojet";
+                                                $res=pg_query($query1);
+                                                $r=pg_fetch_row($res);
+                                               
+
+                                        $query= " SELECT DISTINCT Chercheur.nomch, idDiscussion, dateEnvoi, objet  FROM Message,Chercheur,participe,projet WHERE chercheur.idch = message.idch AND  chercheur.idch = participe.idch AND projet.idprojet=participe.idprojet AND participe.idprojet='".$r[0]."' ";
                                         $result=pg_query($query);
                                         $mess = pg_fetch_all($result);
                            
@@ -185,7 +191,7 @@
                                             $date = $mess[$i][dateenvoi];
                                             if($obj != ""){
                                                 
-                                                echo "<legend> - <a href=message.php?iddiscussion=$idmess>$obj</a> </legend>";
+                                                echo "<legend> - <a href=message.php?idmess=$idmess>$obj</a> </legend>";
                                                 echo "<p> Expéditeur : $nomcher </p>";
                                                 echo "<p> Date de réception : $date </p>";
                                                 
