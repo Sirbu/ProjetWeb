@@ -46,15 +46,9 @@
     // on met à jour la base de donnée uniquement si
     // l'upload s'est bien passé, donc teste d'abord l'upload
     // si la maj de la bdd se passe mal on effacera ce fichier.
-    if(move_uploaded_file($_FILES["file"]["tmp_name"], $fichier_dest))
+    if(!move_uploaded_file($_FILES["file"]["tmp_name"], $fichier_dest))
     {
-        echo "Le fichier " . basename($fichier_dest) . " a bien été uploadé";
-        echo "<br><a href=index.php>Accueil</a>";
-    }
-    else
-    {
-        echo "Désolé il y a eu une erreur lors de l'upload de votre fichier...";
-        echo "<br><a href=index.php>Accueil</a>";
+        header('Location: erreur.php?error=err_upload');
         die();
     }
 
@@ -86,7 +80,7 @@
     }
     else
     {
-        $idDepot = $idMax + 1;
+        $idDepot = $idMax;
     }
 
     // on crée la base de la requête d'insertion
@@ -150,5 +144,8 @@
         header("Location: erreur.php?error=INSERT");
         die();
     }
+
+    // si on arrive ici c'est que tout s'est bien passé :)
+    header("Location: depot_result.php?file=".basename($fichier_dest));
 
  ?>

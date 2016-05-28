@@ -37,6 +37,7 @@
 		$requete = "SELECT max($id) FROM $table;";
         $resultat = pg_query(connectDB(), $requete);
         $lignes = pg_fetch_row($resultat);
+        
         if (!isset($lignes[0])){
         	$cpt = 1;
         }
