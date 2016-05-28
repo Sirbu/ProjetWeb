@@ -253,7 +253,7 @@
                                 <option value="Tests">Tests</option>
                             </select>
 
-                            <button class="submit button" type="submit">Créer la tâche</button>                             
+                                                        
                             <br/>
 
                             <label class="debutT">
@@ -266,11 +266,14 @@
                             <input id="finT" name="finT" value="" type="date" placeholder="jj/mm/aaaa">
                             </label>
                             
-
+                            <!-- Champ de description -->
                             <label class="descriptionT">
-                            <span>Description</span>
-                            <input id="descriptionT" name="descriptionT" value="" type="text" placeholder="description">
+                            <textarea id="descriptionT" name="descriptionT" cols='50' rows='5' placeholder="description"></textarea>
                             </label>
+
+                            <!-- Bouton de validation -->
+                            <button class="submit button" type="submit">Créer la tâche</button> 
+
                         </p>                         
                         </form>
                     </fieldset>                                        
