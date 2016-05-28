@@ -57,7 +57,6 @@
     include("fonctions.php");
 
     // maintenant on le rajoute dans la base de donnée !!
-    $connector = connectDB();
 
     // il faut trouver le plus grand idDoc/idPub
     // pour qu'a l'ajout dans la table on l'incrémente
@@ -136,7 +135,7 @@
         $query .= "Depose ";
     }
 
-    $query .= "VALUES(" . $info_ch[0]['idch'] . ", " . $idDepot . ");";
+    $query .= "VALUES(" . $idDepot . ", " . $info_ch[0]['idch'] . ");";
 
     if(!pg_query(connectDB(), $query))
     {

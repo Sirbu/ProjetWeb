@@ -16,15 +16,23 @@
                         <fieldset>  
 
                                 <?php 
-                                    $login = $_COOKIE["session"];
+                                    $nomch = $_COOKIE["session"];
+
+                                    $requete_login = "SELECT loginch FROM chercheur WHERE nomch = '" . $nomch . "';";
+                                    $login = send_query($requete_login);
 
                                     $query1="SELECT projet.idprojet FROM projet, participe, chercheur"
-                                    ." WHERE loginch='".$login."'"
+                                    ." WHERE loginch='" . $login[0]['loginch'] . "'"
                                     ." AND chercheur.idch = participe.idch"
                                     ." AND participe.idprojet = projet.idprojet;";
                                     $r = send_query($query1);
 
-                                    $query= " SELECT DISTINCT Chercheur.nomch, idDiscussion, dateEnvoi, objet  FROM Message,Chercheur,participe,projet WHERE chercheur.idch = message.idch AND  chercheur.idch = participe.idch AND projet.idprojet=participe.idprojet AND participe.idprojet='".$r[0]."' ";
+                                    $query= "SELECT DISTINCT Chercheur.nomch, idDiscussion, dateEnvoi, objet "
+                                    ."FROM Message,Chercheur,participe,projet "
+                                    ."WHERE chercheur.idch = message.idch "
+                                    ."AND  chercheur.idch = participe.idch "
+                                    ."AND projet.idprojet=participe.idprojet "
+                                    ."AND participe.idprojet='" . $r[0]['idprojet'] . "'";
                                     $mess = send_query($query);
 
                                     if(!$mess)

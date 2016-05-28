@@ -12,7 +12,8 @@
                         $query= "SELECT document.idDoc, typeDoc, titreDoc,nomch FROM Document,Depose,Chercheur "
                                 ."WHERE document.idDoc = depose.idDoc "
                                 ."AND chercheur.idch= depose.idch "
-                                ."AND chercheur.loginch='".$_COOKIE["session"]."'";
+                                ."AND chercheur.nomch='".$_COOKIE["session"]."'";
+
                         $docs = send_query($query);
 
                         if(!$docs)

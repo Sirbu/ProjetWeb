@@ -1,7 +1,7 @@
 <?php 
     include("fonctions.php");
 
-    base_start();
+    base_start("recherche");
  ?>
                 <!-- Contenu de la page resr.php -->
                 <div class="content-container">
