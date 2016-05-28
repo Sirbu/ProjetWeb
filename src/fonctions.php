@@ -78,7 +78,7 @@
 	    $file = fopen("nbr_visites.txt", "c+");
 	    if(!$file)
 	    {
-	        header("Location: erreur.php?error=file_access_denied");
+	        header("Location: erreur.php?error=visit-file_access_denied");
 	        die();
 	    }
 
@@ -238,11 +238,11 @@
 		                                
 		                            if($nav_actif == "about")
 		                            {
-		                            	echo "<li class=\"active\"><a href=\"about.html\">About us</a></li>";
+		                            	echo "<li class=\"active\"><a href=\"about.php\">About us</a></li>";
 		                            }
 		                            else
 		                            {
-		                            	echo "<li><a href=\"about.html\">About us</a></li>";
+		                            	echo "<li><a href=\"about.php\">About us</a></li>";
 		                            }
 			                        
 		echo "                  </ul>

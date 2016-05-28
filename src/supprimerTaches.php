@@ -2,9 +2,8 @@
     require_once('fonctions.php');
 
     
-    $nomT = (isset($_POST['nomT'])) ? $_POST['nomT'] : '';    
+    $nomT = (isset($_POST['nomT'])) ? $_POST['nomT'] : '';
 
-    
     $idcal = idcalFind($nomT);
 
     /*Suppression de la tache*/

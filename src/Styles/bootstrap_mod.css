@@ -176,3 +176,10 @@ tr, td
 	width: 100%;
 	height: 500px;
 }
+
+.partners
+{
+	width: 200px;
+/*	height: 25%; */
+	display: inline-block;
+}

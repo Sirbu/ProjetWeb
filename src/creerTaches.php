@@ -26,7 +26,7 @@
         $verif = 1;
 
     if($verif){
-        if($debutT<=$finT){
+        if($debutT<$finT){
             /*Ajoute la date dans le calendrier*/                        
             $requete1 = "INSERT INTO calendrier VALUES ('".$idLastC."','".$debutT."','".$finT."');";    
             $ret = pg_query(connectDB(), $requete1);
@@ -35,16 +35,20 @@
                 $requete2 = "INSERT INTO tache VALUES ('".$idLastT."','".$nomT."','".$typeT."','".$descriptionT."','".$idProjet."','".$idLastC."');";
                 $ret2 = pg_query(connectDB(), $requete2);
                 if(!$ret2)
-                    $erreur = "impossible de créer la tâche.";                
+                    $erreur = "impossible+de+créer+la+tâche";                
             }
             else
-                $erreur = "impossible de créer la date.";            
+                $erreur = "impossible+de+créer+la+date";            
         }
         else
-            $erreur = "la date de fin est inférieure à la date de début.";
+            $erreur = "la date+de+fin+est+inférieure+à+la+date+de+début";
     }
-    if($erreur)
-        echo'<script type="text/javascript">alert(\'Erreur : '.$erreur.'\');</script> ';   
+    if(isset($erreur))
+    {
+            header("Location: erreur.php?error=".$erreur);
+            die();
+            // echo'<script type="text/javascript">alert(\'Erreur : '.$erreur.'\');</script> ';   
+    }
     
 ?>
     <!-- Retour à la page taches.php -->

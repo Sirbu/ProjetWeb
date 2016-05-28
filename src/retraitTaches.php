@@ -14,7 +14,7 @@
                         <p>
                             <label class="nomT">
                             <span>Nom de la tâche à supprimer</span>
-                            <input id="nomT" name="nomT" value="" type="text" placeholder="tache">
+                            <input id="nomT" name="nomT" type="text" placeholder="tache">
                             </label>
                         </p>                            
                         <p>
