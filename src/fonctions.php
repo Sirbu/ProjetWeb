@@ -252,7 +252,7 @@
 
 		            <div class=\"main-container container-fluid\">
 		                <form action=\"resr.php\" method=\"GET\">
-		                    <input type=\"text\" name=\"rechrapide\" placeholder=\"Recherche\">
+		                    <input type=\"text\" name=\"rechrapide\" placeholder=\"Chercheurs/Publications\">
 		                    <input type=\"submit\" name=\"boutonEnvoi\" value=\"Rechercher\">
 		                </form>
 		                

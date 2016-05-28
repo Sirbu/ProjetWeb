@@ -18,7 +18,10 @@
                                 <?php 
                                     $login = $_COOKIE["session"];
 
-                                    $query1="SELECT projet.idprojet FROM projet, participe, chercheur WHERE loginch='".$login."' AND chercheur.idch = participe.idch AND participe.idprojet= projet.idprojet";
+                                    $query1="SELECT projet.idprojet FROM projet, participe, chercheur"
+                                    ." WHERE loginch='".$login."'"
+                                    ." AND chercheur.idch = participe.idch"
+                                    ." AND participe.idprojet = projet.idprojet;";
                                     $r = send_query($query1);
 
                                     $query= " SELECT DISTINCT Chercheur.nomch, idDiscussion, dateEnvoi, objet  FROM Message,Chercheur,participe,projet WHERE chercheur.idch = message.idch AND  chercheur.idch = participe.idch AND projet.idprojet=participe.idprojet AND participe.idprojet='".$r[0]."' ";

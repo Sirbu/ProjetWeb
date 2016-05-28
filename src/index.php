@@ -1,5 +1,5 @@
 <?php 
-    include 'fonctions.php';
+    include("fonctions.php");
 
     base_start("index");
  ?>
