@@ -1,8 +1,6 @@
 <?php 
     include 'fonctions.php';
 
-    $dbconnect = connectDB();
-
     isset($_COOKIE["session"]) ? $logged = true : $logged = false;
 
     $file = fopen("nbr_visites.txt", "c+");
@@ -110,7 +108,7 @@
                                     <?php 
                                         $requete = "SELECT nomlabo from Laboratoire;";
                                         
-                                        $labos = send_query($dbconnect, $requete);
+                                        $labos = send_query($requete);
                                         foreach($labos as $ligne)
                                         {
                                             echo "<li>
@@ -164,7 +162,7 @@
                                     <p><b>Nombre de publications</b></p>
                                     <?php 
                                         $query = "SELECT COUNT(idpubli) FROM Publication;";
-                                        $result = send_query($dbconnect, $query);
+                                        $result = send_query($query);
                                         echo "<p>";
                                         echo $result[0]['count'];
                                         echo "</p>";
@@ -178,7 +176,7 @@
                                 <p><b>Nombre de chercheurs</b></p>
                                 <?php 
                                     $query = "SELECT COUNT(idch) FROM Chercheur;";
-                                    $result = send_query($dbconnect, $query);
+                                    $result = send_query($query);
                                     echo "<p>";
                                     echo $result[0]['count'];
                                     echo "</p>";
@@ -190,7 +188,7 @@
                                 <p><b>Nombre de laboratoires</b></p>
                                 <?php 
                                     $query = "SELECT count(idLabo) FROM Laboratoire;";
-                                    $result = send_query($dbconnect, $query);
+                                    $result = send_query($query);
                                     echo "<p>";
                                     echo $result[0]['count'];
                                     echo "</p>";
@@ -212,7 +210,7 @@
                                 <p><b>Budget moyen des projet</b></p>
                                 <?php 
                                     $query = "SELECT avg(budget) FROM Projet;";
-                                    $result = send_query($dbconnect, $query);
+                                    $result = send_query($query);
                                     echo "<p>";
                                     printf("%d €", $result[0]['avg']);
                                     echo "</p>";
@@ -226,23 +224,27 @@
                     <div class="content-container">
                         <fieldset><legend>
                             <?php
-                                $query = "SELECT titre, datePubli FROM Publication WHERE idPubli='".$_GET["idpublication"]."'";
-                                $result=pg_query($query);
-                                $pub = pg_fetch_row($result);
-                                echo "$pub[0]  ||  $pub[1]";
-                                if( $pub[0] == null){
-                                    echo "<script> window.location.replace('erreur.php?error=Publication+non+trouvé') </script>";
-                                }
-                                
-                            ?>
-                            </legend>
-                            <?php
-                                $query="SELECT nomch,prenomch FROM Publie, Chercheur, Publication WHERE Publie.idch = Chercheur.idch AND Publie.idpubli ='".$_GET["idpublication"]."'";
-                                $result=pg_query($query);
-                                $auteur = pg_fetch_row($result);
-                                echo "<p>Auteur/s : <a href="."chercheur.php?nomchercheur=$auteur[0]".">$auteur[1] $auteur[0]</a></p>";
+                                $query = "SELECT titre, datePubli, urlpub FROM Publication WHERE idPubli='".$_GET["idpublication"]."'";
+                                $pub = send_query($query);
 
-                                echo "[CONTENU PUBLICATION À COMPLETER]";
+                                if( $pub[0]['titre'] == null){
+                                    echo "<script> window.location.replace('erreur.php?error=Publication+non+trouvée') </script>";
+                                }
+                                echo $pub[0]['titre'] . " publiée le ". $pub[0]['datepubli'];
+                                
+                            
+                                echo "</legend>";
+
+                                $query = "SELECT nomch, prenomch FROM Publie, Chercheur, Publication "
+                                        ."WHERE Publie.idch = Chercheur.idch "
+                                        ."AND Publie.idpubli ='" . $_GET["idpublication"] . "';";
+                                
+                                $auteur = send_query($query);
+
+                                echo "<p>Auteur/s : <a href=\"" . "chercheur.php?nomchercheur=" . $auteur[0]['nomch'] . "\">"
+                                        . $auteur[0]['prenomch'] . " " . $auteur[0]['nomch']."</a></p>";
+
+                                echo "<object class=\"pdf\" data=". $pub[0]['urlpub'] . " type=application/pdf>";
 
                             ?>
                         </fieldset>            

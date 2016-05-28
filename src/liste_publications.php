@@ -1,8 +1,6 @@
 <?php 
     include 'fonctions.php';
 
-    $dbconnect = connectDB();
-
     isset($_COOKIE["session"]) ? $logged = true : $logged = false;
 
     $file = fopen("nbr_visites.txt", "c+");
@@ -158,7 +156,13 @@
                     <input type="text" name="rechrapide" placeholder="Recherche">
                     <input type="submit" name="boutonEnvoi" value="Rechercher">
                 </form>
-                
+                <?php 
+                    if(isset($_COOKIE["session"]))
+                    {
+                        echo "<p class=\"depot\"><a href=\"saisie_depot.php?type=Publication\">Déposer une Publication</a></p>";
+                    }
+                ?>
+
                 <div class="sidebar-container">
                     <table class="personnal-sidebar" height="100%" width="100%" border ="1" cellspacing="1" cellpadding="1"
                      align="left">
@@ -260,14 +264,9 @@
                                             . $auteur[0]['nomch'] . "</a></p>";
 
                                     echo "<p>Lien : <a href=publication.php?idpublication=" . $ligne['idpubli'] . ">"
-                                        . basename($ligne['urlpub']) . "</a></p>";
+                                        . $ligne['titre'] . "</a></p>";
                                 }
 
-                            }
-
-                            if(isset($_COOKIE["session"]))
-                            {
-                                echo "<p><a href=\"saisie_depot.php?type=Publication\">Déposer une Publication</a></p>";
                             }
                         ?>
                     </fieldset>
