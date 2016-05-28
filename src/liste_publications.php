@@ -113,7 +113,7 @@
                                     <?php 
                                         $requete = "SELECT nomlabo from Laboratoire;";
                                         
-                                        $labos = send_query($dbconnect, $requete);
+                                        $labos = send_query($requete);
                                         foreach($labos as $ligne)
                                         {
                                             echo "<li>
@@ -169,7 +169,7 @@
                                     <p><b>Nombre de publications :</b></p>
                                     <?php 
                                         $query = "SELECT COUNT(idpubli) FROM Publication;";
-                                        $result = send_query($dbconnect, $query);
+                                        $result = send_query($query);
                                         echo "<p>";
                                         echo $result[0]['count'];
                                         echo "</p>";
@@ -183,7 +183,7 @@
                                 <p><b>Nombre de chercheurs :</b></p>
                                 <?php 
                                     $query = "SELECT COUNT(idch) FROM Chercheur;";
-                                    $result = send_query($dbconnect, $query);
+                                    $result = send_query($query);
                                     echo "<p>";
                                     echo $result[0]['count'];
                                     echo "</p>";
@@ -195,7 +195,7 @@
                                 <p><b>Nombre de laboratoires :</b></p>
                                 <?php 
                                     $query = "SELECT count(idLabo) FROM Laboratoire;";
-                                    $result = send_query($dbconnect, $query);
+                                    $result = send_query($query);
                                     echo "<p>";
                                     echo $result[0]['count'];
                                     echo "</p>";
@@ -217,7 +217,7 @@
                                 <p><b>Budget moyen des projet :</b></p>
                                 <?php 
                                     $query = "SELECT avg(budget) FROM Projet;";
-                                    $result = send_query($dbconnect, $query);
+                                    $result = send_query($query);
                                     echo "<p>";
                                     printf("%d €", $result[0]['avg']);
                                     echo "</p>";
@@ -233,43 +233,36 @@
                     <fieldset>
                         <?php 
                             $query = "SELECT * FROM Publication";
-                            $result = pg_query($dbconnect, $query);
-                            if(!$result)
+                            $list_publi = send_query($query);
+                            if(!$list_publi)
                             {
                                 echo "<legend>Aucune publication !</legend>";
                             }
                             else
                             {
-
-                                $list_publi = pg_fetch_all($result);
-                                if(!$list_publi)
+                                foreach($list_publi as $ligne)
                                 {
-                                    foreach($list_publi as $ligne)
-                                    {
-                                        // on cherche le nom de l'auteur aussi !
-                                        $requete_auteur = "
-                                        SELECT nomch FROM Chercheur, Publie, Publication"
-                                         . " WHERE Publication.idpubli = ". $ligne['idpubli']
-                                         . " AND Publication.idpubli = Publie.idpubli"
-                                         . " AND Publie.idch = Chercheur.idch;";
+                                    // on cherche le nom de l'auteur aussi !
+                                    $requete_auteur = "
+                                    SELECT nomch FROM Chercheur, Publie, Publication"
+                                     . " WHERE Publication.idpubli = ". $ligne['idpubli']
+                                     . " AND Publication.idpubli = Publie.idpubli"
+                                     . " AND Publie.idch = Chercheur.idch;";
 
-                                        $result = pg_query($dbconnect, $requete_auteur);
-                                        // vérifier si !$result ?
-                                        $auteur = pg_fetch_row($result);
+                                    // pas besoin de vérifier $auteur car tout
+                                    // est fait dans send_query, et si on arrive
+                                    // ici c'est qu'il y a forcément des lignes
+                                    $auteur = send_query($requete_auteur);
 
-                                        echo "<legend>" . $ligne['titre'] . "</legend>";
-                                        echo "<p>Publiée le : " . $ligne['datepubli'] 
-                                                . " par <a href=\"chercheur.php?nomchercheur=" . $auteur[0] . "\">"
-                                                . $auteur[0] . "</a></p>";
+                                    echo "<legend>" . $ligne['titre'] . "</legend>";
+                                    echo "<p>Publiée le : " . $ligne['datepubli'] 
+                                            . " par <a href=\"chercheur.php?nomchercheur=" . $auteur[0]['nomch'] . "\">"
+                                            . $auteur[0]['nomch'] . "</a></p>";
 
-                                        echo "<p>Lien : <a href=" . $ligne['urlpub'] . ">"
-                                            . basename($ligne['urlpub']) . "</a></p>";
-                                    }
+                                    echo "<p>Lien : <a href=publication.php?idpublication=" . $ligne['idpubli'] . ">"
+                                        . basename($ligne['urlpub']) . "</a></p>";
                                 }
-                                else
-                                {
-                                    echo "<p>Aucune publication</p>";
-                                }
+
                             }
 
                             if(isset($_COOKIE["session"]))
