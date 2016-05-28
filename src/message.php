@@ -190,12 +190,6 @@
                         /*Affichage*/
                         echo('<legend class="rubrique"> Objet : ' . $objet .'</legend>');
                         
-                        /*Bouton vers la page d'ajout de tache */
-                        echo'<div class="inline">
-                            <form action="envoyerMessage.php" method="post">
-                            <input class="bouton-envoyerM" type="submit" value="Envoyer un message"> </form>
-                        </div> ';
-
                         echo("Expediteur : $expediteur<BR>");
                         echo("Date :$date<BR>");
                         echo("Contenu :<BR>$contenu");

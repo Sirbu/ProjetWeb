@@ -236,9 +236,11 @@
                     <caption>
                         <h2>Messages</h2>
                     </caption>
-                      
-                   <div>
-                         <fieldset>  
+                    <!-- Bouton vers la page d'ajout de tache -->                      
+                            <form action="envoyerMessage.php" method="post">
+                            <input class="bouton-envoyerM" type="submit" value="Envoyer un message"> </form>  
+                    <div>
+                        <fieldset>  
                                     <?php 
 
                             $query= " SELECT idDiscussion,objet,nomch,dateEnvoi FROM Message,Chercheur WHERE message.idch = chercheur.idch AND chercheur.loginch='".$_COOKIE["session"]."'";

@@ -149,7 +149,7 @@
                         <p>
                             
                             <span>Destinataire :</span>
-                            <select name="idch">
+                            <select name="idprojet">
                             <?php
                                 $requete1 = "SELECT idprojet, nomprojet FROM projet;";    
                                 $resultat = pg_query(connectDB(), $requete1);
@@ -164,7 +164,7 @@
                                     $idprojet= $projet[$i]['idprojet']; 
                                     $nomprojet= $projet[$i]['nomprojet'];   
 
-                                    echo "<option value=".$idprojet.">".$nomprojet."</option>";
+                                    echo "<option value=".$idprojet.">".$idprojet." ".$nomprojet."</option>";
                                 }
 
                             ?>
@@ -179,10 +179,8 @@
 
                             <button class="submit button" type="submit">Envoyer</button>                             
                             <br/>
-
-                            <span>Contenu</span>
-                            <input id="contenuM" name="contenuM" value="" type="text" placeholder="Saisissez votre message">
                             
+                            <textarea id="contenuM" name="contenuM" cols='50' rows='5' placeholder="contenu"></textarea>
                             
 
                             

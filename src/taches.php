@@ -234,7 +234,7 @@
                         <!-- Bouton vers la page d'ajout de tache -->
                         <div class="inline">                       
                             <form action="ajoutTaches.php" method="post">
-                            <input class="bouton-ajoutT" type="submit" value="Ajouter une tache"> </form>
+                            <input class="bouton-ajoutT" type="submit" value="Ajouter une tâche"> </form>
                         </div> 
 
                         <!-- Bouton vers la page de modification de date -->                        
@@ -246,7 +246,7 @@
                         <!-- Bouton vers la page de suppression de tache -->                        
                         <div class="inline">
                             <form action="retraitTaches.php" method="post">
-                            <input class="bouton-supprimerT" type="submit" value="Supprimer une tache"> </form>
+                            <input class="bouton-supprimerT" type="submit" value="Supprimer une tâche"> </form>
                         </div>
 
                         <?php  
