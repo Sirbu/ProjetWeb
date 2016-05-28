@@ -1,5 +1,5 @@
 <?php 
-    include 'fonctions.php';
+    include("fonctions.php");
 
     base_start();
 ?>
@@ -8,40 +8,37 @@
                   <fieldset><legend>
                         <?php
                             $query = "SELECT prenomch FROM Chercheur WHERE nomch='".$_GET["nomchercheur"]."'";
-                            $result=pg_query($query);
-                            $ch = pg_fetch_row($result);
-                            echo "$ch[0] ".$_GET["nomchercheur"];
-                            if( $ch[0] == null){
+                            $ch = send_query($query);
+                            if(!$ch){
                                 echo "<script> window.location.replace('erreur.php?error=Chercheur+non+trouvé') </script>";
                             }
+                            echo $ch[0]['prenomch'] . " " . $_GET['nomchercheur'];
                             
                         ?>
                         </legend>
                         <?php
-                            $query="SELECT nomlabo FROM Equipe, Chercheur, Laboratoire WHERE Chercheur.nomch='".$_GET["nomchercheur"]."' AND Chercheur.idequipe=Equipe.idequipe AND Equipe.idlabo=Laboratoire.idlabo";
-                            $result=pg_query($query);
-                            $nomlabo = pg_fetch_row($result);
-                            echo "<p>Laboratoire : <a href="."laboratoire.php?nomlaboratoire=$nomlabo[0]".">$nomlabo[0]</a></p>";
+                            $query = "SELECT nomlabo FROM Equipe, Chercheur, Laboratoire WHERE Chercheur.nomch='"
+                                .$_GET["nomchercheur"]
+                                ."' AND Chercheur.idequipe=Equipe.idequipe AND Equipe.idlabo=Laboratoire.idlabo";
+                            $nomlabo = send_query($query);
+                            echo "<p>Laboratoire : <a href="."laboratoire.php?nomlaboratoire=".$nomlabo[0]['nomlabo'].">"
+                                . $nomlabo[0]['nomlabo'] . "</a></p>";
 
-                            $query="SELECT numbureau FROM Chercheur WHERE Chercheur.nomch='".$_GET["nomchercheur"]."'";
-                            $result=pg_query($query);
-                            $numBur = pg_fetch_row($result);
-                            echo "<p>Bureau : $numBur[0]</p>";
+                            $query = "SELECT numbureau FROM Chercheur WHERE Chercheur.nomch='".$_GET["nomchercheur"]."'";
+                            $numBur = send_query($query);
+                            echo "<p>Bureau : ". $numBur[0]['numbureau'] . "</p>";
 
                             $query="SELECT sigle FROM Equipe, Chercheur WHERE Chercheur.nomch='".$_GET["nomchercheur"]."' AND Chercheur.idequipe= Equipe.idequipe";
-                            $result=pg_query($query);
-                            $eq = pg_fetch_row($result);
-                            echo "<p>Équipe : <a href='equipe.php?nomequipe=$eq[0]'>$eq[0]</a></p>";
+                            $eq = send_query($query);
+                            echo "<p>Équipe : <a href=\"equipe.php?nomequipe=".$eq[0]['sigle']."\">".$eq[0]['sigle']."</a></p>";
 
-                            $query="SELECT mail FROM Chercheur WHERE nomch='".$_GET["nomchercheur"]."'";
-                            $result=pg_query($query);
-                            $mail = pg_fetch_row($result);
-                            echo "<p>E-Mail : $mail[0]</p>";
+                            $query = "SELECT mail FROM Chercheur WHERE nomch='".$_GET["nomchercheur"]."'";
+                            $mail = send_query($query);
+                            echo "<p>E-Mail : ".$mail[0]['mail']."</p>";
 
-                            $query="SELECT numtel FROM Chercheur WHERE nomch='".$_GET["nomchercheur"]."'";
-                            $result=pg_query($query);
-                            $tel = pg_fetch_row($result);
-                            echo "<p>Téléphone : $tel[0]</p>";
+                            $query = "SELECT numtel FROM Chercheur WHERE nomch='".$_GET["nomchercheur"]."'";
+                            $tel = send_query($query);
+                            echo "<p>Téléphone : ".$tel[0]['numtel']."</p>";
 
                         ?>
                     </fieldset>
@@ -50,8 +47,7 @@
                         <legend>Publications</legend>
                         <?php 
                             $query="SELECT titre, datepubli, Publication.idpubli FROM Publication, Chercheur, Publie WHERE Chercheur.nomch ='".$_GET["nomchercheur"]."' AND Publication.idpubli= Publie.idpubli AND Chercheur.idch = Publie.idch";
-                            $result=pg_query($query);
-                            $pubs = pg_fetch_all($result);
+                            $pubs = send_query($query);
                             $a = count($pubs);
                             for ($i = 0 ; $i < $a ; $i += 1 ){
                                 $titrep = $pubs[$i]['titre']; 

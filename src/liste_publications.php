@@ -1,11 +1,18 @@
 <?php 
     include("fonctions.php");
 
-    base_start();
+    base_start("publications");
  ?>                
                 <!-- Le contenu commence ici ! -->
                 <div class="content-container">
                     <caption><h2>Liste des publications</h2></caption>
+                    <?php 
+                        if(isset($_COOKIE['session']))
+                        {
+                            echo "<a class=\"depot\" href=\"saisie_depot.php?type=Publication\">Déposer une publication</a>";
+                        }
+                     ?>
+
                     <fieldset>
                         <?php 
                             $query = "SELECT * FROM Publication";

@@ -20,7 +20,7 @@
 		$result = pg_query($dbconnect, $query);
 		if(!$result)
 		{
-			header('Location: erreur.php?error=err_fct_req');
+			header('Location: erreur.php?error=err_send_query');
 		}
 
 		$lignes = pg_fetch_all($result);
@@ -62,7 +62,7 @@
 	// du site, c'est à dire le squelette commun de chaque page.
 	// le paramètre $logged indique si la page doit être accédée
 	// seulement par des utilisateurs authentifiés
-	function base_start($secure = false)
+	function base_start($nav_actif = "none", $secure = false)
 	{
 	    isset($_COOKIE["session"]) ? $logged = true : $logged = false;
 
@@ -165,12 +165,29 @@
 		                    </div>
 		                     
 		                    <div id=\"navbar\" class=\"navbar-collapse collapse\">
-		                        <ul class=\"nav navbar-nav\">
-		                            <li class=\"active\"><a href=\"index.php\">Accueil</a></li>
-		                            <li><a href=\"liste_publications.php\">Publications</a></li>
+		                        <ul class=\"nav navbar-nav\">";
+		                        // ici on règle le problème du bouton actif
+		                        if($nav_actif == "index")
+		                        {
+		                        	echo "<li class=\"active\"><a href=\"index.php\">Accueil</a></li>";
+		                        }
+		                        else
+		                        {
+		                        	echo "<li><a href=\"index.php\">Accueil</a></li>";
+		                        }
+		                        if($nav_actif == "publications")
+		                        {
+		                        	echo "<li class=\"active\"><a href=\"liste_publications.php\">Publications</a></li>";
+
+		                        }
+		                        else
+		                        {
+		                        	echo "<li><a href=\"liste_publications.php\">Publications</a></li>";
+
+		                        }
 		                            
-		                            <li class=\"dropdown\">
-		                                <a href=\"laboratoires.php\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" 
+		echo "                      <li class=\"dropdown\">
+		                                <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" 
 		                                    role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">
 		                                        Laboratoires 
 		                                        <span class=\"caret\"></span>
@@ -189,9 +206,17 @@
 		                                        }
 		                                     
 		echo "                          </ul>
-		                            </li>
+		                            </li>";
 		                            
-		                            <li><a href=\"rech3.php\">Recherche</a></li>";
+		                            if($nav_actif == "recherche")
+		                            {
+		                            	echo "<li class=\"active\"><a href=\"rech3.php\">Recherche</a></li>";
+		                            }
+		                            else
+		                            {
+		                            	echo "<li><a href=\"rech3.php\">Recherche</a></li>";
+		                            }
+		                            	
 		                             
 		                                if($logged)
 		                                {
@@ -210,9 +235,16 @@
 		                                        </li>";                                    
 		                                }
 		                                
-
-		echo "                      <li><a href=\"about.html\">About us</a></li>
-		                        </ul>
+		                            if($nav_actif == "about")
+		                            {
+		                            	echo "<li class=\"active\"><a href=\"about.html\">About us</a></li>";
+		                            }
+		                            else
+		                            {
+		                            	echo "<li><a href=\"about.html\">About us</a></li>";
+		                            }
+			                        
+		echo "                  </ul>
 		                    </div>
 		                </div>                    
 		            </nav>
@@ -226,7 +258,7 @@
 		                <div class=\"sidebar-container\">
 		                    <table class=\"personnal-sidebar\" height=\"100%\" width=\"100%\" border =\"1\" cellspacing=\"1\" cellpadding=\"1\"
 		                     align=\"left\">
-		                        <caption> <h2>Statistiques</h2> </caption>
+		                        <caption> <h2>Stats</h2> </caption>
 		                        <tr>
 		                            <td class=\"news-title\">
 		                                <div>

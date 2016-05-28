@@ -1,7 +1,7 @@
 <?php 
     include("fonctions.php");
 
-    base_start();
+    base_start($nav_actif = "publications");
 ?>
                     <!-- CONTENU -->
                     <div class="content-container">
@@ -26,10 +26,12 @@
                                 
                                 $auteur = send_query($query);
 
-                                echo "<p>Auteur/s : <a href=\"" . "chercheur.php?nomchercheur=" . $auteur[0]['nomch'] . "\">"
-                                        . $auteur[0]['prenomch'] . " " . $auteur[0]['nomch']."</a></p>";
+                                echo "<p>Auteur/s : "
+                                        ."<a href=\"" . "chercheur.php?nomchercheur=" . $auteur[0]['nomch'] . "\">"
+                                        . $auteur[0]['prenomch'] . " " . $auteur[0]['nomch']."</a>"
+                                    ."</p>";
 
-                                echo "<object class=\"pdf\" data=". $pub[0]['urlpub'] . " type=application/pdf>";
+                                echo "<object class=\"pdf\" data=\"". $pub[0]['urlpub'] . "\" type=\"application/pdf\">";
 
                             ?>
                         </fieldset>            

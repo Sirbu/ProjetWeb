@@ -25,7 +25,7 @@ tr, td
 {
 	height: auto;
 	width: auto;
-	/*background-image: url("../Images/little3.png");*/
+
 	background-repeat: repeat repeat-y;
 	background-color: #548DD4;
 	border-radius: 15px;
@@ -118,8 +118,7 @@ tr, td
 
 .depot
 {
-	float: right;
-	margin-top: -30px;
+	margin: 5px;
 }
 
 .form_depot
@@ -164,7 +163,7 @@ tr, td
 
 .carousel-caption
 {
-	margin-bottom: 15%;
+	margin-bottom: 30px;
 }
 
 .carousel-caption > a

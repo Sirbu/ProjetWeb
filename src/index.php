@@ -1,7 +1,7 @@
 <?php 
     include 'fonctions.php';
 
-    base_start();
+    base_start("index");
  ?>
                 <!-- Le contenu commence ici ! -->
                 <div class="content-container">

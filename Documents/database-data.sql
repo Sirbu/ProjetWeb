@@ -60,7 +60,7 @@ INSERT INTO Publie VALUES (11, 8);
 
 --Documents -- OK a revoir
 INSERT INTO Document VALUES (1, 'Les réseaux', 'Brouillon', 'Uploads/Documents/réseaux');
-INSERT INTO Document VALUES (2, ' Protocole MPLS', 'Rapport expérience', 'Uploads/Documents/mpls';
+INSERT INTO Document VALUES (2, ' Protocole MPLS', 'Rapport expérience', 'Uploads/Documents/mpls');
 INSERT INTO Document VALUES (3, 'RIP', 'Brouillon','Uploads/Documents/rip');
 INSERT INTO Document VALUES (4, 'OSPF', 'Brouillon', 'Uploads/Documents/ospf');
 
