@@ -16,14 +16,16 @@
     $fichier_dest = $dossier_dest . basename($_FILES["file"]["name"]);
 
     // récupère l'extension du fichier
-    $fileType = pathinfo($fichier_dest, PATHINFO_EXTENSION);
+    $ext = pathinfo($fichier_dest, PATHINFO_EXTENSION);
+
+    $ext = strtolower($ext);
 
     // controle du type de fichier
-    if($fileType != "jpg" && $fileType != "png" && $fileType != "pdf" && $filetype != "odt")
+    if(($ext != "jpg") && ($ext != "png") && ($ext != "pdf") && ($ext != "odt"))
     {
         // la fin de l'url avec le $fichier_dest va peut être
         // foutre la merde (à cause des slash...)
-        header('Location: erreur.php?error=filetype?ext=' . $fileType . '?dest=' . $fichier_dest);
+        header('Location: erreur.php?error=ext?ext=' . $ext . '?dest=' . $fichier_dest);
         die();
     }
 
@@ -44,15 +46,9 @@
     // on met à jour la base de donnée uniquement si
     // l'upload s'est bien passé, donc teste d'abord l'upload
     // si la maj de la bdd se passe mal on effacera ce fichier.
-    if(move_uploaded_file($_FILES["file"]["tmp_name"], $fichier_dest))
+    if(!move_uploaded_file($_FILES["file"]["tmp_name"], $fichier_dest))
     {
-        echo "Le fichier " . basename($fichier_dest) . " a bien été uploadé";
-        echo "<br><a href=index.php>Accueil</a>";
-    }
-    else
-    {
-        echo "Désolé il y a eu une erreur lors de l'upload de votre fichier...";
-        echo "<br><a href=index.php>Accueil</a>";
+        header('Location: erreur.php?error=err_upload');
         die();
     }
 
@@ -68,26 +64,23 @@
     $query = "SELECT ";
     if($_POST["type"] == "Publication")
     {
-        $query .= "max(idPubli) FROM Publication;";
+        $idMax = idLastElement("idpubli", "Publication");
     }
     else
     {
-        $query .= "max(idDoc) FROM Document;";
+        $idMax = idLastElement("iddoc", "Document");
     }
-
-    $result = pg_query($connector, $query);
-    $idMax = pg_fetch_row($result);
 
     // Si on a pas eu de résultat, c'est parce qu'il
     // n'y a rien dans la base. Donc on met le premier
     // id à 1
-    if(!isset($idMax[0]))
+    if(!$idMax)
     {
         $idDepot = 1;
     }
     else
     {
-        $idDepot = $idMax[0]+1;
+        $idDepot = $idMax;
     }
 
     // on crée la base de la requête d'insertion
@@ -104,7 +97,10 @@
         $query .= "'" . $_POST["type_doc"] . "', '$fichier_dest');";
     }
 
-    $result = pg_query($connector, $query);
+    // ici on utilise pg_query car la valeur de retour
+    // de send_query est false lorsqu'il n'y a pas de lignes
+    // et cela ne nous conviens pas.
+    $result = pg_query(connectDB(), $query);
     if(!$result)
     {
         unlink($fichier_dest);
@@ -120,15 +116,13 @@
     // (trop de requêtes, j'en ai marre)
     $requete_ch = "SELECT idCH from Chercheur WHERE nomch = '" . $_COOKIE["session"] . "';";
 
-    $result = pg_query($connector, $requete_ch);
-    if(!$result)
+    $info_ch = send_query($requete_ch);
+    if(!$info_ch)
     {
         unlink($fichier_dest);
         header("Location: erreur.php?error=BDD_ERR_IDCH");
         die();
     }
-
-    $info_ch = pg_fetch_row($result);
 
     // là c'est la requête d'insertion dans la table
     // Dépose ou Publie en fonction du type de dépot
@@ -142,13 +136,16 @@
         $query .= "Depose ";
     }
 
-    $query .= "VALUES(" . $info_ch[0] . ", " . $idDepot . ");";
+    $query .= "VALUES(" . $info_ch[0]['idch'] . ", " . $idDepot . ");";
 
-    if(!pg_query($connector, $query))
+    if(!pg_query(connectDB(), $query))
     {
         unlink($fichier_dest);
         header("Location: erreur.php?error=INSERT");
         die();
     }
+
+    // si on arrive ici c'est que tout s'est bien passé :)
+    header("Location: depot_result.php?file=".basename($fichier_dest));
 
  ?>

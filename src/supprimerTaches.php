@@ -9,13 +9,11 @@
 
     /*Suppression de la tache*/
     $requete2 = "DELETE FROM tache WHERE nomtache = '".$nomT."';";    
-    $resultat = pg_query(connectDB(), $requete2);
-    
-    
+    $resultat = send_query($requete2);
 
     /*Suppression de la date*/
     $requete3 = "DELETE FROM calendrier WHERE idcal = '".$idcal."';";    
-    pg_query(connectDB(), $requete3);
+    send_query($requete3);
 ?>
 
 

@@ -3,7 +3,7 @@ DROP TYPE IF EXISTS DOC CASCADE;
 DROP TYPE IF EXISTS DOM CASCADE;
 DROP TYPE IF EXISTS TYPE_TACHE CASCADE;
 CREATE TYPE STATUT as ENUM ('Responsable', 'Coordinateur', 'Chercheur');
-CREATE TYPE DOM as ENUM ('Biologie', 'Informatique', 'Chimie', 'Physique');
+CREATE TYPE DOM as ENUM ('Biologie', 'Informatique', 'Chimie', 'Physique', 'Electricité');
 CREATE TYPE DOC as ENUM ('Compte rendu réunion', 'Rapport expérience', 'Brouillon', 'Livrable');
 CREATE TYPE TYPE_TACHE as ENUM('Réunion', 'Expérience', 'Tests', 'Documentation', 'Jalon', 'Avancement');
 
@@ -23,7 +23,7 @@ PRIMARY KEY (idCh) );
 -- penser à supprimer la table Equipe avec accent
 DROP TABLE IF EXISTS Equipe CASCADE;
 CREATE TABLE Equipe (idEquipe SERIAL NOT NULL,
-nomEq VARCHAR(50),
+nomEq VARCHAR(200),
 sigle VARCHAR(10),
 specialite VARCHAR(50),
 description VARCHAR(500),
@@ -40,7 +40,7 @@ PRIMARY KEY (idLabo) )  ;
 
 DROP TABLE IF EXISTS Publication CASCADE;
 CREATE TABLE Publication (idPubli SERIAL NOT NULL,
-titre VARCHAR(50),
+titre VARCHAR(200),
 datePubli DATE,
 urlPub VARCHAR(200),
 PRIMARY KEY (idPubli) )  ;
