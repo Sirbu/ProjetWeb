@@ -33,7 +33,8 @@
 
                                 if(file_exists($pub[0]['urlpub']))
                                 {
-                                    echo "<object class=\"pdf\" data=\"". $pub[0]['urlpub'] . "\" type=\"application/pdf\">";
+                                    echo "<object class=\"pdf\" data=\"". $pub[0]['urlpub'] 
+                                        . "\" type=\"application/pdf\"></object>";
                                 }
                                 else
                                 {

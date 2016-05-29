@@ -18,8 +18,8 @@
                                                 
                                                 if(file_exists($data[0]['urldoc']))
                                                 {
-                                                    echo "<object class=\"pdf\" data=\"" . $data[0]['urldoc']
-                                                        . "\" type=\"application/pdf\">";                                          
+                                                    echo "<object class=\"pdf\" data=\"" . $data[0]['urldoc'] .
+                                                       . "\" type=\"application/pdf\"></object>                   
                                                 }
                                                 else
                                                 {

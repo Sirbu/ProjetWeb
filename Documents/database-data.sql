@@ -26,7 +26,7 @@ INSERT INTO Chercheur VALUES (11, 'zissis', 'mdp',14, 'Zissis', 'Georges', 'ziss
 INSERT INTO Chercheur VALUES (12, 'buso', 'mdp', 13, 'Buso', 'David', 'buso.d@laplace.fr', '0534789685', 6);
 
 -- Publications --OK a revoir
-INSERT INTO Publication VALUES (1, 'Théorie des réseaux !', '12/05/2016', 'Uploads/Publications'); -- SIERA
+INSERT INTO Publication VALUES (1, 'Théorie des réseaux !', '12/05/2016', 'Uploads/Publications/deadbeaf.pdf'); -- SIERA
 INSERT INTO Publication VALUES (2, ' Image and Video Processing for Cultural Heritage.', '12/03/2016', 'Uploads/Publications/deadbeaf.pdf'); --VORTEX
 INSERT INTO Publication VALUES (3, 'Fast and tight analysis for AUTOSAR schedule tables', '12/04/2016', 'Uploads/Publications/deadbeaf.pdf'); --VERTICS
 INSERT INTO Publication VALUES (4, 'Emergence in engineering systems', '10/05/2016', 'Uploads/Publications/deadbeaf.pdf'); --ISI

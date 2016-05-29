@@ -13,12 +13,6 @@
     /*Suppression de la date*/
     $requete3 = "DELETE FROM calendrier WHERE idcal = '".$idcal."';";    
     send_query($requete3);
+
+    header("Location: taches.php");
 ?>
-
-
-    <!-- Retour à la page taches.php -->
-<script type="text/javascript">
-    
-        window.location="taches.php";  
-
-</script> 
