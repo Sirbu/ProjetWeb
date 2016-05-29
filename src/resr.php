@@ -55,8 +55,8 @@
                                 $query_equipe = " AND Chercheur.idequipe = Equipe.idEquipe";
                                 $query_labo = " AND Chercheur.idequipe = Equipe.idequipe AND Laboratoire.idlabo = Equipe.idLabo";
                             }else{
-                                $query_equipe =" AND Equipe.idequipe = Chercheur.idch AND Publie.idch = Chercheur.idch AND Publication.idpubli = Publie.idpubli";
-                                $query_labo = "AND Equipe.idequipe = Chercheur.idch AND Publie.idch = Chercheur.idch AND Publie.idpubli = Publication.idpubli AND Laboratoire.idlabo = Equipe.idlabo";
+                                $query_equipe =" AND Equipe.idequipe = Chercheur.idequipe AND Publie.idch = Chercheur.idch AND Publication.idpubli = Publie.idpubli";
+                                $query_labo = "AND Equipe.idequipe = Chercheur.idequipe AND Publie.idch = Chercheur.idch AND Publie.idpubli = Publication.idpubli AND Laboratoire.idlabo = Equipe.idlabo";
                             }
 
                             if($t1 != ""){

@@ -22,18 +22,16 @@
                         }
                         else
                         {
-                            $a = count($docs);
-                                    
-                            for ($i = 0 ; $i < $a ; $i++){ 
-                                $idd = $docs[$i]['iddoc'];
-                                $titred = $docs[$i]['titredoc'];
-                                $nomcher = $docs[$i]['nomch'];
-                                $type = $docs[$i]['typedoc'];
+                            foreach ($docs as $document)
+                            {
+                                $idd = $document['iddoc'];
+                                $titred = $document['titredoc'];
+                                $nomcher = $document['nomch'];
+                                $type = $document['typedoc'];
   
                                 echo "<legend> - <a href=\"document.php?iddoc=$idd\">$titred</a> </legend>";
                                 echo "<p> Auteur : $nomcher </p>";
                                 echo "<p> Type : $type </p>";
-
                             }
                             
                         }

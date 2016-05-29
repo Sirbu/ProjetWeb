@@ -27,13 +27,13 @@ INSERT INTO Chercheur VALUES (12, 'buso', 'mdp', 13, 'Buso', 'David', 'buso.d@la
 
 -- Publications --OK a revoir
 INSERT INTO Publication VALUES (1, 'Théorie des réseaux !', '12/05/2016', 'Uploads/Publications'); -- SIERA
-INSERT INTO Publication VALUES (2, ' Image and Video Processing for Cultural Heritage.', '12/03/2016', 'Uploads/Publications'); --VORTEX
-INSERT INTO Publication VALUES (3, 'Fast and tight analysis for AUTOSAR schedule tables', '12/04/2016', 'Uploads/Publications'); --VERTICS
-INSERT INTO Publication VALUES (4, 'Emergence in engineering systems', '10/05/2016', 'Uploads/Publications'); --ISI
-INSERT INTO Publication VALUES (5, 'A new specification-based qualitative metric for simulation model validity', '17/01/2016', 'Uploads/Publications');--ISI
-INSERT INTO Publication VALUES (6, 'PSpice Modeling of the Pulsed Electro-acoustic Signal', '02/12/2015', 'Uploads/Publications'); --DSF
-INSERT INTO Publication VALUES (7, 'Silver nanoclusters containing layer as an efficient barrier for charge injection in polyethylene', '01/04/2016', 'Uploads/Publications'); --DSF
-INSERT INTO Publication VALUES (8, 'Etude des propriétés électroniques des cristaux liquides discotiques pour applications photovoltaïques', '13/02/2016', 'Uploads/Publications'); --LM
+INSERT INTO Publication VALUES (2, ' Image and Video Processing for Cultural Heritage.', '12/03/2016', 'Uploads/Publications/deadbeaf.pdf'); --VORTEX
+INSERT INTO Publication VALUES (3, 'Fast and tight analysis for AUTOSAR schedule tables', '12/04/2016', 'Uploads/Publications/deadbeaf.pdf'); --VERTICS
+INSERT INTO Publication VALUES (4, 'Emergence in engineering systems', '10/05/2016', 'Uploads/Publications/deadbeaf.pdf'); --ISI
+INSERT INTO Publication VALUES (5, 'A new specification-based qualitative metric for simulation model validity', '17/01/2016', 'Uploads/Publications/deadbeaf.pdf');--ISI
+INSERT INTO Publication VALUES (6, 'PSpice Modeling of the Pulsed Electro-acoustic Signal', '02/12/2015', 'Uploads/Publications/deadbeaf.pdf'); --DSF
+INSERT INTO Publication VALUES (7, 'Silver nanoclusters containing layer as an efficient barrier for charge injection in polyethylene', '01/04/2016', 'Uploads/Publications/deadbeaf.pdf'); --DSF
+INSERT INTO Publication VALUES (8, 'Etude des propriétés électroniques des cristaux liquides discotiques pour applications photovoltaïques', '13/02/2016', 'Uploads/Publications/deadbeaf.pdf'); --LM
 
 
 -- Calendrier --OK

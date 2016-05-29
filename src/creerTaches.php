@@ -50,6 +50,5 @@
             // echo'<script type="text/javascript">alert(\'Erreur : '.$erreur.'\');</script> ';   
     }
     
+    header("Location: taches.php");
 ?>
-    <!-- Retour à la page taches.php -->
-    <script type="text/javascript">window.location="taches.php";</script> 

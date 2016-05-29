@@ -183,3 +183,8 @@ tr, td
 /*	height: 25%; */
 	display: inline-block;
 }
+
+.td-img
+{
+	border: none;
+}

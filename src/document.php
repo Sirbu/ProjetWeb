@@ -16,7 +16,7 @@
                                                 echo "<p>Auteur : " . $data[0]['nomch'] . "</p>";
                                                 echo " <p>Type : " . $data[0]['typedoc'] . "</p>";
                                                 
-                                                if(file_exists($$date[0]['urlDoc']))
+                                                if(file_exists($data[0]['urldoc']))
                                                 {
                                                     echo "<object class=\"pdf\" data=\"" . $data[0]['urldoc']
                                                         . "\" type=\"application/pdf\">";                                          

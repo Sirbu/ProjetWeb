@@ -331,11 +331,17 @@
 
 
 		            <div class=\"mentions\">
-		                <table height=\"75px\" width=\"100%\" border =\"1\" cellspacing=\"1\" cellpadding=\"1\" >
+		                <table rules=\"none\" height=\"75px\" width=\"100%\" border =\"1\" cellspacing=\"1\" cellpadding=\"1\" >
 		                    <caption>Mention légales</caption>
 		                    <tr>
 		                        <td> Nous contacter : stri@hmtl.com</td>
+		                        <td>
+			                        <img class=\"img-responsive partners\" src=\"Images/Partenaires/upssitech.png\">
+			                        <img class=\"img-responsive partners\" src=\"Images/Partenaires/stri.jpg\"/>
+			                        <img class=\"img-responsive partners\" src=\"Images/Partenaires/ups.jpg\"/>
+		                        </td>
 		                    </tr>
+
 		                </table>
 		            </div>
 		        

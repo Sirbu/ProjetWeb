@@ -22,11 +22,12 @@
                             <li> <b>Tél</b>&nbsp;: (33) 5 61 00 00 00</li>
                             <li> <b>Fax</b>&nbsp;: (33) 5 61 55 62 58</li>
                         </ul>
-                        
-                        <h3> NOS PARTENAIRES : </h3> 
-                        <img class="img-responsive partners" src="Images/Partenaires/upssitech.png">
-                        <img class="img-responsive partners" src="Images/Partenaires/stri.jpg"/>
-                        <img class="img-responsive partners" src="Images/Partenaires/ups.jpg"/>                      
+
+                        <iframe src="http://www.ma-carte-geographique.com/my-google-maps.php?SID=1464516252-mCoNP" 
+                            width="500" height="400" frameborder="0" hspace="0" vspace="0" marginheight="0"
+                            marginwidth="0" scrolling="no">
+                                
+                        </iframe>                 
                             
                     </div>                 
 <?php 

@@ -21,7 +21,7 @@
     $ext = strtolower($ext);
 
     // controle du type de fichier
-    if(($ext != "jpg") && ($ext != "png") && ($ext != "pdf") && ($ext != "odt"))
+    if(($ext != "jpeg") && ($ext != "jpg") && ($ext != "png") && ($ext != "pdf") && ($ext != "odt"))
     {
         // la fin de l'url avec le $fichier_dest va peut être
         // foutre la merde (à cause des slash...)
@@ -135,7 +135,7 @@
         $query .= "Depose ";
     }
 
-    $query .= "VALUES(" . $info_ch[0]['idch'] . ", " . $idDepot . ");";
+    $query .= "VALUES(" . $idDepot . ", " . $info_ch[0]['idch'] . ");";
 
     if(!pg_query(connectDB(), $query))
     {
