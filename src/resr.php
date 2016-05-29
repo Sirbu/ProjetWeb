@@ -12,6 +12,7 @@
                             $upup = strtoupper($_GET["rechrapide"]);
                             
                             $query = "SELECT Chercheur.nomch, Publication.idpubli, Publication.titre FROM Chercheur, Publication, Publie WHERE publie.idch = chercheur.idch AND publie.idpubli = publication.idpubli AND (upper(nomch) LIKE '%".$upup."%' OR upper(titre) LIKE '%".$upup."%')";
+
                             $req = send_query($query);
 
                             if(empty($req[0]['nomch']))
@@ -82,7 +83,7 @@
                             
                             $res = send_query($query_final);
 
-                            if ($res[0]['nomch'] == "" && $res[0]['titre'] == "" )
+                            if ($res[0][$type] == "" && $res[0]['titre'] == "" )
                                 $cpt = 0;
                             else
                                 $cpt = count($res);

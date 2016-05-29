@@ -15,8 +15,16 @@
                                                 echo "<p>" . $data[0]['titredoc'] . "</p>";
                                                 echo "<p>Auteur : " . $data[0]['nomch'] . "</p>";
                                                 echo " <p>Type : " . $data[0]['typedoc'] . "</p>";
-                                                echo "<object class=\"pdf\" data=\"" . $data[0]['urldoc']
-                                                    . "\" type=\"application/pdf\">";                                          
+                                                
+                                                if(file_exists($$date[0]['urlDoc']))
+                                                {
+                                                    echo "<object class=\"pdf\" data=\"" . $data[0]['urldoc']
+                                                        . "\" type=\"application/pdf\">";                                          
+                                                }
+                                                else
+                                                {
+                                                    echo "<p>Le fichier est inaccessible !</p>";
+                                                }
                                         ?>
 
                                 </div>

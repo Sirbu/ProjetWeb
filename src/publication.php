@@ -31,7 +31,14 @@
                                         . $auteur[0]['prenomch'] . " " . $auteur[0]['nomch']."</a>"
                                     ."</p>";
 
-                                echo "<object class=\"pdf\" data=\"". $pub[0]['urlpub'] . "\" type=\"application/pdf\">";
+                                if(file_exists($pub[0]['urlpub']))
+                                {
+                                    echo "<object class=\"pdf\" data=\"". $pub[0]['urlpub'] . "\" type=\"application/pdf\">";
+                                }
+                                else
+                                {
+                                    echo "<p>Le fichier est inaccessible !</p>";
+                                }
 
                             ?>
                         </fieldset>            

@@ -135,7 +135,7 @@
         $query .= "Depose ";
     }
 
-    $query .= "VALUES(" . $idDepot . ", " . $info_ch[0]['idch'] . ");";
+    $query .= "VALUES(" . $info_ch[0]['idch'] . ", " . $idDepot . ");";
 
     if(!pg_query(connectDB(), $query))
     {
