@@ -9,6 +9,7 @@
                     <fieldset>  
                     <?php 
 
+                        //Verification des documents par rapport au chercheur.
                         $query= "SELECT document.idDoc, typeDoc, titreDoc,nomch FROM Document,Depose,Chercheur "
                                 ."WHERE document.idDoc = depose.idDoc "
                                 ."AND chercheur.idch= depose.idch "
@@ -16,12 +17,14 @@
 
                         $docs = send_query($query);
 
+                        //Affichage des documents.
                         if(!$docs)
                         {
                             echo "<p>Aucun document</p>";
                         }
                         else
                         {
+
                             foreach ($docs as $document)
                             {
                                 $idd = $document['iddoc'];

@@ -10,16 +10,19 @@
                             <td class="news-title">
                                 <div>
                                        <?php
+
+                                        //Requpération de nos informations liées au document 
                                             $query = "SELECT titreDoc, urlDoc,nomch,typeDoc FROM Document,Depose,Chercheur WHERE Document.idDoc='".$_GET["iddoc"]."' AND chercheur.nomch='".$_COOKIE["session"]."'";
                                                 $data = send_query($query);
                                                 echo "<p>" . $data[0]['titredoc'] . "</p>";
                                                 echo "<p>Auteur : " . $data[0]['nomch'] . "</p>";
                                                 echo " <p>Type : " . $data[0]['typedoc'] . "</p>";
                                                 
+                                                //Vérification de l'existence du fichier 
                                                 if(file_exists($data[0]['urldoc']))
                                                 {
-                                                    echo "<object class=\"pdf\" data=\"" . $data[0]['urldoc']
-                                                        . "\" type=\"application/pdf\">Balise non supportée</object>";
+                                                    echo "<object class=\"pdf\" data=\"" . $data[0]['urldoc'] 
+                                                       . "\" type=\"application/pdf\"></object>";                   
                                                 }
                                                 else
                                                 {
