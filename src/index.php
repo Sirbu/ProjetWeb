@@ -36,7 +36,7 @@
                             $query = "SELECT P.idpubli, titre, nomch FROM Publication as P, Publie as Pb, Chercheur as C"
                                     ." WHERE P.idpubli = Pb.idpubli"
                                     ." AND Pb.idch = C.idch"
-                                    ." ORDER BY datePubli;";
+                                    ." ORDER BY datePubli DESC;";
 
                             $info_publi = send_query($query);
 

@@ -18,8 +18,8 @@
                                                 
                                                 if(file_exists($data[0]['urldoc']))
                                                 {
-                                                    echo "<object class=\"pdf\" data=\"" . $data[0]['urldoc'] .
-                                                       . "\" type=\"application/pdf\"></object>                   
+                                                    echo "<object class=\"pdf\" data=\"" . $data[0]['urldoc']
+                                                        . "\" type=\"application/pdf\">Balise non supportée</object>";
                                                 }
                                                 else
                                                 {

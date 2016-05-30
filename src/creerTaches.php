@@ -26,7 +26,7 @@
         $verif = 1;
 
     if($verif){
-        if($debutT<$finT){
+        if($debutT<=$finT){
             /*Ajoute la date dans le calendrier*/                        
             $requete1 = "INSERT INTO calendrier VALUES ('".$idLastC."','".$debutT."','".$finT."');";    
             $ret = pg_query(connectDB(), $requete1);
@@ -47,8 +47,7 @@
     {
             header("Location: erreur.php?error=".$erreur);
             die();
-            // echo'<script type="text/javascript">alert(\'Erreur : '.$erreur.'\');</script> ';   
     }
     
-    header("Location: taches.php");
+    header("Location: assiTache.php?idtache=" . $idLastT);
 ?>

@@ -1,7 +1,7 @@
 <?php 
     include("fonctions.php");
 
-    base_start($nav_actif = "publications");
+    base_start("publications");
 ?>
                     <!-- CONTENU -->
                     <div class="content-container">
@@ -34,7 +34,7 @@
                                 if(file_exists($pub[0]['urlpub']))
                                 {
                                     echo "<object class=\"pdf\" data=\"". $pub[0]['urlpub'] 
-                                        . "\" type=\"application/pdf\"></object>";
+                                        . "\" >Balise non supportée</object>";
                                 }
                                 else
                                 {

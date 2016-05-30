@@ -17,11 +17,17 @@
     						
     						if (!$result)
     						{
-                                echo"<p>ERREUR lors de l'ajout</p>";	
+                                echo "<script type=\"text/javascript\">
+                                        window.location=\"erreur.php?error=ERREUR+lors+de+l'ajout+de+la+tache\";
+                                     </script>";                                
+                                die();	
     						}
     						else
     						{
-    							echo "<p>SUCCES lors de l'assignation de tâches</p>" ;
+                                echo "<script type=\"text/javascript\">
+                                        window.location=\"taches.php\";
+                                     </script>";                                
+                                die();
     						}
     					?>
 					

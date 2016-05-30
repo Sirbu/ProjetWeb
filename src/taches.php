@@ -49,25 +49,43 @@
 
                         <?php  
                         /*Récupère les taches de la BDD*/
-                        $requete = "SELECT calendrier.datedebut, calendrier.datefin,nomtache,typetache,descriptiontaches FROM tache,calendrier WHERE tache.idcal = calendrier.idcal;";
+                        $requete = "SELECT tache.idtache, calendrier.datedebut, calendrier.datefin,nomtache,typetache,descriptiontaches FROM tache,calendrier WHERE tache.idcal = calendrier.idcal;";
                                         
                         $taches = send_query($requete);
 
                         $cpt = count($taches);
                         if($taches)
                         {                            
-                            for($i =0; $i<$cpt;$i++)
+                            foreach ($taches as $ligne)
                             {
-                                $nom = $taches[$i]['nomtache'];
-                                $type = $taches[$i]['typetache'];
-                                $description = $taches[$i]['descriptiontaches'];
-                                $debut = $taches[$i]['datedebut'];
-                                $fin = $taches[$i]['datefin'];
+                                $nom = $ligne['nomtache'];
+                                $type = $ligne['typetache'];
+                                $description = $ligne['descriptiontaches'];
+                                $debut = $ligne['datedebut'];
+                                $fin = $ligne['datefin'];
 
                                 echo("<h2>$nom</h2> <br>");
                                 echo("<p>Type : $type <br></p>");
                                 echo("<p>Début : $debut Fin : $fin <br></p>");
                                 echo("<p>Description : <br> $description</p>");
+
+                                $requ_assi = "SELECT nomch FROM effectue, Chercheur, tache "
+                                            ."WHERE effectue.idch = chercheur.idch "
+                                            ."AND effectue.idtache = " . $ligne['idtache'] . ";";
+                                $result = send_query($requ_assi);
+                                if(!$result)
+                                {
+                                    echo "<p>Aucun chercheur assigné</p>";
+                                }
+                                else
+                                {
+                                    echo "<p>Chercheurs assignés :<br></p>";
+                                    foreach ($result as $chercheur)
+                                    {
+                                        echo "<a href=\"chercheur.php?nomchercheur=" . $chercheur['nomch'] . "\">" 
+                                                . $chercheur['nomch'] . "</a><br></p>";
+                                    }
+                                }
                                 
                             }   
                         }
