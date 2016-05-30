@@ -7,6 +7,7 @@
                     <div class="content-container">
                         <fieldset><legend>
                         	<?php
+                                // selection du nom de l'equipe
                         		$query = "SELECT Equipe.idequipe FROM Equipe WHERE Equipe.sigle='".$_GET["nomequipe"]."'";
                         		$eq = send_query($query);
                                 echo $_GET["nomequipe"];
@@ -17,6 +18,7 @@
                         	?>
                         	</legend>
                             <?php
+                                //selection des attributs de l'equipe
                             	$query="SELECT nomeq FROM Equipe WHERE Equipe.sigle='".$_GET["nomequipe"]."'";
                                 $nomeq = send_query($query);
                                 echo "<p>".$nomeq[0]['nomeq']."</p>";
@@ -39,6 +41,7 @@
 
                         <fieldset><legend>Membres:</legend>
                             <?php
+                                // Selection des membres qui composent l'équipe et leur statut
                                 $query="SELECT nomch, prenomch FROM Equipe, Chercheur WHERE Equipe.sigle ='".$_GET["nomequipe"]."'AND Equipe.idequipe = Chercheur.idEquipe";
                                 $membres = send_query($query);
                                 if(!$membres)

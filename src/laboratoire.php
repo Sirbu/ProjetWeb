@@ -7,6 +7,7 @@
                     <!--Contenu principal de la page Laboratoire -->
                     <fieldset><legend>
                     	<?php
+                            // Selection du titre du laboratoire
                     		$query = "SELECT idLabo FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
                     		$lab = send_query($query);
                             echo $_GET["nomlaboratoire"];
@@ -17,6 +18,7 @@
                     	?>
                     	</legend>
                         <?php
+                            // Selection des attributs principaux du laboratoire
                         	$query="SELECT domaine FROM Laboratoire WHERE nomlabo='".$_GET["nomlaboratoire"]."'";
                             $dom = send_query($query);
                             echo "<p>Domaine : ".$dom[0]['domaine']."</p>";
@@ -34,6 +36,7 @@
 
                     <fieldset><legend>Équipes Membres:</legend>
                         <?php
+                            // Selection des equipes qui appartiennent au labo
                             $query="SELECT sigle FROM Equipe, Laboratoire WHERE Laboratoire.nomlabo ='".$_GET["nomlaboratoire"]."'AND Equipe.idlabo = Laboratoire.idlabo";
                             $membres = send_query($query);
                             
