@@ -21,7 +21,7 @@
                     
                     <form id="research" method="POST" action="resr.php">
                         <!-- Forulaire de la recherche avabncée -->
-                        <div id="objetR"> Objet de la recheche: </div>
+                        <div id="objetR"> Objet de la recherche: </div>
                         <input id="texteR" type="text" name="texterecherche"/> <br>
                         <!-- Radio boutons obligatoires -->
                         <input type="radio" name="typerecherche" value="titre" checked/> Titre de Publication <br>
