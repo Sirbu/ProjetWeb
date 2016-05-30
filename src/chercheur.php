@@ -7,6 +7,7 @@
                 <div class="content-container">
                   <fieldset><legend>
                         <?php
+                            // Selection du nom et prenom du chercheur
                             $query = "SELECT prenomch FROM Chercheur WHERE nomch='".$_GET["nomchercheur"]."'";
                             $ch = send_query($query);
                             if(!$ch){
@@ -17,6 +18,7 @@
                         ?>
                         </legend>
                         <?php
+                            // selection des attributs du chercheur + son equipe + le labo auquel appartient l'equipe
                             $query = "SELECT nomlabo FROM Equipe, Chercheur, Laboratoire WHERE Chercheur.nomch='"
                                 .$_GET["nomchercheur"]
                                 ."' AND Chercheur.idequipe=Equipe.idequipe AND Equipe.idlabo=Laboratoire.idlabo";
@@ -46,6 +48,7 @@
                     <fieldset>
                         <legend>Publications</legend>
                         <?php 
+                            // selection des publications du chercheur a partir de la table Publications et Publie
                             $query="SELECT titre, datepubli, Publication.idpubli FROM Publication, Chercheur, Publie WHERE Chercheur.nomch ='".$_GET["nomchercheur"]."' AND Publication.idpubli= Publie.idpubli AND Chercheur.idch = Publie.idch";
                             $pubs = send_query($query);
                             $a = count($pubs);
