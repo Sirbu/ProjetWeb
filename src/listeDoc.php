@@ -10,10 +10,9 @@
                     <?php 
 
                         //Verification des documents par rapport au chercheur.
-                        $query= "SELECT document.idDoc, typeDoc, titreDoc,nomch FROM Document,Depose,Chercheur "
+                        $query= "SELECT document.idDoc, typeDoc, titreDoc, nomch FROM Document,Depose,Chercheur "
                                 ."WHERE document.idDoc = depose.idDoc "
-                                ."AND chercheur.idch= depose.idch "
-                                ."AND chercheur.nomch='".$_COOKIE["session"]."'";
+                                ."AND chercheur.idch= depose.idch ";
 
                         $docs = send_query($query);
 
