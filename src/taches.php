@@ -64,12 +64,12 @@
                                 $debut = $ligne['datedebut'];
                                 $fin = $ligne['datefin'];
 
-                                echo("<h2>$nom</h2> <br>");
+                                echo("<legend>$nom</legend>");
                                 echo("<p>Type : $type <br></p>");
                                 echo("<p>Début : $debut Fin : $fin <br></p>");
                                 echo("<p>Description : <br> $description</p>");
 
-                                $requ_assi = "SELECT nomch FROM effectue, Chercheur, tache "
+                                $requ_assi = "SELECT DISTINCT nomch FROM effectue, Chercheur, tache "
                                             ."WHERE effectue.idch = chercheur.idch "
                                             ."AND effectue.idtache = " . $ligne['idtache'] . ";";
                                 $result = send_query($requ_assi);
